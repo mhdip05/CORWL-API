@@ -1,0 +1,18 @@
+﻿[
+  {
+    "UserName": "Dip",
+    "Email": "mhsporsho120@gmail.com",
+    "PhoneNumber": "01791468094",
+    "EmployeeId": 2,
+    "CompanyId": 1
+  },
+
+  {
+    "Email": "mhsporsho220@gmail.com",
+    "EmployeeId": 3,
+    "PhoneNumber": "01623425119",
+    "UserName": "Sayara",
+    "CompanyId": 1
+  }
+
+]

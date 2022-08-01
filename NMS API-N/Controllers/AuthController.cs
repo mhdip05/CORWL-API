@@ -72,6 +72,31 @@ namespace NMS_API_N.Controllers
             };
         }
 
+        [Authorize]
+        [HttpPost("Forgot-Password")]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordDto forgotPassword)
+        {
+            var user = await GetUserByUserName(User.GetUserName());
+
+            var checkPassowrd = await _userManager.CheckPasswordAsync(user, forgotPassword.CurrentPassword);
+
+            if (!checkPassowrd) return BadRequest("Your current password is not correct");
+
+            if (forgotPassword.CurrentPassword == forgotPassword.NewPassword) return BadRequest("Current password and new password must not be same");
+
+            var result = await _userManager.ChangePasswordAsync(user, forgotPassword.CurrentPassword, forgotPassword.NewPassword);
+
+            if (result.Succeeded) return Ok("Password changed successfully");
+
+            return BadRequest("Something Bad happened while changing password");
+        }
+
+        private async Task<User> GetUserByUserName(string username)
+        {
+#nullable disable
+            return await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == username.ToLower());
+        }
+
         private async Task<string> UniqueUserValidation(RegisterDto registerDto)
         {
 

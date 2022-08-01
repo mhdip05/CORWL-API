@@ -29,7 +29,5 @@ namespace NMS_API_N.Model.DTO
         [Required(ErrorMessage = "Please Select City")]
         [Range(1, int.MaxValue, ErrorMessage = "make sure you have selected a valid city")]
         public int CityId { get; set; }
-
-
     }
 }

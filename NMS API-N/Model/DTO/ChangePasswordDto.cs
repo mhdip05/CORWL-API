@@ -2,7 +2,7 @@
 
 namespace NMS_API_N.Model.DTO
 {
-    public class ForgotPasswordDto
+    public class ChangePasswordDto
     {
 #nullable disable
         [Required(ErrorMessage = "Current password is required")]

@@ -72,9 +72,9 @@ namespace NMS_API_N.Controllers
             };
         }
 
-        [Authorize]
-        [HttpPost("Forgot-Password")]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordDto forgotPassword)
+        [HttpPost("Change-Password")]
+        [Authorize]  
+        public async Task<ActionResult> ChangePassword(ChangePasswordDto forgotPassword)
         {
             var user = await GetUserByUserName(User.GetUserName());
 
@@ -86,8 +86,12 @@ namespace NMS_API_N.Controllers
 
             var result = await _userManager.ChangePasswordAsync(user, forgotPassword.CurrentPassword, forgotPassword.NewPassword);
 
-            if (result.Succeeded) return Ok("Password changed successfully");
-
+            if (result.Succeeded)
+            {
+                var message = new SuccessMessageDto { Message = "Password Changed Successfully" };
+                return Ok(message);
+            }
+            
             return BadRequest("Something Bad happened while changing password");
         }
 

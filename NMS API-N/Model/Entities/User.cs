@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NMS_API_N.Model.Entities
@@ -20,11 +19,8 @@ namespace NMS_API_N.Model.Entities
         public int EmailCode { get; set; }
         
 #nullable disable
-
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }
         public int CompanyId { get; set; }
-
-
     }
 }

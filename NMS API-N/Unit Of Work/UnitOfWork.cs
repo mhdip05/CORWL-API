@@ -17,14 +17,19 @@ namespace NMS_API_N.Unit_Of_Work
         }
 
         public ICompanyRepository CompanyRepository => new CompanyRepository(_context, _mapper);
+
         public IAddressRepository AddressRepository => new AddressRepository(_context, _mapper);
+
         public ICountryRepository CountryRepository => new CountryRepository(_context, _mapper);
+
         public ICityRepository CityRepository => new CityRepository(_context, _mapper);
         public IUserRepository UserRepository => new UserRepository(_context, _mapper);
+
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
         public bool HasChanges()
         {
             return _context.ChangeTracker.HasChanges();

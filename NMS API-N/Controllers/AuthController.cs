@@ -8,6 +8,8 @@ using NMS_API_N.Model.Entities;
 using NMS_API_N.Extension;
 using NMS_API_N.IServices;
 
+
+
 namespace NMS_API_N.Controllers
 {
     public class AuthController : BaseApiController
@@ -73,14 +75,15 @@ namespace NMS_API_N.Controllers
             };
         }
 
-#nullable disable
         private async Task<User> GetUserByUserName(string username)
         {
+#nullable disable
             return await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == username.ToLower());
         }
 
         private async Task<string> UniqueUserValidation(RegisterDto registerDto)
         {
+
             if (await UserExist(registerDto.UserName!))
                 return "Username is taken";
             else if (await EmailExist(registerDto.Email!))

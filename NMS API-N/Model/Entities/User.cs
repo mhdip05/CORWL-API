@@ -17,7 +17,8 @@ namespace NMS_API_N.Model.Entities
         public bool? IsActive { get; set; }
         public bool? IsDelete { get; set; }
         public DateTime? DeletedDate { get; set; }
-
+        public int EmailCode { get; set; }
+        
 #nullable disable
 
         [ForeignKey("CompanyId")]

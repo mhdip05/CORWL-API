@@ -15,6 +15,7 @@ namespace NMS_API_N.Extension
         public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<ITokenServices, TokenServices>();
+            services.AddSingleton<IEmailServices, MailServices>();
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

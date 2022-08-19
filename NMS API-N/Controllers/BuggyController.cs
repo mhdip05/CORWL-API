@@ -28,7 +28,7 @@ namespace NMS_API_N.Controllers
         public ActionResult<string> GetServerError()
         {
             var data = _context.Users.Find(-1);
-
+#nullable disable
             var thingsToReturn = data.ToString();
 
             return thingsToReturn;

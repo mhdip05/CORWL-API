@@ -8,6 +8,7 @@ namespace NMS_API_N.Unit_Of_Work
         IAddressRepository AddressRepository { get; }
         ICountryRepository CountryRepository { get; }
         ICityRepository CityRepository { get; }
+        IUserRepository UserRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }

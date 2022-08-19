@@ -8,6 +8,8 @@ using NMS_API_N.Model.Entities;
 using NMS_API_N.Extension;
 using NMS_API_N.IServices;
 
+
+
 namespace NMS_API_N.Controllers
 {
     public class AuthController : BaseApiController
@@ -51,6 +53,7 @@ namespace NMS_API_N.Controllers
                 Token = await _tokenService.CreateToken(user),
                 EmployeeId = user.EmployeeId,
             };
+
         }
 
         [HttpPost("Login")]
@@ -70,29 +73,6 @@ namespace NMS_API_N.Controllers
                 Token = await _tokenService.CreateToken(user),
                 EmployeeId = user.EmployeeId,
             };
-        }
-
-        [HttpPost("Change-Password")]
-        [Authorize]  
-        public async Task<ActionResult> ChangePassword(ChangePasswordDto forgotPassword)
-        {
-            var user = await GetUserByUserName(User.GetUserName());
-
-            var checkPassowrd = await _userManager.CheckPasswordAsync(user, forgotPassword.CurrentPassword);
-
-            if (!checkPassowrd) return BadRequest("Your current password is not correct");
-
-            if (forgotPassword.CurrentPassword == forgotPassword.NewPassword) return BadRequest("Current password and new password must not be same");
-
-            var result = await _userManager.ChangePasswordAsync(user, forgotPassword.CurrentPassword, forgotPassword.NewPassword);
-
-            if (result.Succeeded)
-            {
-                var message = new SuccessMessageDto { Message = "Password Changed Successfully" };
-                return Ok(message);
-            }
-            
-            return BadRequest("Something Bad happened while changing password");
         }
 
         private async Task<User> GetUserByUserName(string username)

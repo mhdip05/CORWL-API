@@ -20,7 +20,6 @@ namespace NMS_API_N.Model.Entities
         public int EmailCode { get; set; }
         
 #nullable disable
-
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }
         public int CompanyId { get; set; }

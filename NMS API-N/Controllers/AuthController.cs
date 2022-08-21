@@ -91,7 +91,7 @@ namespace NMS_API_N.Controllers
             else if (await PhoneExist(registerDto.PhoneNumber!))
                 return "Phone number is taken";
 
-            return "Something unexpected happened";
+            return "";
         }
         private async Task<bool> UserExist(string username)
         {

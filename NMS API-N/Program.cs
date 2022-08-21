@@ -4,6 +4,7 @@ using NMS_API_N.DbContext;
 using NMS_API_N.Model.Entities;
 using NMS_API_N.Extension;
 using NMS_API_N.SeedData;
+using NMS_API_N.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,8 +35,9 @@ catch (Exception ex)
     logger.LogError(ex, "An error occured during migration");
 }
 
-
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

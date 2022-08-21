@@ -20,6 +20,8 @@ namespace NMS_API_N.Helper
 
             CreateMap<CityDto, City>().ReverseMap();
 
+            CreateMap<UserListDto, User>().ReverseMap();
+
             CreateMap<string, string>().ConvertUsing(new StringTrimmerProfile());
         }
     }

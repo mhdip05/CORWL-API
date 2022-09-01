@@ -44,7 +44,6 @@ namespace NMS_API_N.Extension
                 options.AddPolicy("DoctorRole", policy => policy.RequireRole("doctor"));
                 options.AddPolicy("PatientRole", policy => policy.RequireRole("patient"));
                 options.AddPolicy("ManagementRole", policy => policy.RequireRole("admin", "management"));
-
             });
 
             return services;

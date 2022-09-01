@@ -11,7 +11,7 @@ namespace NMS_API_N.Extension
             response.Headers.Add("Pagination", JsonSerializer.Serialize(paginationHeader));
 
             // To make pagination header available
-            response.Headers.Add("Access-Control-Pagination-Headers", "Pagination");
+            response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
         }
     }
 }

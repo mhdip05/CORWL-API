@@ -49,7 +49,7 @@ namespace NMS_API_N.Controllers
             return new UserDto
             {
                 UserId = user.Id,
-                Username = user.UserName,
+                UserName = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 EmployeeId = user.EmployeeId,
             };
@@ -69,7 +69,7 @@ namespace NMS_API_N.Controllers
             return new UserDto
             {
                 UserId = user.Id,
-                Username = user.UserName,
+                UserName = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 EmployeeId = user.EmployeeId,
             };
@@ -83,7 +83,6 @@ namespace NMS_API_N.Controllers
 
         private async Task<string> UniqueUserValidation(RegisterDto registerDto)
         {
-
             if (await UserExist(registerDto.UserName!))
                 return "Username is taken";
             else if (await EmailExist(registerDto.Email!))

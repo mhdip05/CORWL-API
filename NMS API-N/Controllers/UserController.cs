@@ -12,7 +12,7 @@ namespace NMS_API_N.Controllers
     public class UserController : BaseApiController
     {
         private readonly IUnitOfWork _uot;
-        private IMapper _mapper;
+        private IMapper _mapper; 
 
         public UserController(IUnitOfWork uot, IMapper mapper)
         {

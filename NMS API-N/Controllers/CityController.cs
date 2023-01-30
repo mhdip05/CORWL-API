@@ -5,6 +5,7 @@ using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
 using NMS_API_N.Extension;
 using NMS_API_N.Unit_Of_Work;
+using NMS_API_N.Helper;
 
 namespace NMS_API_N.Controllers
 {
@@ -20,6 +21,18 @@ namespace NMS_API_N.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("GetAllCity")]
+        public async Task<IActionResult> GetAllCity()
+        {
+            return Ok(await _uot.CityRepository.GetAllCity());
+        }
+
+        [HttpGet("GetCityByCountry")]
+        public async Task<IActionResult> GetCityByCountry(int countryId)
+        {
+            return Ok(await _uot.CityRepository.GetCityByCountry(countryId));
+        }
+
         [HttpPost("add-city")]
         public async Task<ActionResult<CityDto>> AddCity(CityDto cityDto)
         {
@@ -31,10 +44,10 @@ namespace NMS_API_N.Controllers
 
             cityData.CityName = cityData.CityName.ToLower();
             cityData.CreatedBy = int.Parse(User.GetUserId());
-            
+
             _uot.CityRepository.AddCity(cityData);
 
-            if(await _uot.Complete())
+            if (await _uot.Complete())
                 return Ok(cityData);
 
             return BadRequest("Failed To Add City");
@@ -43,21 +56,22 @@ namespace NMS_API_N.Controllers
         [HttpPut("update-city")]
         public async Task<ActionResult> UpdateCity(CityDto cityDto)
         {
-            var checkCity = await _uot.CityRepository.GetCityById(cityDto.CityId);
+            var checkCity = await _uot.CityRepository.GetCityById(cityDto.Id);
 
-            if (checkCity == null) return BadRequest("No Record Found");
-     
-            if (checkCity.CityName == cityDto.CityName.ToLower()) return BadRequest("Updating with same name is not allowed");
+            if (checkCity == null) return BadRequest("No Data Found");
+
+            if ((checkCity.CityName == cityDto.CityName.ToLower()) && (checkCity.CountryId == cityDto.CountryId))
+                return BadRequest("Updating with same name is not allowed");
 
             var cityData = _mapper.Map(cityDto, checkCity);
 
             cityData.UpdatedBy = int.Parse(User.GetUserId());
-            cityData.LastUpdatedDate = DateTime.Now;
+            cityData.LastUpdatedDate = DateTime.UtcNow.AddHours(DateTimeHelper.GetUtcHour());
             cityData.UpdatedCount += 1;
 
             _uot.CityRepository.UpdateCity(cityData);
 
-            if(await _uot.Complete()) return NoContent();
+            if (await _uot.Complete()) return NoContent();
 
             return BadRequest("Failed to updated city");
         }

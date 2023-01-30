@@ -4,6 +4,7 @@ using NMS_API_N.Model.Entities;
 using NMS_API_N.Extension;
 using NMS_API_N.Unit_Of_Work;
 using System.Text.Json;
+using NMS_API_N.Model.DTO;
 
 namespace NMS_API_N.SeedData
 {
@@ -50,6 +51,11 @@ namespace NMS_API_N.SeedData
             var company = new Company
             {
                 CompanyName = "neurogen",
+                CompanyCode = "123456",
+                CityId = 1,
+                Address="Dhaka, Bangladesh",
+                ZipCode = "12500",
+                MobileNo = "123456789",
                 CreatedBy = 1,
                 CreatedDate = DateTime.Now,
             };
@@ -65,7 +71,6 @@ namespace NMS_API_N.SeedData
                 CountryName = "bangladesh",
                 CreatedBy = 1,
                 CreatedDate = DateTime.Now,
-                CompanyId = 1,
             };
 
             _uot.CountryRepository.AddCountry(country);
@@ -80,7 +85,6 @@ namespace NMS_API_N.SeedData
                 CreatedBy = 1,
                 CreatedDate = DateTime.Now,
                 CountryId = 1,
-                CompanyId = 1,
             };
 
             _uot.CityRepository.AddCity(city);

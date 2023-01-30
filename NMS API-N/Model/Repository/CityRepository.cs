@@ -1,8 +1,13 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using NMS_API_N.DbContext;
+using NMS_API_N.Extension;
+using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
+using NMS_API_N.Model.FetchDto;
 using NMS_API_N.Model.IRepository;
+using System.Diagnostics.Metrics;
 
 namespace NMS_API_N.Model.Repository
 {
@@ -19,6 +24,42 @@ namespace NMS_API_N.Model.Repository
         public void AddCity(City city)
         {
             _context.Cities.Add(city);
+        }
+
+        public async Task<IEnumerable<CityDto>> GetAllCity()
+        {
+            return await (from country in _context.Countries
+                          join city in _context.Cities on country.Id equals city.CountryId
+                          orderby country.CountryName, city.CityName
+                          select new CityDto
+                          {
+                              CountryId = city.CountryId,
+                              CountryName = country.CountryName.ToUpper(),
+                              Id = city.Id,
+                              CityName = city.CityName.ToUpper(),
+                              CreatedBy = city.CreatedBy,
+                              CreatedDate = city.CreatedDate,
+                              LastUpdatedDate = city.LastUpdatedDate,
+                          })
+                          .AsNoTracking()
+                          .ToListAsync();
+
+        }
+
+        public async Task<IQueryable<GetCityByCountryDto>> GetCityByCountry(int countryId)
+        {
+            var data = await (from city in _context.Cities.Where(e => e.CountryId == countryId)
+                              orderby city.CityName
+                              select new GetCityByCountryDto
+                              {
+                                  CityId = city.Id,
+                                  CityName = city.CityName.ToUpper(),
+                              })
+                             .AsNoTracking()
+                             .ToListAsync();
+
+            return data.AsQueryable();
+
         }
 
         public async Task<City> GetCityById(int id)

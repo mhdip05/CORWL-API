@@ -22,7 +22,12 @@ namespace NMS_API_N.Helper
 
             CreateMap<UserListDto, User>().ReverseMap();
 
+            CreateMap<CurrencyDto, Currency>().ReverseMap();
+
+            CreateMap<BankDto, Bank>().ReverseMap();
+
             CreateMap<string, string>().ConvertUsing(new StringTrimmerProfile());
+            //CreateMap<string, string>().ConvertUsing(new EmptyToNullConverter());
         }
     }
 }

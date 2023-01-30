@@ -8,19 +8,19 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!--<PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />-->
-		<PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
+		 <!--<PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />-->
+         <!-- <PackageReference Include="ReportViewerCore.NETCore" Version="15.1.17" />-->
+		<PackageReference Include="QuestPDF" Version="2022.9.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 		<PackageReference Include="MailKit" Version="3.3.0" />
-		<PackageReference Include="QuestPDF" Version="2022.8.2" />
-		<PackageReference Include="ReportViewerCore.NETCore" Version="15.1.17" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-		<PackageReference Include="CloudinaryDotNet" Version="1.16.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+		<PackageReference Include="CloudinaryDotNet" Version="1.16.0" />
+		<PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
 	</ItemGroup>
 
 </Project>

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NMS_API_N.DbContext;
 using NMS_API_N.Model.Entities;
+using NMS_API_N.Model.FetchDTO;
 using NMS_API_N.Model.IRepository;
 
 namespace NMS_API_N.Model.Repository
@@ -19,6 +20,23 @@ namespace NMS_API_N.Model.Repository
         public void AddCountry(Country country)
         {
             _context.Countries.Add(country);
+        }
+
+        public async Task<IEnumerable<Country>> GetAllCountry()
+        {
+            return await _context.Countries.OrderBy(x => x.CountryName).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IEnumerable<GetCountriesDto>> GetCountries()
+        {
+            return await _context.Countries
+                .Select(x => new GetCountriesDto
+                {
+                    CountryId = x.Id,
+                    CountryName = x.CountryName.ToUpper(),
+                })
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Country> GetCountryById(int id)

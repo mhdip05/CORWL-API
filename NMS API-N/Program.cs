@@ -6,6 +6,7 @@ using NMS_API_N.Extension;
 using NMS_API_N.SeedData;
 using NMS_API_N.Middleware;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();

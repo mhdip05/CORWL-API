@@ -9,6 +9,8 @@ namespace NMS_API_N.Unit_Of_Work
         ICountryRepository CountryRepository { get; }
         ICityRepository CityRepository { get; }
         IUserRepository UserRepository { get; }
+        ICurrencyRepository CurrencyRepository { get; }
+        IBankRepository BankRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }

@@ -67,7 +67,7 @@ namespace NMS_API_N.Controllers
 
         private bool IsSameAddressInfo(AddressDto addressDto, Address address)
         {
-            ObjectTrimmer.MakeObjectTrim(addressDto);
+            ObjectConverter.MakeObjectTrim(addressDto);
 
             return addressDto.AddressDescription == address.AddressDescription &&
                    addressDto.SourceId == address.SourceId &&

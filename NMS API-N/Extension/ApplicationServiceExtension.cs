@@ -16,8 +16,8 @@ namespace NMS_API_N.Extension
         {
             services.AddScoped<ITokenServices, TokenServices>();
             services.AddSingleton<IEmailServices, MailServices>();
-            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             services.AddDbContextPool<DataContext>(options =>
             {

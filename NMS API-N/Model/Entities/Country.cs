@@ -13,8 +13,10 @@ namespace NMS_API_N.Model.Entities
         [StringLength(256)]
         public string CountryName { get; set; }
 
-#nullable enable
+        [StringLength(6)]
+        public string CountryAlias { get; set; }
+
         [StringLength(10)]
-        public string? TelephoneCode { get; set; }
+        public string TelephoneCode { get; set; }
     }
 }

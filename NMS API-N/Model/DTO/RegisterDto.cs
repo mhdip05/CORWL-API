@@ -2,7 +2,6 @@
 
 namespace NMS_API_N.Model.DTO
 {
-    // Register Input For Client
     public class RegisterDto : CommonDto
     {      
         [Required]

@@ -20,7 +20,6 @@ namespace NMS_API_N.Controllers
             _mapper = mapper;
         }
 
-
         [HttpGet("GetAllUsers")]
         public async Task<ActionResult<IEnumerable<UserListDto>>> GetAllUsers([FromQuery]PaginationParams @params)
         {

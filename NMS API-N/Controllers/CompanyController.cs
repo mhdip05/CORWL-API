@@ -5,6 +5,10 @@ using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
 using NMS_API_N.Extension;
 using NMS_API_N.Unit_Of_Work;
+using NMS_API_N.Helper;
+using Newtonsoft.Json;
+using NMS_API_N.CustomValidation;
+
 
 namespace NMS_API_N.Controllers
 {
@@ -20,48 +24,62 @@ namespace NMS_API_N.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("add-company")]
-        public async Task<ActionResult<CompanyDto>> AddCompany(CompanyDto company)
+
+        [HttpGet("GetAllCompanies")]
+        public async Task<IActionResult> GetAllCompanies()
         {
-            var companyData = _mapper.Map<Company>(company);
+            return Ok(await _unitOfWork.CompanyRepository.GetAllCompanies());
+        }
 
-            var checkCompany = await _unitOfWork.CompanyRepository.GetComanyByCompanyName(companyData.CompanyName.ToLower());
+        [HttpGet("GetCompanyById/{id}")]
+        public async Task<ActionResult> GetCompanyById(int id)
+        {
+            var companyData =   await _unitOfWork.CompanyRepository.GetCompayByIdAsync(id);
+            if (companyData == null) return BadRequest("No Data Found");
+            return Ok(companyData);
+        }
 
-            if (checkCompany != null) return BadRequest("Company is Exist");
-                    
-            companyData.CompanyName = companyData.CompanyName.ToLower();
+        [HttpPost("add-company")]
+        public async Task<ActionResult> AddCompany(CompanyDto companyDto)
+        {
+            var companyData = _mapper.Map<Company>(companyDto);
+
             companyData.CreatedBy = int.Parse(User.GetUserId());
 
-            _unitOfWork.CompanyRepository.AddCompany(companyData);
+            var res = await _unitOfWork.CompanyRepository.AddCompany(companyData);
 
-            if (await _unitOfWork.Complete())
-                   return Ok(companyData);
+            if (res.Status == false) return BadRequest(res.Message);
 
-            return BadRequest("Failed to Add Company");
-
+            if (await _unitOfWork.Complete()) 
+                return Ok(res.Data);
+                       
+            return BadRequest(ValidationMsg.SomethingWrong("adding company"));
         }
 
         [HttpPut("update-company")]
         public async Task<ActionResult> UpdateCompany(CompanyDto companyDto)
-        {           
-            var CompanyData = await _unitOfWork.CompanyRepository.GetCompayByIdAsync(companyDto.CompanyId);
+        {
+            companyDto.UpdatedBy= int.Parse(User.GetUserId());
 
-            if (CompanyData == null) return BadRequest("No Data Found");
-          
-            if (CompanyData.CompanyName == companyDto.CompanyName.ToLower()) return BadRequest("Updaing with same company name is not allowed");
+            var res = await _unitOfWork.CompanyRepository.UpdateCompany(companyDto);
 
-            var data = _mapper.Map(companyDto, CompanyData);
+            if(res.Status == false) return BadRequest(res.Message);
 
-            data.UpdatedBy = int.Parse(User.GetUserId());
-            data.LastUpdatedDate = DateTime.Now;
-            data.UpdatedCount += 1; 
+            if (await _unitOfWork.Complete()) return Ok(res.Data);
 
-            _unitOfWork.CompanyRepository.UpdateCompany(CompanyData);
+            return BadRequest(ValidationMsg.SomethingWrong("updating company"));
+        }
 
-            if(await _unitOfWork.Complete()) return NoContent();
+        [HttpGet("DeleteCompany")]
+        public async Task<ActionResult> DeleteCompany(int id)
+        {
+            var result = await _unitOfWork.CompanyRepository.DeleteCompany(id);
 
-            return BadRequest("Failed to update company");
+            if (result.Status == false) return BadRequest(result.Message); 
 
+            if (await _unitOfWork.Complete()) return Ok(new SuccessMessageDto { Message = "Company Deleted Successfully." });
+
+            return BadRequest(ValidationMsg.SomethingWrong("deleteing company"));
         }
     }
 }

@@ -18,12 +18,10 @@ namespace NMS_API_N.Model.Entities
         public bool? IsDelete { get; set; }
         public DateTime? DeletedDate { get; set; }
         public int EmailCode { get; set; }
-        
+
 #nullable disable
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }
         public int CompanyId { get; set; }
-
-
     }
 }

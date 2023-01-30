@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Reporting.NETCore;
+//using Microsoft.Reporting.NETCore;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -9,6 +9,7 @@ using System.Net;
 
 namespace NMS_API_N.Controllers
 {
+    /*
     public class ReportController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -68,5 +69,5 @@ namespace NMS_API_N.Controllers
 
             // return Ok();
         }
-    }
+    }*/
 }

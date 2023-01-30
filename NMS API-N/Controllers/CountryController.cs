@@ -20,6 +20,18 @@ namespace NMS_API_N.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("GetAllCountries")]
+        public async Task<IActionResult> GetAllCountries()
+        {
+            return Ok(await _uot.CountryRepository.GetAllCountry());
+        }
+
+        [HttpGet("GetCountries")]
+        public async Task<IActionResult> GetCountries()
+        {
+            return Ok(await _uot.CountryRepository.GetCountries());
+        }
+
         [HttpPost("add-country")]
         public async Task<ActionResult<CountryDto>> AddCountry(CountryDto country)
         {
@@ -27,14 +39,14 @@ namespace NMS_API_N.Controllers
 
             var checkCountry = await _uot.CountryRepository.GetCountryByName(countryData.CountryName.ToLower());
 
-            if (checkCountry != null) return BadRequest("Country is Exist");
+            if (checkCountry != null) return BadRequest("Country Already Exist");
 
             countryData.CountryName = countryData.CountryName.ToLower();
             countryData.CreatedBy = int.Parse(User.GetUserId());
 
             _uot.CountryRepository.AddCountry(countryData);
 
-            if (await _uot.Complete()) 
+            if (await _uot.Complete())
                 return Ok(countryData);
 
             return BadRequest("Failed To Add Country");
@@ -46,7 +58,7 @@ namespace NMS_API_N.Controllers
             var countryData = await _uot.CountryRepository.GetCountryById(countryDto.CountryId);
 
             if (countryData == null) return BadRequest("No Data Found");
-          
+
             if (countryData.CountryName == countryDto.CountryName.ToLower()) return BadRequest("Updaing with same name is not allowed");
 
             var data = _mapper.Map(countryDto, countryData);
@@ -57,7 +69,7 @@ namespace NMS_API_N.Controllers
 
             _uot.CountryRepository.UpdateCountry(data);
 
-            if(await _uot.Complete()) return NoContent();
+            if (await _uot.Complete()) return Ok(data);
 
             return BadRequest("Failed to update country");
         }

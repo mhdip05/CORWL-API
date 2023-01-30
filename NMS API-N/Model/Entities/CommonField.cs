@@ -7,7 +7,7 @@ namespace NMS_API_N.Model.Entities
     {
 #nullable disable
         [Required]
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         [Required]
         public int CreatedBy { get; set; } 
@@ -22,13 +22,7 @@ namespace NMS_API_N.Model.Entities
         public bool? IsDelete { get; set; }
         public int? DeletedBy { get; set; }
         public DateTime? DeletedDate { get; set; }
-
-
-#nullable disable
         public int UpdatedCount { get; set; }
 
-        [ForeignKey("CompanyId")]
-        public Company Company { get; set; }
-        public int CompanyId { get; set; }
     }
 }

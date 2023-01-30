@@ -1,14 +1,17 @@
-﻿using NMS_API_N.Model.DTO;
+﻿using NMS_API_N.CustomValidation;
+using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
 
 namespace NMS_API_N.Model.IRepository
 {
-    public interface ICompanyRepository
+    public interface ICompanyRepository 
     {
-        void AddCompany(Company conpany);
-        Task<Company> GetCompayByIdAsync(int id);
-        void UpdateCompany(Company conpany);
-        Task<Company> GetComanyByCompanyName(string companyName);
-
+        Task<Result> AddCompany(Company company);
+        Task<CompanyDto> GetCompayByIdAsync(int id);
+        Task<Result> UpdateCompany(CompanyDto companyDto);  
+        Task<Company> FindCompanyByName(string companyName);
+        Task<Company> FindCompanyById(int id);
+        Task<IEnumerable<CompanyDto>> GetAllCompanies();
+        Task<Result> DeleteCompany(int id);
     }
 }

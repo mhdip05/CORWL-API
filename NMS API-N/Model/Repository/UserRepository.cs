@@ -37,5 +37,6 @@ namespace NMS_API_N.Model.Repository
 #nullable disable
             return await _context.Users.SingleOrDefaultAsync(x => x.UserName == username.ToLower());
         }
+
     }
 }

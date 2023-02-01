@@ -8,10 +8,14 @@ using NMS_API_N.Extension;
 using NMS_API_N.IServices;
 using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
+using NMS_API_N.Model.FetchDTO;
 using NMS_API_N.Unit_Of_Work;
+using System.Linq.Expressions;
 
 namespace NMS_API_N.Controllers
 {
+#nullable disable
+    [Authorize]
     public class AccountSettingsController : BaseApiController
     {
         private readonly IUnitOfWork _uot;
@@ -30,7 +34,6 @@ namespace NMS_API_N.Controllers
 
 
         [HttpPost("Change-Password")]
-        [Authorize]
         public async Task<ActionResult> ChangePassword(ChangePasswordDto forgotPassword)
         {
             var user = await GetUserByUserName(User.GetUserName());
@@ -43,18 +46,51 @@ namespace NMS_API_N.Controllers
 
             var result = await _userManager.ChangePasswordAsync(user, forgotPassword.CurrentPassword, forgotPassword.NewPassword);
 
-            if (result.Succeeded)
-            {
-                var message = new SuccessMessageDto { Message = "Password Changed Successfully" };
-
-                return Ok(message);
-            }
+            if (result.Succeeded) return Ok(new SuccessMessageDto { Message = "Password Changed Successfully" });
 
             return BadRequest("Something Bad happened while changing password");
         }
 
+        [HttpPost("change-username")]
+        public async Task<ActionResult> ChangeUsername(ChangeUsernameDto changeUsername)
+        {
+            var username = await GetUserByUserName(changeUsername.Username);
+          
+            if (username != null) return BadRequest("Someone already taken the username");
+
+            var getUser = await _userManager.FindByIdAsync(User.GetUserId());
+
+            getUser.UserName = changeUsername.Username.ToLower();
+
+            var result = await _userManager.UpdateAsync(getUser);
+
+            if (result.Succeeded) return Ok(new SuccessMessageDto { Message = "Username changed successfully" });
+
+            return BadRequest("Something bad happened while changing the username");
+        }
+
+        [HttpPost("change-email")]
+        public async Task<ActionResult> ChangeEmail(ChangeEmailDto changeEmail)
+        {
+            var email = await _userManager.FindByEmailAsync(changeEmail.Email);
+
+            if (email != null) return BadRequest("This email already taken");
+
+            var getUser = await _userManager.FindByIdAsync(User.GetUserId());
+
+            getUser.Email= changeEmail.Email;
+
+            var result = await _userManager.UpdateAsync(getUser);
+
+            if (result.Succeeded) return Ok(new SuccessMessageDto { Message = "Email changed successfully" });
+
+            return BadRequest("Something bad happened while changing the email");
+
+        }
+
 
         [HttpPost("SendCodeToEmail")]
+        [AllowAnonymous]
         public async Task<ActionResult> SendCodeToEmail(SendCodeToEmail emailDto)
         {
             var checkEmail = await CheckEmail(emailDto.Email);
@@ -89,10 +125,11 @@ namespace NMS_API_N.Controllers
 
 
         [HttpPost("ResetPassword")]
+        [AllowAnonymous]
         public async Task<ActionResult> ResetPassword(ResetPasswordDto resetPassword)
         {
             var checkEmail = await CheckEmail(resetPassword.Email);
-          
+
             if (checkEmail == null)
             {
                 var data = new ReturnedValueDto
@@ -113,7 +150,7 @@ namespace NMS_API_N.Controllers
 
             var result = await _userManager.AddPasswordAsync(checkEmail, resetPassword.NewPassword);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 checkEmail.EmailCode = 0;
                 await _uot.Complete();
@@ -143,7 +180,7 @@ namespace NMS_API_N.Controllers
 
         private async Task<User> GetUserByUserName(string username)
         {
-#nullable disable
+
             return await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == username.ToLower());
         }
 

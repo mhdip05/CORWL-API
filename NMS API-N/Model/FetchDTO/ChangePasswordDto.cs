@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NMS_API_N.Model.DTO
+namespace NMS_API_N.Model.FetchDTO
 {
     public class ChangePasswordDto
     {

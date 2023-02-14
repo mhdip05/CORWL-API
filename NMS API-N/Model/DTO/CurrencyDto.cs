@@ -16,7 +16,7 @@ namespace NMS_API_N.Model.DTO
         public string Details { get; set; }
 
         [StringLength(3, MinimumLength = 1, ErrorMessage = "Currency sumbol must be between {2} and {1} characters")]
-        [RegularExpression(@"\p{Sc}",ErrorMessage ="Invalid Currency, only currency symbol are allowed")]
+        [RegularExpression(@"\p{Sc}", ErrorMessage = "Invalid Currency, only currency symbol are allowed")]
         public string CurrencySymbol { get; set; }
     }
 }

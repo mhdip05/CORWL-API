@@ -1,4 +1,6 @@
-﻿using NMS_API_N.Model.Entities;
+﻿using NMS_API_N.CustomValidation;
+using NMS_API_N.Model.DTO;
+using NMS_API_N.Model.Entities;
 using NMS_API_N.Model.FetchDTO;
 
 namespace NMS_API_N.Model.IRepository
@@ -8,7 +10,7 @@ namespace NMS_API_N.Model.IRepository
         void AddCountry(Country country);
         Task<Country> GetCountryById(int id);
         Task<Country> GetCountryByName(string name);
-        void UpdateCountry(Country country);
+        Task<Result> UpdateCountry(CountryDto countryDto);
         Task<IEnumerable<Country>> GetAllCountry();
         Task<IEnumerable<GetCountriesDto>> GetCountries();
     }

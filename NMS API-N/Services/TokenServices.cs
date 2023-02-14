@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using NMS_API_N.Model.Entities;
 using NMS_API_N.IServices;
+using NMS_API_N.Model.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -25,7 +25,7 @@ namespace NMS_API_N.Services
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Sid, user.EmployeeId.ToString()), 
+                new Claim(JwtRegisteredClaimNames.Sid, user.EmployeeId.ToString()),
             };
 
             var roles = await _userManager.GetRolesAsync(user);

@@ -11,6 +11,6 @@ namespace NMS_API_N.Model.DTO
         [MaxLength(50, ErrorMessage = "Maximum length 50")]
 
 #nullable disable
-        public string RoleName{ get; set; }
+        public string RoleName { get; set; }
     }
 }

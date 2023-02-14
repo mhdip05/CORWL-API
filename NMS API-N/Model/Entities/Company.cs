@@ -54,8 +54,8 @@ namespace NMS_API_N.Model.Entities
 
         [StringLength(512)]
         public string LogoPath { get; set; }
-        public bool IsActive { get; set; } 
-        public bool IsParentCompany { get; set; } 
+        public bool IsActive { get; set; }
+        public bool IsParentCompany { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(6);
         public int CreatedBy { get; set; }
         public DateTime? LastUpdatedDate { get; set; }

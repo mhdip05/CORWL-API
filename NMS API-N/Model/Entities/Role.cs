@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
 
 namespace NMS_API_N.Model.Entities
 {
@@ -14,7 +13,7 @@ namespace NMS_API_N.Model.Entities
         public int? UpdatedBy { get; set; }
         public int UpdatedCount { get; set; }
         public bool? IsActive { get; set; }
-        public bool? IsDelete { get; set; }    
+        public bool? IsDelete { get; set; }
         public DateTime? DeletedDate { get; set; }
 
     }

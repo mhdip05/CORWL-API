@@ -11,6 +11,7 @@ namespace NMS_API_N.Unit_Of_Work
         IUserRepository UserRepository { get; }
         ICurrencyRepository CurrencyRepository { get; }
         IBankRepository BankRepository { get; }
+        IBranchReposiroty BranchReposiroty { get; }
         Task<bool> Complete();
         bool HasChanges();
     }

@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NMS_API_N.DbContext;
-using NMS_API_N.Model.Entities;
 using NMS_API_N.Extension;
-using NMS_API_N.SeedData;
 using NMS_API_N.Middleware;
+using NMS_API_N.Model.Entities;
+using NMS_API_N.SeedData;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,7 +49,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseCors(policy=> policy.AllowAnyHeader()
+app.UseCors(policy => policy.AllowAnyHeader()
         .AllowAnyMethod()
         .WithOrigins("https://localhost:4201"));
 

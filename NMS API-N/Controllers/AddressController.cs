@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NMS_API_N.Model.DTO;
-using NMS_API_N.Model.Entities;
 using NMS_API_N.Extension;
 using NMS_API_N.Helper;
+using NMS_API_N.Model.DTO;
+using NMS_API_N.Model.Entities;
 using NMS_API_N.Unit_Of_Work;
 
 namespace NMS_API_N.Controllers
@@ -59,7 +59,7 @@ namespace NMS_API_N.Controllers
 
             _uot.AddressRepository.UpdateAddress(data);
 
-            if (await _uot.Complete()) 
+            if (await _uot.Complete())
                 return NoContent();
 
             return BadRequest("Failed to Update Address");

@@ -12,7 +12,7 @@ namespace NMS_API_N.Controllers
     public class UserController : BaseApiController
     {
         private readonly IUnitOfWork _uot;
-        private IMapper _mapper; 
+        private IMapper _mapper;
 
         public UserController(IUnitOfWork uot, IMapper mapper)
         {
@@ -21,7 +21,7 @@ namespace NMS_API_N.Controllers
         }
 
         [HttpGet("GetAllUsers")]
-        public async Task<ActionResult<IEnumerable<UserListDto>>> GetAllUsers([FromQuery]PaginationParams @params)
+        public async Task<ActionResult<IEnumerable<UserListDto>>> GetAllUsers([FromQuery] PaginationParams @params)
         {
             var users = await _uot.UserRepository.GetAllUsersAsync(@params);
 

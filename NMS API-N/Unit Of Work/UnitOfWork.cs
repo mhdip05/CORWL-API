@@ -23,7 +23,7 @@ namespace NMS_API_N.Unit_Of_Work
         public IUserRepository UserRepository => new UserRepository(_context, _mapper);
         public ICurrencyRepository CurrencyRepository => new CurrencyRepository(_context, _mapper);
         public IBankRepository BankRepository => new BankRepository(_context, _mapper);
-
+        public IBranchReposiroty BranchReposiroty => new BranchRepository(_context, _mapper);
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;

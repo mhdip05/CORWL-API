@@ -3,15 +3,15 @@
 namespace NMS_API_N.Model.DTO
 {
     public class RegisterDto : CommonDto
-    {      
+    {
         [Required]
-        [StringLength(50, MinimumLength=2)]
+        [StringLength(50, MinimumLength = 2)]
         public string? UserName { get; set; }
 
         public int EmployeeId { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength=5)]
+        [StringLength(100, MinimumLength = 5)]
         public string? Password { get; set; }
 
         [Required]

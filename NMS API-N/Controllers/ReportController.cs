@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-//using Microsoft.Reporting.NETCore;
-using QuestPDF.Fluent;
-using QuestPDF.Helpers;
-using QuestPDF.Infrastructure;
-using QuestPDF.Previewer;
-using System.Net;
+﻿//using Microsoft.Reporting.NETCore;
 
 namespace NMS_API_N.Controllers
 {

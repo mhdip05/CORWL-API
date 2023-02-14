@@ -1,10 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-using NMS_API_N.Extension;
-using NMS_API_N.Helper;
-using NMS_API_N.Model.Entities;
-using NMS_API_N.CustomValidation;
-using System.Runtime.InteropServices;
+﻿using NMS_API_N.Helper;
+using System.ComponentModel.DataAnnotations;
 
 namespace NMS_API_N.Model.DTO
 {
@@ -13,7 +8,7 @@ namespace NMS_API_N.Model.DTO
 #nullable disable
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Company Name is required")] 
+        [Required(ErrorMessage = "Company Name is required")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Company name's length: min={2} & max={1}")]
         [RegularExpression(@"^[a-zA-Z0-9 '](?:(?![.-]{2,})[a-zA-Z0-9. '&-])*[a-zA-Z0-9 ']$", ErrorMessage = "Please enter valid company name")]
         public string CompanyName { get; set; }
@@ -29,17 +24,17 @@ namespace NMS_API_N.Model.DTO
         public string CountryName { get; set; }
 
         [Required(ErrorMessage = "Address is Required")]
-        [StringLength(300,  MinimumLength =4, ErrorMessage = "Address length: min={2} & max={1}")]
+        [StringLength(300, MinimumLength = 4, ErrorMessage = "Address length: min={2} & max={1}")]
         [RegularExpression(@"^[a-zA-Z0-9# '](?:[a-zA-Z0-9#\-+*/\,:_;()=. '])*[a-zA-Z0-9. ']$", ErrorMessage = "Please enter valid address")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Zip code is required")]
-        [StringLength(6, MinimumLength =3, ErrorMessage = "Zip code's length: min={2} & max={1}")]
+        [StringLength(6, MinimumLength = 3, ErrorMessage = "Zip code's length: min={2} & max={1}")]
         [RegularExpression(@"^[a-zA-Z0-9]*$", ErrorMessage = "Please enter valid zipcode")]
         public string ZipCode { get; set; }
 
         [Required(ErrorMessage = "Mobile No is required")]
-        [StringLength(13, MinimumLength =10, ErrorMessage = "Mobile no's length: min={2} & max={1}")]
+        [StringLength(13, MinimumLength = 10, ErrorMessage = "Mobile no's length: min={2} & max={1}")]
         [RegularExpression(@"^(?:(?![+]{2})[0-9+])*[0-9]$", ErrorMessage = "Invalid Mobile No, e.g. +123456789")]
         public string MobileNo { get; set; }
 

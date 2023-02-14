@@ -2,9 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NMS_API_N.CustomValidation;
 using NMS_API_N.DbContext;
-using NMS_API_N.Extension;
 using NMS_API_N.Helper;
-using NMS_API_N.IServices;
 using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
 using NMS_API_N.Model.IRepository;
@@ -59,13 +57,13 @@ namespace NMS_API_N.Model.Repository
                        Web = com.Web,
                        ZipCode = com.ZipCode,
                        Address = com.Address,
-                       ConversionRate= com.ConversionRate,
+                       ConversionRate = com.ConversionRate,
                        CreatedBy = com.CreatedBy,
                        CreatedDate = com.CreatedDate,
                        UpdatedBy = com.UpdatedBy,
                        LastUpdatedDate = com.LastUpdatedDate ?? null,
-                       LocalCurrencyId =  com.LocalCurrencyId,
-                       LocalCurrencyName =  sublc.CurrencyName,
+                       LocalCurrencyId = com.LocalCurrencyId,
+                       LocalCurrencyName = sublc.CurrencyName,
                        InterNationalCurrencyId = com.InterNationalCurrencyId,
                        InterNationalCurrencyName = subic.CurrencyName,
                        IsActive = com.IsActive,
@@ -102,11 +100,11 @@ namespace NMS_API_N.Model.Repository
         {
             var existCompany = await FindCompanyById(companyDto.Id);
 
-            if (existCompany == null) return new Result { Status = false, Message = ValidationMsg.NoRecordFound()};
+            if (existCompany == null) return new Result { Status = false, Message = ValidationMsg.NoRecordFound() };
 
-            if(existCompany.CompanyName.ToLower() != companyDto.CompanyName.ToLower())
+            if (existCompany.CompanyName.ToLower() != companyDto.CompanyName.ToLower())
             {
-                if(await FindCompanyByName(companyDto.CompanyName.ToLower()) != null)
+                if (await FindCompanyByName(companyDto.CompanyName.ToLower()) != null)
                 {
                     return new Result { Status = false, Message = ValidationMsg.Exist("This company") };
                 }

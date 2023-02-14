@@ -1,7 +1,7 @@
-﻿using NMS_API_N.IServices;
-using MimeKit;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MailKit.Security;
+using MimeKit;
+using NMS_API_N.IServices;
 
 namespace NMS_API_N.Services
 {

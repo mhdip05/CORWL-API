@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using NMS_API_N.CustomValidation;
 using NMS_API_N.DbContext;
+using NMS_API_N.Helper;
+using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
 using NMS_API_N.Model.FetchDTO;
 using NMS_API_N.Model.IRepository;
@@ -53,9 +56,27 @@ namespace NMS_API_N.Model.Repository
                .SingleOrDefaultAsync();
         }
 
-        public void UpdateCountry(Country country)
+
+        public async Task<Result> UpdateCountry(CountryDto countryDto)
         {
-            _context.Attach(country);
+            var existCountry = await GetCountryById(countryDto.Id);
+
+            if (existCountry == null) return new Result { Status = false, Message = ValidationMsg.NoRecordFound() };
+
+            if (existCountry.CountryName.ToLower() != countryDto.CountryName.ToLower())
+            {
+                if (await GetCountryByName(countryDto.CountryName.ToLower()) != null)
+                {
+                    return new Result { Status = false, Message = ValidationMsg.Exist("This country")};
+                }
+            }
+
+            var countryData = _mapper.Map(countryDto, existCountry);
+            countryData.LastUpdatedDate = DateTime.UtcNow.AddHours(DateTimeHelper.GetUtcHour());
+
+            _context.Attach(countryData);
+
+            return new Result { Status = true, Data = countryData };
         }
     }
 }

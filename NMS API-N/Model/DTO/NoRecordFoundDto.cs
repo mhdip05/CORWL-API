@@ -4,7 +4,7 @@
     {
         public NoRecordFoundDto()
         {
-           NoRecordFound = "No Rcord Found";
+            NoRecordFound = "No Rcord Found";
         }
 
         public string NoRecordFound { get; set; }

@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using NMS_API_N.DbContext;
-using NMS_API_N.Extension;
 using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
 using NMS_API_N.Model.FetchDto;
 using NMS_API_N.Model.IRepository;
-using System.Diagnostics.Metrics;
 
 namespace NMS_API_N.Model.Repository
 {

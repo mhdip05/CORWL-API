@@ -1,16 +1,13 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NMS_API_N.DbContext;
 using NMS_API_N.Extension;
 using NMS_API_N.IServices;
 using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
 using NMS_API_N.Model.FetchDTO;
 using NMS_API_N.Unit_Of_Work;
-using System.Linq.Expressions;
 
 namespace NMS_API_N.Controllers
 {
@@ -55,7 +52,7 @@ namespace NMS_API_N.Controllers
         public async Task<ActionResult> ChangeUsername(ChangeUsernameDto changeUsername)
         {
             var username = await GetUserByUserName(changeUsername.Username);
-          
+
             if (username != null) return BadRequest("Someone already taken the username");
 
             var getUser = await _userManager.FindByIdAsync(User.GetUserId());
@@ -78,7 +75,7 @@ namespace NMS_API_N.Controllers
 
             var getUser = await _userManager.FindByIdAsync(User.GetUserId());
 
-            getUser.Email= changeEmail.Email;
+            getUser.Email = changeEmail.Email;
 
             var result = await _userManager.UpdateAsync(getUser);
 

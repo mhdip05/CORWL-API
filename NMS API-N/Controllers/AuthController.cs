@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NMS_API_N.Model.DTO;
-using NMS_API_N.Model.Entities;
 using NMS_API_N.Extension;
 using NMS_API_N.IServices;
+using NMS_API_N.Model.DTO;
+using NMS_API_N.Model.Entities;
 
 
 

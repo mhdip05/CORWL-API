@@ -12,7 +12,7 @@ namespace NMS_API_N.Model.Entities
 
         [Required]
         [StringLength(56)]
-        public string CurrencyName{ get; set; }
+        public string CurrencyName { get; set; }
 
         [StringLength(128)]
         public string Details { get; set; }

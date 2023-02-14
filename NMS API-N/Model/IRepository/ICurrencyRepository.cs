@@ -1,6 +1,5 @@
 ﻿using NMS_API_N.Model.Entities;
 using NMS_API_N.Model.FetchDTO;
-using System.Collections;
 
 namespace NMS_API_N.Model.IRepository
 {

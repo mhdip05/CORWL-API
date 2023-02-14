@@ -11,7 +11,7 @@ namespace NMS_API_N.Extension
         private const string IsUtcAnnotation = "IsUtc";
         public static PropertyBuilder<TProperty> IsUtc<TProperty>(this PropertyBuilder<TProperty> builder, bool isUtc = true) =>
 builder.HasAnnotation(IsUtcAnnotation, isUtc);
-       
+
         private static readonly ValueConverter<DateTime, DateTime> UtcConverter =
           new ValueConverter<DateTime, DateTime>(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 

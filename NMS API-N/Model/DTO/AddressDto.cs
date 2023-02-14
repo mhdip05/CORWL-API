@@ -16,7 +16,7 @@ namespace NMS_API_N.Model.DTO
         public int SourceId { get; set; }
 
         [Required(ErrorMessage = "Please Enter Source Type")]
-        [MinLength(2,ErrorMessage = "Minimum length of source type is 2")]
+        [MinLength(2, ErrorMessage = "Minimum length of source type is 2")]
         public string SourceType { get; set; }
 
         [Required(ErrorMessage = "Pleaser Enter Phone No")]

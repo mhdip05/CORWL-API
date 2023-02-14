@@ -12,7 +12,7 @@ namespace NMS_API_N.Model.Entities
 #nullable disable
         [Required]
         [StringLength(56)]
-        public string SourceType { get; set; } 
+        public string SourceType { get; set; }
 
         [StringLength(56)]
         public string AddressType { get; set; }
@@ -37,7 +37,7 @@ namespace NMS_API_N.Model.Entities
         public string? Email { get; set; }
 
         [StringLength(512)]
-        public string? Web { get; set; }    
+        public string? Web { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public int? UpdatedBy { get; set; }

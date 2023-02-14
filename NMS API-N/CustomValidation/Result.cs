@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace NMS_API_N.CustomValidation
+﻿namespace NMS_API_N.CustomValidation
 {
     public class Result
     {

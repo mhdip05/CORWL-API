@@ -13,7 +13,7 @@ namespace NMS_API_N.Model.Entities
         public string DesignationName { get; set; }
 
         [StringLength(128)]
-        public string Abbreviation  { get; set; }
+        public string Abbreviation { get; set; }
 
         [ForeignKey("DepartmentId")]
         public Department Department { get; set; }

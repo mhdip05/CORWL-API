@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
+using NMS_API_N.CustomValidation;
+using NMS_API_N.Extension;
 using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
-using NMS_API_N.Extension;
 using NMS_API_N.Unit_Of_Work;
 
 namespace NMS_API_N.Controllers
@@ -55,23 +57,15 @@ namespace NMS_API_N.Controllers
         [HttpPut("update-country")]
         public async Task<ActionResult> UpdateCountry(CountryDto countryDto)
         {
-            var countryData = await _uot.CountryRepository.GetCountryById(countryDto.CountryId);
+            countryDto.UpdatedBy = int.Parse(User.GetUserId());
 
-            if (countryData == null) return BadRequest("No Data Found");
+            var res = await _uot.CountryRepository.UpdateCountry(countryDto);
 
-            if (countryData.CountryName == countryDto.CountryName.ToLower()) return BadRequest("Updaing with same name is not allowed");
+            if (res.Status == false) return BadRequest(res.Message);
 
-            var data = _mapper.Map(countryDto, countryData);
+            if (await _uot.Complete()) return Ok(new SuccessMessageDto { Message = "Country updated successfully"});
 
-            data.UpdatedBy = int.Parse(User.GetUserId());
-            data.LastUpdatedDate = DateTime.Now;
-            data.UpdatedCount += 1;
-
-            _uot.CountryRepository.UpdateCountry(data);
-
-            if (await _uot.Complete()) return Ok(data);
-
-            return BadRequest("Failed to update country");
+            return BadRequest(ValidationMsg.SomethingWrong("updating country"));
         }
     }
 }

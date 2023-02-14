@@ -1,9 +1,8 @@
-﻿using NMS_API_N.Model.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace NMS_API_N.Model.DTO
 {
-    public class CityDto 
+    public class CityDto
     {
 #nullable disable
 

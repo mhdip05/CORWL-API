@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NMS_API_N.CustomValidation;
+using NMS_API_N.Extension;
 using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
-using NMS_API_N.Extension;
 using NMS_API_N.Unit_Of_Work;
-using NMS_API_N.Helper;
-using Newtonsoft.Json;
-using NMS_API_N.CustomValidation;
 
 
 namespace NMS_API_N.Controllers
@@ -34,7 +32,7 @@ namespace NMS_API_N.Controllers
         [HttpGet("GetCompanyById/{id}")]
         public async Task<ActionResult> GetCompanyById(int id)
         {
-            var companyData =   await _unitOfWork.CompanyRepository.GetCompayByIdAsync(id);
+            var companyData = await _unitOfWork.CompanyRepository.GetCompayByIdAsync(id);
             if (companyData == null) return BadRequest("No Data Found");
             return Ok(companyData);
         }
@@ -50,20 +48,20 @@ namespace NMS_API_N.Controllers
 
             if (res.Status == false) return BadRequest(res.Message);
 
-            if (await _unitOfWork.Complete()) 
+            if (await _unitOfWork.Complete())
                 return Ok(res.Data);
-                       
+
             return BadRequest(ValidationMsg.SomethingWrong("adding company"));
         }
 
         [HttpPut("update-company")]
         public async Task<ActionResult> UpdateCompany(CompanyDto companyDto)
         {
-            companyDto.UpdatedBy= int.Parse(User.GetUserId());
+            companyDto.UpdatedBy = int.Parse(User.GetUserId());
 
             var res = await _unitOfWork.CompanyRepository.UpdateCompany(companyDto);
 
-            if(res.Status == false) return BadRequest(res.Message);
+            if (res.Status == false) return BadRequest(res.Message);
 
             if (await _unitOfWork.Complete()) return Ok(res.Data);
 
@@ -75,7 +73,7 @@ namespace NMS_API_N.Controllers
         {
             var result = await _unitOfWork.CompanyRepository.DeleteCompany(id);
 
-            if (result.Status == false) return BadRequest(result.Message); 
+            if (result.Status == false) return BadRequest(result.Message);
 
             if (await _unitOfWork.Complete()) return Ok(new SuccessMessageDto { Message = "Company Deleted Successfully." });
 

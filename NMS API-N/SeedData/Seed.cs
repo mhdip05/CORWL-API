@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using NMS_API_N.Model.Entities;
 using NMS_API_N.Extension;
+using NMS_API_N.Model.Entities;
 using NMS_API_N.Unit_Of_Work;
 using System.Text.Json;
-using NMS_API_N.Model.DTO;
 
 namespace NMS_API_N.SeedData
 {
@@ -53,7 +52,7 @@ namespace NMS_API_N.SeedData
                 CompanyName = "neurogen",
                 CompanyCode = "123456",
                 CityId = 1,
-                Address="Dhaka, Bangladesh",
+                Address = "Dhaka, Bangladesh",
                 ZipCode = "12500",
                 MobileNo = "123456789",
                 CreatedBy = 1,
@@ -100,7 +99,7 @@ namespace NMS_API_N.SeedData
                 SourceType = "company",
                 Phone = "+8801791468094",
                 CityId = 1,
-                
+
             };
 
             _uot.AddressRepository.AddAddress(address);

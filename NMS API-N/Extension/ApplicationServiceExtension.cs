@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NMS_API_N.DbContext;
 using NMS_API_N.Helper;
 using NMS_API_N.IServices;

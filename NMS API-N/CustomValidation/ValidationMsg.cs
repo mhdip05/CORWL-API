@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using NMS_API_N.Extension;
-using NMS_API_N.Model.DTO;
+﻿using NMS_API_N.Extension;
 
 namespace NMS_API_N.CustomValidation
 {

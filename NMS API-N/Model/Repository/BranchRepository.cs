@@ -52,7 +52,7 @@ namespace NMS_API_N.Model.Repository
 
             if (existBranch.BranchName.ToLower() != branchDto.BranchName.ToLower())
             {
-                if (await FindBranchByName(branchDto.BranchName.ToLower()) != null)
+                if (await GetBranchByName(branchDto.BranchName.ToLower()) != null)
                 {
                     return new Result { Status = false, Message = ValidationMsg.Exist("This branch") };
                 }

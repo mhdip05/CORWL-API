@@ -1,6 +1,7 @@
 ﻿using NMS_API_N.Model.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using NMS_API_N.Helper;
 
 namespace NMS_API_N.Model.DTO
 {
@@ -15,15 +16,17 @@ namespace NMS_API_N.Model.DTO
         public string BranchName { get; set; }
 
         [Required(ErrorMessage = "Company Code is required")]
-        [RegularExpression(@"^[a-zA-Z0-9 ']+$", ErrorMessage = "Please enter valid Branch code")]
+        [RegularExpression(@"^[a-zA-Z0-9 '-]+$", ErrorMessage = "Please enter valid Branch code")]
         public string BranchCode { get; set; }
 
         // ============== Dropdown Start ===============
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Please select city")]
         public int CityId { get; set; }
-        public int CityName { get; set; }
+        public string CityName { get; set; }
         public int CountryId { get; set; }
-        public int CountryName { get; set; }
+        public string CountryName { get; set; }
+        public int CompanyId { get; set; }
+        public string CompanyName { get; set; }
 
         // ============== Dropdown End  =================
 
@@ -53,6 +56,11 @@ namespace NMS_API_N.Model.DTO
         [Required(ErrorMessage = "Zip code is required")]
         [StringLength(8, MinimumLength = 3, ErrorMessage = "Zip code's length: min={2} & max={1}")]
         [RegularExpression(@"^[a-zA-Z0-9 ']*$", ErrorMessage = "Please enter valid zipcode")]
-        public int ZipCode { get; set; }
+        public string ZipCode { get; set; }
+
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(DateTimeHelper.GetUtcHour());
+        public int? UpdatedBy { get; set; }
+        public DateTime? LastUpdatedDate { get; set;}
     }
 }

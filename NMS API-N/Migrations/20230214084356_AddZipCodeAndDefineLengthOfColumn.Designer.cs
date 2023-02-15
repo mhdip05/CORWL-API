@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NMS_API_N.DbContext;
 
@@ -11,9 +12,10 @@ using NMS_API_N.DbContext;
 namespace NMS_API_N.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230214084356_AddZipCodeAndDefineLengthOfColumn")]
+    partial class AddZipCodeAndDefineLengthOfColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -442,6 +444,7 @@ namespace NMS_API_N.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("LocalCurrencyId")
+                        .HasMaxLength(16)
                         .HasColumnType("int");
 
                     b.Property<string>("LogoPath")
@@ -449,12 +452,12 @@ namespace NMS_API_N.Migrations
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("MobileNo")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PhoneNo")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");

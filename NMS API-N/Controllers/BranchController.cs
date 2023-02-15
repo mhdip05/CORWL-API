@@ -22,7 +22,14 @@ namespace NMS_API_N.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("GetBranchById")]
+        [HttpGet("GetAllBranch")]
+        public async Task<IActionResult> GetAllBranche()
+        {
+            return Ok(await _uot.BranchReposiroty.GetAllBranches());
+        }
+
+
+        [HttpGet("GetBranchById/{id}")]
         public async Task<IActionResult> GetBranchById(int id)
         {
             return Ok(await _uot.BranchReposiroty.GetBranchById(id));
@@ -44,6 +51,20 @@ namespace NMS_API_N.Controllers
                 return Ok(new { Message = "Branch added successfully", res.Data });
 
             return BadRequest(ValidationMsg.SomethingWrong("adding branch"));
+        }
+
+        [HttpPut("UpdateBranch")]
+        public async Task<ActionResult> UpdateBranch(BranchDto branchDto)
+        {
+            branchDto.UpdatedBy= int.Parse(User.GetUserId());
+
+            var res = await _uot.BranchReposiroty.UpdateBranch(branchDto);
+
+            if (res.Status == false) return BadRequest(res.Message);
+
+            if (await _uot.Complete()) return Ok(new { Message="Branch Updated Successfully", res.Data });
+
+            return BadRequest(ValidationMsg.SomethingWrong("updating branch"));
         }
     }
 }

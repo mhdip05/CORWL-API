@@ -20,6 +20,32 @@ namespace NMS_API_N.Model.Repository
             _mapper = mapper;
         }
 #nullable disable
+
+        private IQueryable<BranchDto> FetchAllBrances()
+        {
+            return from br in _context.Branches
+                   join cty in _context.Cities on br.CityId equals cty.Id
+
+                   select new BranchDto
+                   {
+                       Id= br.Id,
+                       BranchName = br.BranchName,
+                       BranchCode= br.BranchCode,
+                       Address= br.Address,
+                       ZipCode = br.ZipCode,
+                       Mobile= br.Mobile,
+                       Email= br.Email,
+                       Phone= br.Phone,
+                       CreatedBy= br.CreatedBy,
+                       CreatedDate= br.CreatedDate,
+                       UpdatedBy= br.UpdatedBy,
+                       LastUpdatedDate= br.LastUpdatedDate,
+                   };
+        }
+        public async Task<IEnumerable<BranchDto>> GetAllBranches()
+        {
+            return await FetchAllBrances().AsNoTracking().ToListAsync();
+        }
         public async Task<Branch> GetBranchByName(string branchName)
         {
             return await _context.Branches

@@ -26,6 +26,8 @@ namespace NMS_API_N.Helper
 
             CreateMap<BankDto, Bank>().ReverseMap();
 
+            CreateMap<BranchDto, Branch>().ReverseMap();
+
             CreateMap<string, string>().ConvertUsing(new StringTrimmerProfile());
             //CreateMap<string, string>().ConvertUsing(new EmptyToNullConverter());
         }

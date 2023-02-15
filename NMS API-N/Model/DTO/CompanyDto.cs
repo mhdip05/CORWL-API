@@ -14,7 +14,7 @@ namespace NMS_API_N.Model.DTO
         public string CompanyName { get; set; }
 
         [Required(ErrorMessage = "Company Code is required")]
-        [RegularExpression(@"^[a-zA-Z0-9 ']+$", ErrorMessage = "Please enter valid company code")]
+        [RegularExpression(@"^[a-zA-Z0-9 '-]+$", ErrorMessage = "Please enter valid company code")]
         public string CompanyCode { get; set; }
 
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Please select city")]

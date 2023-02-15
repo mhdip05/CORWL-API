@@ -23,11 +23,24 @@ namespace NMS_API_N.Model.Entities
         public int? BranchInchargeId { get; set; }
         public int? BranchAttentionPersonId { get; set; }
         public int BranchTypeId { get; set; }
+
+        [StringLength(15)]
         public string Mobile { get; set; }
+
+        [StringLength(15)]
         public string Phone { get; set; }
+
+        [StringLength(256)]
         public string Email { get; set; }
+
+        [StringLength(126)]
         public string Web { get; set; }
+
+        [StringLength(512)]
         public string Address { get; set; }
+
+        [StringLength(10)]
+        public string ZipCode { get; set; }
 
     }
 }

@@ -31,10 +31,10 @@ namespace NMS_API_N.Model.Entities
         [StringLength(10)]
         public string ZipCode { get; set; }
 
-        [StringLength(256)]
+        [StringLength(15)]
         public string MobileNo { get; set; }
 
-        [StringLength(256)]
+        [StringLength(15)]
         public string PhoneNo { get; set; }
 
         [StringLength(256)]
@@ -46,7 +46,6 @@ namespace NMS_API_N.Model.Entities
 
         public int? InterNationalCurrencyId { get; set; }
 
-        [StringLength(16)]
         public int? LocalCurrencyId { get; set; }
 
         [Precision(18, 4)]

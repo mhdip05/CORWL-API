@@ -29,8 +29,8 @@ namespace NMS_API_N.Model.DTO
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Zip code is required")]
-        [StringLength(6, MinimumLength = 3, ErrorMessage = "Zip code's length: min={2} & max={1}")]
-        [RegularExpression(@"^[a-zA-Z0-9]*$", ErrorMessage = "Please enter valid zipcode")]
+        [StringLength(8, MinimumLength = 3, ErrorMessage = "Zip code's length: min={2} & max={1}")]
+        [RegularExpression(@"^[a-zA-Z0-9 ']*$", ErrorMessage = "Please enter valid zipcode")]
         public string ZipCode { get; set; }
 
         [Required(ErrorMessage = "Mobile No is required")]

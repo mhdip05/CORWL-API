@@ -15,7 +15,7 @@ namespace NMS_API_N.Model.DTO
         [RegularExpression(@"^[a-zA-Z0-9 '](?:(?![.-]{2,})[a-zA-Z0-9. '&-])*[a-zA-Z0-9 ']$", ErrorMessage = "Please enter valid branch name")]
         public string BranchName { get; set; }
 
-        [Required(ErrorMessage = "Company Code is required")]
+        [Required(ErrorMessage = "Branch Code is required")]
         [RegularExpression(@"^[a-zA-Z0-9 '-]+$", ErrorMessage = "Please enter valid Branch code")]
         public string BranchCode { get; set; }
 
@@ -25,21 +25,28 @@ namespace NMS_API_N.Model.DTO
         public string CityName { get; set; }
         public int CountryId { get; set; }
         public string CountryName { get; set; }
+
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Please select company")]
         public int CompanyId { get; set; }
         public string CompanyName { get; set; }
 
-        // ============== Dropdown End  =================
+        [Required(ErrorMessage = "Please select branch Type")]
+        public string BranchType { get; set; }
 
         public int? BranchInchargeId { get; set; }
+        public string BranchInchargeName { get; set; }
         public int? BranchAttentionPersonId { get; set; }
-        public int? BranchTypeId { get; set; }
+        public string BranchAttentionPersonName { get; set; }
+
+        // ============== Dropdown End  =================
 
         [Required(ErrorMessage = "Mobile No is required")]
         [StringLength(13, MinimumLength = 10, ErrorMessage = "Mobile no's length: min={2} & max={1}")]
         [RegularExpression(@"^(?:(?![+]{2})[0-9+])*[0-9]$", ErrorMessage = "Invalid Mobile No, e.g. +123456789")]
         public string Mobile { get; set; }
 
-        [RegularExpression(@"^(([^<>()[\]\\.,;:\s@""]+(\.[^<>()[\]\\.,;:\s@""]+)*)|("".+""))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))", ErrorMessage = "Please provide valid email address")]
+        [StringLength(13, MinimumLength = 8, ErrorMessage = "Phone no's length: min={2} & max={1}")]
+        [RegularExpression(@"^(?:(?![+]{2})[0-9+])*[0-9]$", ErrorMessage = "Invalid Phone No, e.g. +123456789")]
         public string Phone { get; set; }
 
         [RegularExpression(@"^(([^<>()[\]\\.,;:\s@""]+(\.[^<>()[\]\\.,;:\s@""]+)*)|("".+""))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))", ErrorMessage = "Please provide valid email address")]
@@ -57,7 +64,7 @@ namespace NMS_API_N.Model.DTO
         [StringLength(8, MinimumLength = 3, ErrorMessage = "Zip code's length: min={2} & max={1}")]
         [RegularExpression(@"^[a-zA-Z0-9 ']*$", ErrorMessage = "Please enter valid zipcode")]
         public string ZipCode { get; set; }
-
+        public bool? IsActive { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(DateTimeHelper.GetUtcHour());
         public int? UpdatedBy { get; set; }

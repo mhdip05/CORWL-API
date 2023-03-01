@@ -12,6 +12,7 @@ namespace NMS_API_N.Model.IRepository
         Task<Company> FindCompanyByName(string companyName);
         Task<Company> FindCompanyById(int id);
         Task<IEnumerable<CompanyDto>> GetAllCompanies();
+        Task<IEnumerable<object>> GetCompanyDropdown();
         Task<Result> DeleteCompany(int id);
     }
 }

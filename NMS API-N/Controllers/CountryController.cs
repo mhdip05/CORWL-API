@@ -28,10 +28,10 @@ namespace NMS_API_N.Controllers
             return Ok(await _uot.CountryRepository.GetAllCountry());
         }
 
-        [HttpGet("GetCountries")]
-        public async Task<IActionResult> GetCountries()
+        [HttpGet("GetCountryDropdown")]
+        public async Task<IActionResult> GetCountryDropdown()
         {
-            return Ok(await _uot.CountryRepository.GetCountries());
+            return Ok(await _uot.CountryRepository.GetCountryDropdown());
         }
 
         [HttpPost("add-country")]

@@ -28,6 +28,11 @@ namespace NMS_API_N.Controllers
         {
             return Ok(await _unitOfWork.CompanyRepository.GetAllCompanies());
         }
+        [HttpGet("GetCompanyDropdown")]
+        public async Task<IActionResult> GetCompanyDropdown()
+        {
+            return Ok(await _unitOfWork.CompanyRepository.GetCompanyDropdown());
+        }
 
         [HttpGet("GetCompanyById/{id}")]
         public async Task<ActionResult> GetCompanyById(int id)

@@ -5,10 +5,9 @@ namespace NMS_API_N.Model.Entities
 {
     public class Employee : CommonFieldWithCompany
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int EmployeeId { get; set; }
-
 #nullable disable
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(256)]
@@ -27,12 +26,6 @@ namespace NMS_API_N.Model.Entities
 
         [StringLength(10)]
         public string MartialStatus { get; set; }
-
-        [StringLength(128)]
-        public int IdType { get; set; }
-
-        [StringLength(128)]
-        public int IdNo { get; set; }
 
         [StringLength(56)]
         public string Status { get; set; }

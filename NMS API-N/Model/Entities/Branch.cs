@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace NMS_API_N.Model.Entities
 {
@@ -23,6 +24,9 @@ namespace NMS_API_N.Model.Entities
         public int? BranchInchargeId { get; set; }
         public int? BranchAttentionPersonId { get; set; }
         public int BranchTypeId { get; set; }
+
+        [StringLength(30)]
+        public string BranchType { get; set; }
 
         [StringLength(15)]
         public string Mobile { get; set; }

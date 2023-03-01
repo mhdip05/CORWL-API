@@ -12,6 +12,6 @@ namespace NMS_API_N.Model.IRepository
         Task<Country> GetCountryByName(string name);
         Task<Result> UpdateCountry(CountryDto countryDto);
         Task<IEnumerable<Country>> GetAllCountry();
-        Task<IEnumerable<GetCountriesDto>> GetCountries();
+        Task<IEnumerable<object>> GetCountryDropdown();
     }
 }

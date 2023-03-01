@@ -23,4 +23,8 @@
 		<PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Enum\" />
+	</ItemGroup>
+
 </Project>

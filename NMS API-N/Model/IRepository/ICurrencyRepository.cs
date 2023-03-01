@@ -7,7 +7,7 @@ namespace NMS_API_N.Model.IRepository
     {
         void AddCurrency(Currency currency);
         Task<IEnumerable<Currency>> GetAllCurrency();
-        Task<IEnumerable<GetCurrenciesDto>> GetCurrencies();
+        Task<IEnumerable<object>> GetCurrencyDropdown();
         void UpdateCurrency(Currency currency);
         Task<Currency> GetCurrencyByName(string currencyName);
         Task<Currency> GetCurrencyById(int id);

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using NMS_API_N.DbContext;
 using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
-using NMS_API_N.Model.FetchDto;
 using NMS_API_N.Model.IRepository;
 
 namespace NMS_API_N.Model.Repository
@@ -43,11 +42,11 @@ namespace NMS_API_N.Model.Repository
 
         }
 
-        public async Task<IQueryable<GetCityByCountryDto>> GetCityByCountry(int countryId)
+        public async Task<IQueryable<object>> GetCityByCountry(int countryId)
         {
             var data = await (from city in _context.Cities.Where(e => e.CountryId == countryId)
                               orderby city.CityName
-                              select new GetCityByCountryDto
+                              select new 
                               {
                                   CityId = city.Id,
                                   CityName = city.CityName.ToUpper(),

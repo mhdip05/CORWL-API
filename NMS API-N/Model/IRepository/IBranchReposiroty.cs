@@ -8,7 +8,7 @@ namespace NMS_API_N.Model.IRepository
     {
         Task<Result> AddBranch(Branch branch);
         Task<Branch> GetBranchByName(string branchName);
-        Task<Branch> GetBranchById(int id);
+        Task<BranchDto> GetBranchById(int id);
         Task<Result> UpdateBranch(BranchDto branchDto);
         Task<IEnumerable<BranchDto>> GetAllBranches();
     }

@@ -5,6 +5,7 @@ using NMS_API_N.DbContext;
 using NMS_API_N.Helper;
 using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
+using NMS_API_N.Model.FetchDTO;
 using NMS_API_N.Model.IRepository;
 
 namespace NMS_API_N.Model.Repository
@@ -75,6 +76,15 @@ namespace NMS_API_N.Model.Repository
         public async Task<IEnumerable<CompanyDto>> GetAllCompanies()
         {
             return await FetchAllComnpay().AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IEnumerable<object>> GetCompanyDropdown()
+        {
+            return await _context.Companies
+                .Select(cm => new { companyId = cm.Id, companyName = cm.CompanyName })
+                .AsNoTracking()
+                .ToListAsync();
+
         }
 #nullable disable
         public async Task<Company> FindCompanyByName(string companyName)

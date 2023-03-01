@@ -25,21 +25,44 @@ namespace NMS_API_N.Model.Repository
         {
             return from br in _context.Branches
                    join cty in _context.Cities on br.CityId equals cty.Id
+                   join con in _context.Countries on cty.CountryId equals con.Id
+                   join com in _context.Companies on br.CompanyId equals com.Id
+
+                   join brap in _context.Employees on br.BranchAttentionPersonId equals brap.Id
+                   into sbrap
+                   from subbrap in sbrap.DefaultIfEmpty()
+
+                   join brai in _context.Employees on br.BranchInchargeId equals brai.Id
+                   into sbrai
+                   from subbrai in sbrai.DefaultIfEmpty()
 
                    select new BranchDto
                    {
-                       Id= br.Id,
+                       Id = br.Id,
                        BranchName = br.BranchName,
-                       BranchCode= br.BranchCode,
-                       Address= br.Address,
+                       BranchCode = br.BranchCode,
+                       CityId = cty.Id,
+                       CityName = cty.CityName,
+                       CountryId = con.Id,
+                       CountryName = con.CountryName,
+                       BranchAttentionPersonId = subbrap.Id,
+                       BranchAttentionPersonName = string.IsNullOrWhiteSpace(subbrap.FirstName + " " + subbrap.LastName) ? null : subbrap.FirstName + " " + subbrap.LastName,
+                       BranchInchargeId = subbrai.Id,
+                       BranchInchargeName = string.IsNullOrWhiteSpace(subbrai.FirstName + " " + subbrai.LastName) ? null : subbrai.FirstName + " " + subbrai.LastName,
+                       CompanyId = com.Id,
+                       CompanyName = com.CompanyName,
+                       BranchType = br.BranchType,
+                       Address = br.Address,
                        ZipCode = br.ZipCode,
-                       Mobile= br.Mobile,
-                       Email= br.Email,
-                       Phone= br.Phone,
-                       CreatedBy= br.CreatedBy,
-                       CreatedDate= br.CreatedDate,
-                       UpdatedBy= br.UpdatedBy,
-                       LastUpdatedDate= br.LastUpdatedDate,
+                       Mobile = br.Mobile,
+                       Email = br.Email,
+                       Phone = br.Phone,
+                       Web = br.Web,
+                       CreatedBy = br.CreatedBy,
+                       CreatedDate = br.CreatedDate,
+                       UpdatedBy = br.UpdatedBy,
+                       LastUpdatedDate = br.LastUpdatedDate,
+                       IsActive = br.IsActive,
                    };
         }
         public async Task<IEnumerable<BranchDto>> GetAllBranches()
@@ -55,7 +78,12 @@ namespace NMS_API_N.Model.Repository
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<Branch> GetBranchById(int id)
+        public async Task<BranchDto> GetBranchById(int id)
+        {
+            return await FetchAllBrances().Where(e => e.Id == id).AsNoTracking().FirstAsync();
+        }
+
+        public async Task<Branch> FindBranchById(int id)
         {
             return await _context.Branches.FindAsync(id);
         }
@@ -72,7 +100,7 @@ namespace NMS_API_N.Model.Repository
 
         public async Task<Result> UpdateBranch(BranchDto branchDto)
         {
-            var existBranch = await GetBranchById(branchDto.Id);
+            var existBranch = await FindBranchById(branchDto.Id);
 
             if (existBranch == null) return new Result { Status = false, Message = ValidationMsg.NoRecordFound() };
 

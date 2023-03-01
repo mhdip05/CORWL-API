@@ -30,10 +30,10 @@ namespace NMS_API_N.Model.Repository
             return await _context.Countries.OrderBy(x => x.CountryName).AsNoTracking().ToListAsync();
         }
 
-        public async Task<IEnumerable<GetCountriesDto>> GetCountries()
+        public async Task<IEnumerable<object>> GetCountryDropdown()
         {
             return await _context.Countries
-                .Select(x => new GetCountriesDto
+                .Select(x => new 
                 {
                     CountryId = x.Id,
                     CountryName = x.CountryName.ToUpper(),

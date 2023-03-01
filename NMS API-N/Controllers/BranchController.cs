@@ -37,7 +37,7 @@ namespace NMS_API_N.Controllers
         }
 
         [HttpPost("AddBranch")]
-        public async Task<ActionResult> AddCompany(BranchDto branchDto)
+        public async Task<ActionResult> AddBranch(BranchDto branchDto)
         {
             var branchData = _mapper.Map<Branch>(branchDto);
 

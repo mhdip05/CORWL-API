@@ -36,10 +36,10 @@ namespace NMS_API_N.Controllers
             return Ok(await _uot.CurrencyRepository.GetAllCurrency());
         }
 
-        [HttpGet("GetCurrencies")]
-        public async Task<ActionResult> GetCurrencies()
+        [HttpGet("GetCurrencyDropdown")]
+        public async Task<ActionResult> GetCurrencyDropdown()
         {
-            return Ok(await _uot.CurrencyRepository.GetCurrencies());
+            return Ok(await _uot.CurrencyRepository.GetCurrencyDropdown());
         }
 
         [HttpGet("GetCurrencyById/{id}")]

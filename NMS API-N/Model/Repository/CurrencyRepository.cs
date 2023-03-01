@@ -40,11 +40,11 @@ namespace NMS_API_N.Model.Repository
             return await _context.Currencies.OrderBy(e => e.CurrencyName).AsNoTracking().ToListAsync();
         }
 
-        public async Task<IEnumerable<GetCurrenciesDto>> GetCurrencies()
+        public async Task<IEnumerable<object>> GetCurrencyDropdown()
         {
             return await _context.Currencies
                 .OrderBy(e => e.CurrencyName)
-                .Select(e => new GetCurrenciesDto
+                .Select(e => new 
                 {
                     CurrencyId = e.Id,
                     CurrencyName = e.CurrencyName,

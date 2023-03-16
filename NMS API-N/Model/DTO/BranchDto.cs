@@ -11,7 +11,7 @@ namespace NMS_API_N.Model.DTO
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Branch Name is required")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "Company name's length: min={2} & max={1}")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "branche's length: min={2} & max={1}")]
         [RegularExpression(@"^[a-zA-Z0-9 '](?:(?![.-]{2,})[a-zA-Z0-9. '&-])*[a-zA-Z0-9 ']$", ErrorMessage = "Please enter valid branch name")]
         public string BranchName { get; set; }
 

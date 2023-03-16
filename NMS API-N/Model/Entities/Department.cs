@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NMS_API_N.Model.Entities
 {
-    public class Department : CommonFieldWithCompany
+    public class Department : CommonField
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -16,10 +16,13 @@ namespace NMS_API_N.Model.Entities
         [StringLength(128)]
         public string Abbreviation { get; set; }
 
-        [ForeignKey("CityId")]
-        public City City { get; set; }
-        public int CityId { get; set; }
+        [StringLength(128)]
+        public string DepartmentCode { get; set; }
 
+        [StringLength(128)]
+        public string DepartmentAddress { get; set; }
+
+        public int DepartmentHeadId { get; set; }
 
     }
 }

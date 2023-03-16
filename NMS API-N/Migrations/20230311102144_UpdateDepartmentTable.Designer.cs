@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NMS_API_N.DbContext;
 
@@ -11,9 +12,10 @@ using NMS_API_N.DbContext;
 namespace NMS_API_N.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230311102144_UpdateDepartmentTable")]
+    partial class UpdateDepartmentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -607,6 +609,9 @@ namespace NMS_API_N.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
@@ -619,16 +624,15 @@ namespace NMS_API_N.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DepartmentAddress")
+                    b.Property<int>("DepartmentAddress")
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("int");
 
-                    b.Property<string>("DepartmentCode")
-                        .IsRequired()
+                    b.Property<int>("DepartmentCode")
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("int");
 
-                    b.Property<int>("DepartmentHeadId")
+                    b.Property<int>("DepartmentHead")
                         .HasColumnType("int");
 
                     b.Property<string>("DepartmentName")
@@ -656,6 +660,8 @@ namespace NMS_API_N.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("Departments");
                 });
@@ -1090,6 +1096,17 @@ namespace NMS_API_N.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
+                });
+
+            modelBuilder.Entity("NMS_API_N.Model.Entities.Department", b =>
+                {
+                    b.HasOne("NMS_API_N.Model.Entities.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("NMS_API_N.Model.Entities.Designation", b =>

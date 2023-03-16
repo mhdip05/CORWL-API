@@ -25,6 +25,8 @@ namespace NMS_API_N.Unit_Of_Work
         public IBankRepository BankRepository => new BankRepository(_context, _mapper);
         public IBranchReposiroty BranchReposiroty => new BranchRepository(_context, _mapper);
         public IEmployeeRepository EmployeeRepository => new EmployeeRepository(_context, _mapper);
+        public IDepartmentRepository DepartmentRepository => new DepartmentRepository(_context, _mapper);
+        public IDesignationRepository DesignationRepository => new DesignationRepository(_context, _mapper);
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;

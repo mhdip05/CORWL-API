@@ -11,5 +11,6 @@ namespace NMS_API_N.Model.IRepository
         Task<DepartmentDto> GetDepartmentById(int id);
         Task<Result> UpdateDepartment(DepartmentDto departmentDto);
         Task<IEnumerable<DepartmentDto>> GetAllDepartment();
+        Task<IEnumerable<object>> GetDepartmentDropdown();
     }
 }

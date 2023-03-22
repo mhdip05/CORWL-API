@@ -19,6 +19,9 @@ namespace NMS_API_N.Controllers
             _uot = uot;
             _mapper = mapper;
         }
+        
+     
+
         [HttpGet("GetAllDesignation")]
 
         public async Task<IActionResult> GetAllDesignation()

@@ -24,24 +24,35 @@ namespace NMS_API_N.Model.Repository
         {
             return from dp in _context.Departments
                    join em in _context.Employees on dp.DepartmentHeadId equals em.Id
+                   into sem
+                   from subSem in sem.DefaultIfEmpty()
                    join usr in _context.Users on dp.CreatedBy equals usr.Id
 
                    select new DepartmentDto
                    {
                        Id = dp.Id,
                        DepartmentName = dp.DepartmentName,
-                       Abbreviation= dp.Abbreviation,
+                       Abbreviation = dp.Abbreviation,
                        DepartmentCode = dp.DepartmentCode,
                        DepartmentAddress = dp.DepartmentAddress,
                        DepartmentHeadId = dp.DepartmentHeadId,
-                       DepartmentHeadName = string.IsNullOrWhiteSpace(em.FirstName + " " + em.LastName) ? null : em.FirstName + " " + em.LastName,
+                       DepartmentHeadName = string.IsNullOrWhiteSpace(subSem.FirstName + " " + subSem.LastName) ? null : subSem.FirstName + " " + subSem.LastName,
                        CreatedByName = usr.UserName,
+                       CreatedBy = usr.Id
                    };
         }
 
         public async Task<IEnumerable<DepartmentDto>> GetAllDepartment()
         {
             return await FetchAllDepartment().AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IEnumerable<object>> GetDepartmentDropdown()
+        {
+            return await _context.Departments
+               .Select(x => new { DepartmentId = x.Id,  x.DepartmentName })
+               .AsNoTracking()
+               .ToListAsync();
         }
 
         public async Task<DepartmentDto> GetDepartmentById(int id)
@@ -81,7 +92,7 @@ namespace NMS_API_N.Model.Repository
 
             if (existDepartment.DepartmentName.ToLower() != departmentDto.DepartmentName.ToLower())
             {
-                if(await GetDepartmentByName(departmentDto.DepartmentName.ToLower()) != null)
+                if (await GetDepartmentByName(departmentDto.DepartmentName.ToLower()) != null)
                 {
                     return new Result { Status = false, Message = ValidationMsg.Exist("This department") };
                 }

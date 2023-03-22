@@ -7,7 +7,6 @@ namespace NMS_API_N.Model.Entities
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
 #nullable disable
         [Required]
         [StringLength(128)]
@@ -16,7 +15,7 @@ namespace NMS_API_N.Model.Entities
         [StringLength(128)]
         public string Abbreviation { get; set; }
 
-        [StringLength(128)]
+        [StringLength(28)]
         public string DepartmentCode { get; set; }
 
         [StringLength(128)]

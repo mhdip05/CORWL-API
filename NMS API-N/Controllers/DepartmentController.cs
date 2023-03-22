@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NMS_API_N.CustomValidation;
@@ -26,6 +27,12 @@ namespace NMS_API_N.Controllers
         public async Task<IActionResult> GetAllDepartment()
         {
             return Ok(await _uot.DepartmentRepository.GetAllDepartment());
+        }
+
+        [HttpGet("GetDepartmentDropdown")]
+        public async Task<IActionResult> GetDepartmentDropdown()
+        {
+            return Ok(await _uot.DepartmentRepository.GetDepartmentDropdown());
         }
 
         [HttpGet("GetDepartmentById/{id}")]

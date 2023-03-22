@@ -31,7 +31,9 @@ namespace NMS_API_N.Model.Repository
                        Id= ds.Id,
                        DesignationName=ds.DesignationName,
                        Abbreviation=ds.Abbreviation,
+                       DepartmentId = ds.DepartmentId,
                        DepartmentName = dp.DepartmentName,
+                       CreatedBy = usr.Id,
                        CreatedByName = usr.UserName,
                    };
         }

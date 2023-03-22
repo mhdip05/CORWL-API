@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NMS_API_N.DbContext;
 
@@ -11,9 +12,10 @@ using NMS_API_N.DbContext;
 namespace NMS_API_N.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230317092651_RemoveDepartmentCode")]
+    partial class RemoveDepartmentCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -622,10 +624,6 @@ namespace NMS_API_N.Migrations
                     b.Property<string>("DepartmentAddress")
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("DepartmentCode")
-                        .HasMaxLength(28)
-                        .HasColumnType("nvarchar(28)");
 
                     b.Property<int>("DepartmentHeadId")
                         .HasColumnType("int");

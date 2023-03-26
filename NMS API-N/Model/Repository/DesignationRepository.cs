@@ -35,6 +35,8 @@ namespace NMS_API_N.Model.Repository
                        DepartmentName = dp.DepartmentName,
                        CreatedBy = usr.Id,
                        CreatedByName = usr.UserName,
+                       CreatedDate = ds.CreatedDate,
+                       LastUpdatedDate= ds.LastUpdatedDate,
                    };
         }
 

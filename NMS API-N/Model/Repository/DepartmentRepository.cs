@@ -22,7 +22,7 @@ namespace NMS_API_N.Model.Repository
 
         private IQueryable<DepartmentDto> FetchAllDepartment()
         {
-            return from dp in _context.Departments
+            return (from dp in _context.Departments
                    join em in _context.Employees on dp.DepartmentHeadId equals em.Id
                    into sem
                    from subSem in sem.DefaultIfEmpty()
@@ -38,8 +38,10 @@ namespace NMS_API_N.Model.Repository
                        DepartmentHeadId = dp.DepartmentHeadId,
                        DepartmentHeadName = string.IsNullOrWhiteSpace(subSem.FirstName + " " + subSem.LastName) ? null : subSem.FirstName + " " + subSem.LastName,
                        CreatedByName = usr.UserName,
-                       CreatedBy = usr.Id
-                   };
+                       CreatedBy = usr.Id,
+                       CreatedDate = dp.CreatedDate,
+                       LastUpdatedDate = dp.LastUpdatedDate,
+                   }).OrderByDescending(x=>x.Id);
         }
 
         public async Task<IEnumerable<DepartmentDto>> GetAllDepartment()

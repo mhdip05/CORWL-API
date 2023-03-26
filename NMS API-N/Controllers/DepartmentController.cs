@@ -53,8 +53,8 @@ namespace NMS_API_N.Controllers
             if (res.Status == false) return BadRequest(res.Message);
 
             if (await _uot.Complete())
-                return Ok(new { Message = "Department added successfully", res.Data });
-
+                return Ok(new { Message = "Department added successfully", res.Data,  });
+              
             return BadRequest(ValidationMsg.SomethingWrong("adding Department"));
         }
 

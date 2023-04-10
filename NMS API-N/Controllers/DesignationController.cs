@@ -32,7 +32,13 @@ namespace NMS_API_N.Controllers
         [HttpGet("GetDesignationById/{id}")]
         public async Task<IActionResult> GetDesignationById(int id)
         {
-            return Ok(await _uot.DesignationRepository.GetDesignationById(id));
+            return Ok(await _uot.DesignationRepository.GetDesignationById(id)); 
+        }
+
+        [HttpGet("GetDesignationDropdown")]
+        public async Task<IActionResult> GetDesignationDropdown()
+        {
+            return Ok(await _uot.DesignationRepository.GetDesignationDropdown());
         }
 
         [HttpPost("AddDesignation")]

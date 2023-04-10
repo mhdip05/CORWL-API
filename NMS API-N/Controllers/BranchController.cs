@@ -36,6 +36,13 @@ namespace NMS_API_N.Controllers
 
         }
 
+        [HttpGet("GetBranchDropdown")]
+        public async Task<IActionResult> GetBranchDropdown()
+        {
+            return Ok(await _uot.BranchReposiroty.GetBranchDropdown());
+
+        }
+
         [HttpPost("AddBranch")]
         public async Task<ActionResult> AddBranch(BranchDto branchDto)
         {

@@ -23,7 +23,6 @@ namespace NMS_API_N.Controllers
         }
 
         [HttpGet("GetAllDepartment")]
-
         public async Task<IActionResult> GetAllDepartment()
         {
             return Ok(await _uot.DepartmentRepository.GetAllDepartment());

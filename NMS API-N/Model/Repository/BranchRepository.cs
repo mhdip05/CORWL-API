@@ -42,9 +42,9 @@ namespace NMS_API_N.Model.Repository
                        BranchName = br.BranchName,
                        BranchCode = br.BranchCode,
                        CityId = cty.Id,
-                       CityName = cty.CityName,
+                       CityName = cty.CityName.ToUpper(),
                        CountryId = con.Id,
-                       CountryName = con.CountryName,
+                       CountryName = con.CountryName.ToUpper(),
                        BranchAttentionPersonId = subbrap.Id,
                        BranchAttentionPersonName = string.IsNullOrWhiteSpace(subbrap.FirstName + " " + subbrap.LastName) ? null : subbrap.FirstName + " " + subbrap.LastName,
                        BranchInchargeId = subbrai.Id,
@@ -76,6 +76,14 @@ namespace NMS_API_N.Model.Repository
                 .Select(x => new Branch { Id = x.Id, BranchName = x.BranchName })
                 .AsNoTracking()
                 .SingleOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<object>> GetBranchDropdown()
+        {
+            return await _context.Branches
+              .Select(x => new { BranchId = x.Id, x.BranchName })
+              .AsNoTracking()
+              .ToListAsync();
         }
 
         public async Task<BranchDto> GetBranchById(int id)

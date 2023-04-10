@@ -9,6 +9,7 @@ namespace NMS_API_N.Model.IRepository
         Task<Result> AddDesignation(Designation designation);
         Task<Designation> GetDesignationByName(string designationName);
         Task<DesignationDto> GetDesignationById(int id);
+        Task<IEnumerable<object>> GetDesignationDropdown();
         Task<Result> UpdateDesignation(DesignationDto designationDto);
         Task<IEnumerable<DesignationDto>> GetAllDesignation();
     }

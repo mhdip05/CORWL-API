@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NMS_API_N.DbContext;
+using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.IRepository;
 
 namespace NMS_API_N.Model.Repository
@@ -22,6 +23,11 @@ namespace NMS_API_N.Model.Repository
                 .Select(emp => new { employeeId = emp.Id, employeeName = emp.FirstName + " " + emp.LastName })
                 .AsNoTracking()
                 .ToListAsync();
+        }
+
+        public void SaveDocumentInfo(EmployeeDocumentDto employeeDocument)
+        {
+
         }
     }
 }

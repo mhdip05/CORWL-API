@@ -42,6 +42,9 @@ namespace NMS_API_N.DbContext
         public DbSet<Bank> Banks { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeDocumentInfo> EmployeeDocumentInfos { get; set; }
+        public DbSet<EmployeeDocument> EmployeeDocuments { get; set; }
+
 
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using NMS_API_N.DbContext;
 using NMS_API_N.Extension;
 using NMS_API_N.Middleware;
@@ -56,6 +57,8 @@ app.UseCors(policy => policy.AllowAnyHeader()
 app.UseAuthentication();
 app.UseAuthorization();
 
+
 app.MapControllers();
 
 app.Run();
+

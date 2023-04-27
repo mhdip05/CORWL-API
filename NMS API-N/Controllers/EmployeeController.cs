@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using NMS_API_N.CustomValidation;
 using NMS_API_N.DbContext;
 using NMS_API_N.Extension;
 using NMS_API_N.IServices;
@@ -13,46 +14,51 @@ namespace NMS_API_N.Controllers
     {
         private readonly IUnitOfWork _uot;
         private readonly IMapper _mapper;
-        private readonly IFileServices _fileService;
-        private IWebHostEnvironment _environment;
 
         public EmployeeController(IUnitOfWork uot, IMapper mapper)
         {
             _uot = uot;
             _mapper = mapper;
-            _fileService = (IFileServices)ApplicationServiceExtension.serviceProvider.GetRequiredService(typeof(IFileServices));
-            _environment = (IWebHostEnvironment)ApplicationServiceExtension.serviceProvider.GetRequiredService(typeof(IWebHostEnvironment));
+            
         }
 
         [HttpGet("GetEmployeeDropdown")]
-
         public async Task<IActionResult> GetEmployeeDropdown()
         {
             return Ok(await _uot.EmployeeRepository.GetEmployeeDropdown());
         }
 
-        [HttpPost("SaveDocumentInfo")]
-        public async Task<ActionResult> SaveDocumentInfo([FromForm] EmployeeDocumentDto employeeDocument)
+        [HttpPost("SaveEmployeeBasicInfo")]
+        public async Task<IActionResult> SaveEmployeeBasicInfo(EmployeeBasicInfoDto employeeBasicInfoDto)
         {
-            List<EmployeeDocument> empDoc = new List<EmployeeDocument>();
+            var employeeData = _mapper.Map<Employee>(employeeBasicInfoDto);
 
+            employeeData.CreatedBy = int.Parse(User.GetUserId());
 
-            var files = await _fileService.CopyFileToServer(employeeDocument.Files, "mhdip");
+            var res = await _uot.EmployeeRepository.SaveEmployeeBasicInfo(employeeData);
 
-            foreach (var file in files)
+            if(res.Status == false) return BadRequest(res.Message);
+
+            if (await _uot.Complete())
+                return Ok(new { Message = "Employee data saved successfully", res.Data });
+
+            return BadRequest(ValidationMsg.SomethingWrong("adding employee basic info"));
+        }
+
+        [HttpPost("SaveDocument")]
+        public async Task<ActionResult> SaveDocument([FromForm] EmployeeDocumentDto employeeDocumentDto)
+        {
+            var docInfo = _mapper.Map<EmployeeDocumentMaster>(employeeDocumentDto);
+            docInfo.CreatedBy = int.Parse(User.GetUserId());
+
+            var res = await _uot.EmployeeRepository.SaveDocument(docInfo, employeeDocumentDto.Files);
+
+            if (await _uot.Complete())
             {
-                // save to data base
-                empDoc.Add(new EmployeeDocument
-                {
-                    FileName = file.FileName,
-                    ContentType = file.ContentType,
-                    FilePath = file.FilePath,
-                    FileSize= file.FileSize,
-                    fileExtension = file.fileExtension
-                });
+                return Ok(res);
             }
 
-            return Ok(new { employeeDocument, empDoc});
+            return Ok(new { res.Status });
         }
     }
 }

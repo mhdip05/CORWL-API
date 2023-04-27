@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NMS_API_N.Extension;
 using NMS_API_N.Model.Entities;
 
@@ -19,13 +22,12 @@ namespace NMS_API_N.DbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Only For Development Purpose
-            var cascadeFKs = modelBuilder.Model.GetEntityTypes()
-                .SelectMany(t => t.GetForeignKeys())
-                .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+            //var cascadeFKs = modelBuilder.Model.GetEntityTypes()
+            //    .SelectMany(t => t.GetForeignKeys())
+            //    .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
 
-            foreach (var fk in cascadeFKs)
-                fk.DeleteBehavior = DeleteBehavior.NoAction;
+            //foreach (var fk in cascadeFKs)
+            //    fk.DeleteBehavior = DeleteBehavior.NoAction;
 
             base.OnModelCreating(modelBuilder);
 
@@ -42,9 +44,51 @@ namespace NMS_API_N.DbContext
         public DbSet<Bank> Banks { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<EmployeeDocumentInfo> EmployeeDocumentInfos { get; set; }
-        public DbSet<EmployeeDocument> EmployeeDocuments { get; set; }
+        public DbSet<EmployeeDocumentMaster> EmployeeDocumentMaster { get; set; }
+        public DbSet<EmployeeDocumentDetails> EmployeeDocumentDetails { get; set; }
 
+    }
 
+    public static class UtcDateAnnotation
+    {
+        private const String IsUtcAnnotation = "IsUtc";
+        private static readonly ValueConverter<DateTime, DateTime> UtcConverter =
+          new ValueConverter<DateTime, DateTime>(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+        private static readonly ValueConverter<DateTime?, DateTime?> UtcNullableConverter =
+          new ValueConverter<DateTime?, DateTime?>(v => v, v => v == null ? v : DateTime.SpecifyKind(v.Value, DateTimeKind.Utc));
+
+        public static PropertyBuilder<TProperty> IsUtc<TProperty>(this PropertyBuilder<TProperty> builder, Boolean isUtc = true) =>
+          builder.HasAnnotation(IsUtcAnnotation, isUtc);
+
+        public static Boolean IsUtc(this IMutableProperty property) =>
+          ((Boolean?)property.FindAnnotation(IsUtcAnnotation)?.Value) ?? true;
+
+        /// <summary>
+        /// Make sure this is called after configuring all your entities.
+        /// </summary>
+        public static void ApplyUtcDateTimeConverter(this ModelBuilder builder)
+        {
+            foreach (var entityType in builder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (!property.IsUtc())
+                    {
+                        continue;
+                    }
+
+                    if (property.ClrType == typeof(DateTime))
+                    {
+                        property.SetValueConverter(UtcConverter);
+                    }
+
+                    if (property.ClrType == typeof(DateTime?))
+                    {
+                        property.SetValueConverter(UtcNullableConverter);
+                    }
+                }
+            }
+        }
     }
 }

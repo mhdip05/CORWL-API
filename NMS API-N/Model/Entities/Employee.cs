@@ -25,11 +25,18 @@ namespace NMS_API_N.Model.Entities
         public string BloodGroup { get; set; }
 
         [StringLength(10)]
-        public string MartialStatus { get; set; }
+        public string MaritalStatus { get; set; }
 
         [StringLength(56)]
         public string Status { get; set; }
 
+        [Required]
+        [StringLength(56)]
+        public string IdType { get; set; }
+
+        [Required]
+        [StringLength(512)]
+        public string IdNo { get; set; }
 
     }
 }

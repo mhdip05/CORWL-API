@@ -23,7 +23,7 @@ namespace NMS_API_N.Extension
             {
                 var conStr = config.GetConnectionString("DefaultConnection");
 
-                options.UseSqlServer(conStr);
+                options.UseNpgsql(conStr);
             });
 
             serviceProvider = services.BuildServiceProvider();

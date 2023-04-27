@@ -4,22 +4,22 @@
 
 namespace NMS_API_N.Migrations
 {
-    public partial class ChangeDepartmentHeadToDepartmentId : Migration
+    public partial class SpeelCorrectMaritalStatus : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "DepartmentHead",
-                table: "Departments",
-                newName: "DepartmentHeadId");
+                name: "MartialStatus",
+                table: "Employees",
+                newName: "MaritalStatus");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "DepartmentHeadId",
-                table: "Departments",
-                newName: "DepartmentHead");
+                name: "MaritalStatus",
+                table: "Employees",
+                newName: "MartialStatus");
         }
     }
 }

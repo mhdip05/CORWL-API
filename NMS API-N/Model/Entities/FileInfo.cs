@@ -20,6 +20,10 @@ namespace NMS_API_N.Model.Entities
         public decimal FileSize { get; set; }
 
         [Required]
+        [StringLength(8)]
+        public string fileExtension { get; set; }
+
+        [Required]
         [Precision(18, 4)]
         public string FileUnit { get; set; }
 
@@ -27,13 +31,13 @@ namespace NMS_API_N.Model.Entities
         [StringLength(521)]
         public string FilePath { get; set; }
 
-        [NotMapped]
+        [Required]
+        [StringLength(16)]
         public string ContentType { get; set; }
 
         [NotMapped]
         public byte[] Content { get; set; }
 
-        [NotMapped]
-        public string fileExtension { get; set; }
+
     }
 }

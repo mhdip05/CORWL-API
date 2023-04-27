@@ -19,8 +19,8 @@ namespace NMS_API_N.Model.DTO
         //[Required]
         public List<IFormFile> Files { get; set; }
 
-        public string ContentType { get; set; }
-        public byte[] Content { get; set; }
+        //public string ContentType { get; set; }
+        //public byte[] Content { get; set; }
 
     }
 }

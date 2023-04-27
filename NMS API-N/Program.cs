@@ -19,6 +19,8 @@ builder.Services.AddCors();
 
 var app = builder.Build();
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 // For seeding data 
 var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

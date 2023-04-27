@@ -44,6 +44,7 @@ namespace NMS_API_N.Controllers
 
             cityData.CityName = cityData.CityName.ToLower();
             cityData.CreatedBy = int.Parse(User.GetUserId());
+            cityData.CreatedDate = DateTime.Now;
 
             _uot.CityRepository.AddCity(cityData);
 

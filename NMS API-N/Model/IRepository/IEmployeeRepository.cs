@@ -1,4 +1,6 @@
-﻿using NMS_API_N.Model.DTO;
+﻿using NMS_API_N.CustomValidation;
+using NMS_API_N.Model.DTO;
+using NMS_API_N.Model.Entities;
 
 namespace NMS_API_N.Model.IRepository
 {
@@ -6,6 +8,9 @@ namespace NMS_API_N.Model.IRepository
     {
         Task<IEnumerable<object>> GetEmployeeDropdown();
 
-        void SaveDocumentInfo(EmployeeDocumentDto employeeDocument);
+        Task<Result> SaveEmployeeBasicInfo(Employee employee);
+
+        Task<Result> SaveDocument(EmployeeDocumentMaster employeeDocument, List<IFormFile> fileCollection);
+
     }
 }

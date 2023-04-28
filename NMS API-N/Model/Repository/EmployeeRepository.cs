@@ -3,14 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using NMS_API_N.CustomValidation;
 using NMS_API_N.DbContext;
 using NMS_API_N.Extension;
+using NMS_API_N.Helper;
 using NMS_API_N.IServices;
 using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
 using NMS_API_N.Model.IRepository;
+using NMS_API_N.Pagination;
 using NMS_API_N.Unit_Of_Work;
 
 namespace NMS_API_N.Model.Repository
 {
+
     public class EmployeeRepository : IEmployeeRepository
     {
 #nullable disable
@@ -22,6 +25,36 @@ namespace NMS_API_N.Model.Repository
             _context = context;
             _mapper = mapper;
             _fileService = (IFileServices)ApplicationServiceExtension.serviceProvider.GetRequiredService(typeof(IFileServices));
+        }
+
+        private IQueryable<EmployeeBasicInfoDto> FetchAllEmployeeBasicInfo()
+        {
+            return from emp in _context.Employees
+                   join com in _context.Companies on emp.CompanyId equals com.Id
+                   into sbCom
+                   from subcom in sbCom.DefaultIfEmpty()
+
+                   join usr in _context.Users on emp.CreatedBy equals usr.Id
+
+                   select new EmployeeBasicInfoDto
+                   {
+                       CompanyId = subcom.Id,
+                       CompanyName = subcom.CompanyName,
+                       Id = emp.Id,
+                       FirstName = emp.FirstName,
+                       LastName = emp.LastName,
+                       Gender = emp.Gender,
+                       Dob = emp.Dob,
+                       BloodGroup = emp.BloodGroup,
+                       MaritalStatus = emp.MaritalStatus,
+                       Status = emp.Status,
+                       IdType = emp.IdType,
+                       IdNo = emp.IdNo,
+                       CreatedByName = usr.UserName,
+                       CreatedDate = emp.CreatedDate,
+                       CreatedBy = emp.CreatedBy,
+                       LastUpdatedDate = emp.LastUpdatedDate
+                   };
         }
 
         public async Task<IEnumerable<object>> GetEmployeeDropdown()
@@ -43,6 +76,7 @@ namespace NMS_API_N.Model.Repository
 
             return new Result { Status = true, Data = employee };
         }
+
 
 
         public async Task<Result> SaveDocument(EmployeeDocumentMaster employeeDocumentMaster, List<IFormFile> filesCollection)
@@ -83,6 +117,38 @@ namespace NMS_API_N.Model.Repository
             return new Result { Status = true };
         }
 
+        public async Task<Result> GetEmployeeBasicInfo(int employeeId)
+        {
+            var data = await FetchAllEmployeeBasicInfo().FirstOrDefaultAsync(e=>e.Id == employeeId);
+
+            if(data == null) return new Result { Status = false };
+
+            return new Result { Status = true, Data = data};
+        }
+
+
+        public async Task<PageList<EmployeeBasicInfoDto>> GetAllEmployee(PaginationParams @params)
+        {
+            var query = FetchAllEmployeeBasicInfo().AsNoTracking().OrderByDescending(e=>e.Id);
+
+            return await PageList<EmployeeBasicInfoDto>.CreateAsynch(query, @params.PageNumber, @params.PageSize);
+        }
+
+
+        public async Task<Result> UpdateEmployeeBasicInfo(EmployeeBasicInfoDto employeeBasicInfoDto)
+        {
+            var checkEmployee = await _context.Employees.FindAsync(employeeBasicInfoDto.Id);
+
+            if (checkEmployee == null) return new Result { Status = false, Message = ValidationMsg.NoRecordFound()};
+
+            var empData = _mapper.Map(employeeBasicInfoDto, checkEmployee);
+
+            empData.LastUpdatedDate = DateTime.UtcNow.AddHours(DateTimeHelper.GetUtcHour());
+
+            _context.Attach(empData);
+
+            return new Result { Status = true, Data = employeeBasicInfoDto };
+        }
 
     }
 }

@@ -33,7 +33,7 @@ namespace NMS_API_N.CustomValidation
         {
             if (entity == null) return "Data Already Exists";
 
-            return $@"{entity.ToCapitalize()} already exists";
+            return $@"{entity.ToCapitalize()} Already Exists";
         }
 
 

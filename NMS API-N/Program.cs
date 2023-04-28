@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using NMS_API_N.DbContext;
 using NMS_API_N.Extension;
 using NMS_API_N.Middleware;
@@ -17,6 +18,8 @@ builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddCors();
 
 var app = builder.Build();
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // For seeding data 
 var scope = app.Services.CreateScope();
@@ -56,6 +59,8 @@ app.UseCors(policy => policy.AllowAnyHeader()
 app.UseAuthentication();
 app.UseAuthorization();
 
+
 app.MapControllers();
 
 app.Run();
+

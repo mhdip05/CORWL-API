@@ -28,15 +28,15 @@ namespace NMS_API_N.Model.Repository
 
                    select new DesignationDto
                    {
-                       Id= ds.Id,
-                       DesignationName=ds.DesignationName,
-                       Abbreviation=ds.Abbreviation,
+                       Id = ds.Id,
+                       DesignationName = ds.DesignationName,
+                       Abbreviation = ds.Abbreviation,
                        DepartmentId = ds.DepartmentId,
                        DepartmentName = dp.DepartmentName,
                        CreatedBy = usr.Id,
                        CreatedByName = usr.UserName,
                        CreatedDate = ds.CreatedDate,
-                       LastUpdatedDate= ds.LastUpdatedDate,
+                       LastUpdatedDate = ds.LastUpdatedDate,
                    };
         }
 
@@ -48,6 +48,14 @@ namespace NMS_API_N.Model.Repository
         public async Task<DesignationDto> GetDesignationById(int id)
         {
             return await FetchAllDesignation().Where(e => e.Id == id).AsNoTracking().FirstAsync();
+        }
+
+        public async Task<IEnumerable<object>> GetDesignationDropdown()
+        {
+            return await _context.Designations
+               .Select(x => new { DesignationId = x.Id, x.DesignationName })
+               .AsNoTracking()
+               .ToListAsync();
         }
 
 #nullable disable
@@ -67,8 +75,8 @@ namespace NMS_API_N.Model.Repository
 
         public async Task<Result> AddDesignation(Designation designation)
         {
-            if(await GetDesignationByName(designation.DesignationName) !=null)
-                return new Result { Status = false, Message = ValidationMsg.Exist("Designation")};
+            if (await GetDesignationByName(designation.DesignationName) != null)
+                return new Result { Status = false, Message = ValidationMsg.Exist("Designation") };
 
             _context.Add(designation);
 

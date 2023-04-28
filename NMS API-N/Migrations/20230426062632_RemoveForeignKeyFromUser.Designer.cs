@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NMS_API_N.DbContext;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NMS_API_N.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230426062632_RemoveForeignKeyFromUser")]
+    partial class RemoveForeignKeyFromUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -757,16 +759,6 @@ namespace NMS_API_N.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
-                    b.Property<string>("IdNo")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)");
-
-                    b.Property<string>("IdType")
-                        .IsRequired()
-                        .HasMaxLength(56)
-                        .HasColumnType("character varying(56)");
-
                     b.Property<bool?>("IsActive")
                         .HasColumnType("boolean");
 
@@ -784,7 +776,7 @@ namespace NMS_API_N.Migrations
                     b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("MaritalStatus")
+                    b.Property<string>("MartialStatus")
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 

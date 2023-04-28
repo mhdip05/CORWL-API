@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NMS_API_N.DbContext;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NMS_API_N.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230426132021_AddIdTypeAndIdNo")]
+    partial class AddIdTypeAndIdNo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -784,7 +786,7 @@ namespace NMS_API_N.Migrations
                     b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("MaritalStatus")
+                    b.Property<string>("MartialStatus")
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 

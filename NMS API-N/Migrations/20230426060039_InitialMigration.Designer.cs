@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NMS_API_N.DbContext;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NMS_API_N.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230426060039_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -757,16 +759,6 @@ namespace NMS_API_N.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
-                    b.Property<string>("IdNo")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)");
-
-                    b.Property<string>("IdType")
-                        .IsRequired()
-                        .HasMaxLength(56)
-                        .HasColumnType("character varying(56)");
-
                     b.Property<bool?>("IsActive")
                         .HasColumnType("boolean");
 
@@ -784,7 +776,7 @@ namespace NMS_API_N.Migrations
                     b.Property<DateTime?>("LastUpdatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("MaritalStatus")
+                    b.Property<string>("MartialStatus")
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
@@ -982,6 +974,9 @@ namespace NMS_API_N.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
@@ -1063,6 +1058,8 @@ namespace NMS_API_N.Migrations
                         .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -1246,6 +1243,17 @@ namespace NMS_API_N.Migrations
                         .IsRequired();
 
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("NMS_API_N.Model.Entities.User", b =>
+                {
+                    b.HasOne("NMS_API_N.Model.Entities.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("NMS_API_N.Model.Entities.UserRoleMapping", b =>

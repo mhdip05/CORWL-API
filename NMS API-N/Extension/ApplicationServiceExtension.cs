@@ -15,6 +15,7 @@ namespace NMS_API_N.Extension
         {
             services.AddScoped<ITokenServices, TokenServices>();
             services.AddSingleton<IEmailServices, MailServices>();
+            services.AddSingleton<IFileServices, FileServices>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
@@ -22,7 +23,7 @@ namespace NMS_API_N.Extension
             {
                 var conStr = config.GetConnectionString("DefaultConnection");
 
-                options.UseSqlServer(conStr);
+                options.UseNpgsql(conStr);
             });
 
             serviceProvider = services.BuildServiceProvider();

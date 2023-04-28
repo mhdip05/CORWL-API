@@ -32,7 +32,12 @@ namespace NMS_API_N.Helper
 
             CreateMap<DesignationDto, Designation>().ReverseMap();
 
+            CreateMap<EmployeeDocumentDto, EmployeeDocumentMaster>().ReverseMap();
+
+            CreateMap<EmployeeBasicInfoDto, Employee>().ReverseMap();
+
             CreateMap<string, string>().ConvertUsing(new StringTrimmerProfile());
+
             //CreateMap<string, string>().ConvertUsing(new EmptyToNullConverter());
         }
     }

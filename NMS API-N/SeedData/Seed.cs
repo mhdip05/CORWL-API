@@ -117,6 +117,7 @@ namespace NMS_API_N.SeedData
                 user.UserName = user.UserName.ToLower();
                 user.CreatedBy = 1;
                 user.CreatedDate = DateTime.Now;
+                //user.CompanyId= 1;
 
                 await userManager.CreateAsync(user, "123456");
                 await userManager.AddToRoleAsync(user, "admin");
@@ -134,6 +135,7 @@ namespace NMS_API_N.SeedData
                 user.UserName = user.UserName.ToLower();
                 user.CreatedBy = 1;
                 user.CreatedDate = DateTime.Now;
+               // user.CompanyId = 1;
 
                 await userManager.CreateAsync(user, "123456");
 
@@ -152,6 +154,7 @@ namespace NMS_API_N.SeedData
                 user.UserName = user.UserName.ToLower();
                 user.CreatedBy = 1;
                 user.CreatedDate = DateTime.Now;
+                //user.CompanyId = 1;
 
                 await userManager.CreateAsync(user, "123456");
                 await userManager.AddToRoleAsync(user, "management");

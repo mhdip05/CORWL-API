@@ -10,9 +10,12 @@ namespace NMS_API_N.Model.IRepository
         Task<IEnumerable<object>> GetEmployeeDropdown();
         Task<Result> SaveEmployeeBasicInfo(Employee employee);
         Task<Result> SaveDocument(EmployeeDocumentMaster employeeDocument, List<IFormFile> fileCollection);
+        Task<Result> UpdateEmployeeDocumentMaster(EmployeeDocumentMaseterDto employeeDocument);
+        Task<object> GetDocumentInfoByEmployee(int employeeId);
         Task<Result> GetEmployeeBasicInfo(int employeeId);
         Task<Result> UpdateEmployeeBasicInfo(EmployeeBasicInfoDto employeeBasicInfoDto);
         Task<PageList<EmployeeBasicInfoDto>> GetAllEmployee(PaginationParams @params);
-
+        Task<bool> DeleteEmployeeDoc(int fileId, int empId);
+       
     }
 }

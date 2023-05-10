@@ -7,28 +7,29 @@ namespace NMS_API_N.Controllers
 {
     public class FileController : BaseApiController
     {
+#nullable disable
         private readonly IWebHostEnvironment _env;
         public FileController(IWebHostEnvironment env)
         {
             _env = env;
         }
 
-        [HttpGet("GetFile/{fileName}")]
-        public IActionResult GetFile(string path)
+        [HttpGet("GetFile/{directory}/{fileName}/{subdirectory?}")]
+        public IActionResult GetFile(string directory, string fileName, string subdirectory=null)
         {
-            //string filePath;
+            string filePath;
 
-            //if (subdirectory == "none")
-            //{
-            //    filePath = Path.Combine(_env.WebRootPath, "FileUpload", directory, fileName);
-            //}
-            //else
-            //{
-            //    filePath = Path.Combine(_env.WebRootPath, "FileUpload", directory, subdirectory, fileName);
-            //}
+            if (string.IsNullOrWhiteSpace(subdirectory))
+            {
+                filePath = Path.Combine(_env.WebRootPath, "FileUpload", directory.Trim(), fileName);
+            }
+            else
+            {
+                filePath = Path.Combine(_env.WebRootPath, "FileUpload", directory.Trim(), subdirectory.Trim(), fileName.Trim());
+            }
 
-            var fileProvider = new PhysicalFileProvider(Path.GetDirectoryName("K:\\Project\\user-mhsporsho\\NMS-API\\NMS API-N\\wwwroot/FileUpload/EmployeeDoc\\empId_0\\My Passport.pdf"));
-            var fileInfo = fileProvider.GetFileInfo(Path.GetFileName("K:\\Project\\user-mhsporsho\\NMS-API\\NMS API-N\\wwwroot/FileUpload/EmployeeDoc\\empId_0\\My Passport.pdf"));
+            var fileProvider = new PhysicalFileProvider(Path.GetDirectoryName(filePath));
+            var fileInfo = fileProvider.GetFileInfo(Path.GetFileName(filePath));
 
             if (!fileInfo.Exists)
             {
@@ -36,7 +37,7 @@ namespace NMS_API_N.Controllers
             }
 
             var fileStream = fileInfo.CreateReadStream();
-            var contentType = MimeTypes.GetMimeType("K:\\Project\\user-mhsporsho\\NMS-API\\NMS API-N\\wwwroot/FileUpload/EmployeeDoc\\empId_0\\My Passport.pdf");
+            var contentType = MimeTypes.GetMimeType(filePath);
 
             return File(fileStream, contentType);
         }

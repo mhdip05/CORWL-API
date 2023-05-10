@@ -2,7 +2,7 @@
 
 namespace NMS_API_N.Model.DTO
 {
-    public class EmployeeDocumentDto
+    public class EmployeeDocumentDto 
     {
 #nullable disable
         public int Id { get; set; }
@@ -11,16 +11,27 @@ namespace NMS_API_N.Model.DTO
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Doc name's length: min={2} & max={1}")]
         public string  DocumentName { get; set; }
 
-        [MaxLength(512, ErrorMessage = "Description length: max={1}")]
+        [StringLength(256, MinimumLength = 2, ErrorMessage = "Description length: min={2} & max={1}")]
         public string Description { get; set; }
 
         public int EmployeeId { get; set; }
+        public int UpdatedBy { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
 
-        //[Required]
+        [Required(ErrorMessage = "Please select at least 1 file")]
         public List<IFormFile> Files { get; set; }
 
-        //public string ContentType { get; set; }
-        //public byte[] Content { get; set; }
+    }
 
+    public class EmployeeDocumentMaseterDto : CommonDto
+    {
+        [Required(ErrorMessage = "Please enter document name")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Doc name's length: min={2} & max={1}")]
+        public string DocumentName { get; set; }
+
+        [StringLength(256, MinimumLength = 2, ErrorMessage = "Description length: min={2} & max={1}")]
+        public string Description { get; set; }
+
+        public int EmployeeId { get; set; }
     }
 }

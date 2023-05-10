@@ -91,11 +91,40 @@ namespace NMS_API_N.Controllers
             var res = await _uot.EmployeeRepository.SaveDocument(docInfo, employeeDocumentDto.Files);
 
             if (await _uot.Complete())
-            {
-                return Ok(res);
-            }
+                  return Ok(res);
 
-            return Ok(new { res.Status });
+            return Ok(ValidationMsg.SomethingWrong("adding employee document info"));
+        }
+
+        [HttpPut("UpdateDocumentMaster")]
+        public async Task<ActionResult> UpdateDocumentMaster(EmployeeDocumentMaseterDto employeeDocument)
+        {
+            employeeDocument.UpdatedBy= int.Parse(User.GetUserId());
+
+            var res = await _uot.EmployeeRepository.UpdateEmployeeDocumentMaster(employeeDocument);
+
+            if(res.Status == false) return BadRequest(res.Message);
+
+            if (await _uot.Complete()) return Ok(new { Message = "Doc Info Updated Successfully", res.Data });
+
+            return BadRequest(ValidationMsg.SomethingWrong("updating Employee Doc Info"));
+        }
+
+        [HttpGet("GetDocumentInfoByEmployee/{employeeId}")]
+        public async Task<ActionResult> GetDocumentInfoByEmployee(int employeeId)
+        {
+            return Ok(await _uot.EmployeeRepository.GetDocumentInfoByEmployee(employeeId));
+        }
+
+        [HttpDelete("DeleteEmployeeDoc/{fileId}/{empId}")]
+        public async Task<ActionResult> DeleteEmployeeDoc(int fileId, int empId)
+        {
+            var data = await _uot.EmployeeRepository.DeleteEmployeeDoc(fileId, empId);
+
+            if (await _uot.Complete())
+                return Ok(data);
+
+            return Ok(ValidationMsg.SomethingWrong("deleting employee document"));
         }
     }
 }

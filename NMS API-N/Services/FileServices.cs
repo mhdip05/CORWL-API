@@ -59,14 +59,16 @@ namespace NMS_API_N.Services
             return "file";
         }
 
+        private string BaseFolder()
+        {
+            return "FileUpload";
+        }
+
         public async Task<List<Model.Entities.FileInfo>> CopyFileToServer(List<IFormFile> files, string directory, string subdirectory = null, string folderName = null)
         {
-            var currentDirectory = Environment.CurrentDirectory;
-            var baseFolder = "FileUpload";
-
             var baseDirectoryPath = subdirectory == null
-                ? Path.Combine(currentDirectory, _webHostEnvironment.WebRootPath, baseFolder, directory.ToLower())
-                : Path.Combine(currentDirectory, _webHostEnvironment.WebRootPath, baseFolder, directory.ToLower(), subdirectory.ToLower());
+                ? Path.Combine(_webHostEnvironment.WebRootPath, BaseFolder(), directory.ToLower())
+                : Path.Combine(_webHostEnvironment.WebRootPath, BaseFolder(), directory.ToLower(), subdirectory.ToLower());
 
             var uploadFolderPath = folderName == null
                  ? baseDirectoryPath
@@ -87,12 +89,32 @@ namespace NMS_API_N.Services
                 }
 
                 fileInfo.Add(CreateFileInfoObject(file, filePath));
-
             }
 
             return fileInfo;
         }
 
-     
+        public bool DeleteFile(string directory, string fileName, string subdirectory = null)
+        {
+            var baseDirectory = _webHostEnvironment.WebRootPath;
+
+            var basePath = subdirectory == null
+                ? Path.Combine(baseDirectory, BaseFolder(), directory.ToLower())
+    : Path.Combine(baseDirectory, _webHostEnvironment.WebRootPath, BaseFolder(), directory.ToLower(), subdirectory.ToLower());
+
+            var fileToDelete = Path.Combine(basePath, fileName);
+
+            if (!File.Exists(fileToDelete))
+            {
+                return false;
+            }
+            else
+            {
+                File.Delete(fileToDelete);
+            }
+
+            return true;
+        }
+
     }
 }

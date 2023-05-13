@@ -27,7 +27,7 @@ namespace NMS_API_N.SeedData
                 new Role(){ Name = "admin", CreatedBy=1, CreatedDate=DateTime.Now},
                 new Role(){ Name = "doctor", CreatedBy=1, CreatedDate=DateTime.Now},
                 new Role(){ Name = "management", CreatedBy=1, CreatedDate=DateTime.Now},
-                new Role(){ Name = "user", CreatedBy=1, CreatedDate=DateTime.Now}
+                new Role(){ Name = "cs", CreatedBy=1, CreatedDate=DateTime.Now}
             };
 
             foreach (var role in rolse)

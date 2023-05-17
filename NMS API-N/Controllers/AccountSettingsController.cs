@@ -143,7 +143,7 @@ namespace NMS_API_N.Controllers
 
             var removeCurrentPassword = await _userManager.RemovePasswordAsync(checkEmail);
 
-            if (!removeCurrentPassword.Succeeded) return BadRequest("Something bad happened while resetting password");
+            if (!removeCurrentPassword.Succeeded) return BadRequest("Something went wront while resetting password");
 
             var result = await _userManager.AddPasswordAsync(checkEmail, resetPassword.NewPassword);
 

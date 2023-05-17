@@ -9,6 +9,8 @@ namespace NMS_API_N.Extension
 {
     public static class IdentityServiceExtension
     {
+#nullable disable
+        public static IServiceProvider serviceProvider;
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddIdentityCore<User>(opt =>
@@ -45,6 +47,8 @@ namespace NMS_API_N.Extension
                 options.AddPolicy("PatientRole", policy => policy.RequireRole("patient"));
                 options.AddPolicy("ManagementRole", policy => policy.RequireRole("admin", "management"));
             });
+
+            serviceProvider = services.BuildServiceProvider();
 
             return services;
         }

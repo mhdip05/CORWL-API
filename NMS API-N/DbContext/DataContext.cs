@@ -31,6 +31,11 @@ namespace NMS_API_N.DbContext
 
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("Users");
+            });
+
             modelBuilder.ApplyUtcDateTimeConverter();
         }
 

@@ -82,53 +82,7 @@ namespace NMS_API_N.Controllers
 
         }
 
-        [HttpGet("GetUserData/{employeeId}")]
-        public async Task<ActionResult> GetUserData(int employeeId)
-        {
-            return Ok(await _uot.EmployeeRepository.GetUserData(employeeId));
-        }
-
-        [HttpPost("SaveUserInfo")]
-        public async Task<ActionResult> SaveUserInfo(UserInfoDto user)
-        {
-            var userInfo = _mapper.Map<User>(user);
-            userInfo.CreatedBy = int.Parse(User.GetUserId());
-            userInfo.CreatedDate = DateTime.Now;
-            userInfo.PasswordHash = user.Password;
-
-            var res = await _uot.EmployeeRepository.SaveUserInfo(userInfo);
-
-            if (res.Status == false) return BadRequest(res.Message);
-
-            return Ok(new { Message = "User Saved Successfully", res.Status });
-
-        }
-
-        [HttpPut("UpdateUserInfo")]
-        public async Task<ActionResult> UpdateUserInfo(UserDataDto userInfoDto)
-        {
-            userInfoDto.UpdatedBy = int.Parse(User.GetUserId());
-
-            var res = await _uot.EmployeeRepository.UpdateUserInfo(userInfoDto);
-
-            if (res.Status == false) return BadRequest(res.Message);
-
-            return Ok(new { Message = "User Info Updated Successfully", res.Data });
-
-
-        }
-
-        [HttpPut("UpdateUserPassword")]
-
-        public async Task<ActionResult> UpdateUserPassword(UserPasswordDto userPasswordDto)
-        {
-            var res = await _uot.EmployeeRepository.UpdateUserPassword(userPasswordDto);
-
-            if (res.Status == false) return BadRequest(res.Message);
-
-            return Ok(new Result { Status = res.Status, Message = "Password Upadted Successfully" });
-        }
-
+ 
         [HttpPost("SaveDocument")]
         public async Task<ActionResult> SaveDocument([FromForm] EmployeeDocumentDto employeeDocumentDto)
         {

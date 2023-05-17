@@ -38,6 +38,9 @@ namespace NMS_API_N.Helper
 
             CreateMap<EmployeeDocumentMaseterDto, EmployeeDocumentMaster>().ReverseMap();
 
+            CreateMap<UserInfoDto, User>().ReverseMap();
+            CreateMap<UserDataDto, User>().ReverseMap();
+
             CreateMap<string, string>().ConvertUsing(new StringTrimmerProfile());
 
             //CreateMap<string, string>().ConvertUsing(new EmptyToNullConverter());

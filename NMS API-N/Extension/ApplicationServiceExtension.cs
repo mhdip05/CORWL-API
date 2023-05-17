@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Google;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using NMS_API_N.DbContext;
 using NMS_API_N.Helper;
 using NMS_API_N.IServices;
+using NMS_API_N.Model.Entities;
 using NMS_API_N.Services;
 using NMS_API_N.Unit_Of_Work;
 
@@ -25,6 +28,7 @@ namespace NMS_API_N.Extension
 
                 options.UseNpgsql(conStr);
             });
+
 
             serviceProvider = services.BuildServiceProvider();
 

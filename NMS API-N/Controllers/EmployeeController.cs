@@ -22,7 +22,7 @@ namespace NMS_API_N.Controllers
         {
             _uot = uot;
             _mapper = mapper;
-            
+
         }
 
         [HttpGet("GetAllEmployee")]
@@ -58,7 +58,7 @@ namespace NMS_API_N.Controllers
 
             var res = await _uot.EmployeeRepository.SaveEmployeeBasicInfo(employeeData);
 
-            if(res.Status == false) return BadRequest(res.Message);
+            if (res.Status == false) return BadRequest(res.Message);
 
             if (await _uot.Complete())
                 return Ok(new { Message = "Employee data saved successfully", res.Data });
@@ -69,17 +69,64 @@ namespace NMS_API_N.Controllers
         [HttpPut("UpdateEmployeeBasicInfo")]
         public async Task<IActionResult> UpdateEmployeeBasicInfo(EmployeeBasicInfoDto employeeBasicInfoDto)
         {
-            employeeBasicInfoDto.UpdatedBy= int.Parse(User.GetUserId());
+            employeeBasicInfoDto.UpdatedBy = int.Parse(User.GetUserId());
 
             var res = await _uot.EmployeeRepository.UpdateEmployeeBasicInfo(employeeBasicInfoDto);
 
             if (res.Status == false) return BadRequest(res.Message);
 
-            if (await _uot.Complete()) 
+            if (await _uot.Complete())
                 return Ok(new { Message = "Employee Updated Successfully", res.Data });
 
             return BadRequest(ValidationMsg.SomethingWrong("updating employee"));
 
+        }
+
+        [HttpGet("GetUserData/{employeeId}")]
+        public async Task<ActionResult> GetUserData(int employeeId)
+        {
+            return Ok(await _uot.EmployeeRepository.GetUserData(employeeId));
+        }
+
+        [HttpPost("SaveUserInfo")]
+        public async Task<ActionResult> SaveUserInfo(UserInfoDto user)
+        {
+            var userInfo = _mapper.Map<User>(user);
+            userInfo.CreatedBy = int.Parse(User.GetUserId());
+            userInfo.CreatedDate = DateTime.Now;
+            userInfo.PasswordHash = user.Password;
+
+            var res = await _uot.EmployeeRepository.SaveUserInfo(userInfo);
+
+            if (res.Status == false) return BadRequest(res.Message);
+
+            return Ok(new { Message = "User Saved Successfully", res.Status });
+
+        }
+
+        [HttpPut("UpdateUserInfo")]
+        public async Task<ActionResult> UpdateUserInfo(UserDataDto userInfoDto)
+        {
+            userInfoDto.UpdatedBy = int.Parse(User.GetUserId());
+
+            var res = await _uot.EmployeeRepository.UpdateUserInfo(userInfoDto);
+
+            if (res.Status == false) return BadRequest(res.Message);
+
+            return Ok(new { Message = "User Info Updated Successfully", res.Data });
+
+
+        }
+
+        [HttpPut("UpdateUserPassword")]
+
+        public async Task<ActionResult> UpdateUserPassword(UserPasswordDto userPasswordDto)
+        {
+            var res = await _uot.EmployeeRepository.UpdateUserPassword(userPasswordDto);
+
+            if (res.Status == false) return BadRequest(res.Message);
+
+            return Ok(new Result { Status = res.Status, Message = "Password Upadted Successfully" });
         }
 
         [HttpPost("SaveDocument")]
@@ -91,7 +138,7 @@ namespace NMS_API_N.Controllers
             var res = await _uot.EmployeeRepository.SaveDocument(docInfo, employeeDocumentDto.Files);
 
             if (await _uot.Complete())
-                  return Ok(res);
+                return Ok(res);
 
             return Ok(ValidationMsg.SomethingWrong("adding employee document info"));
         }
@@ -99,11 +146,11 @@ namespace NMS_API_N.Controllers
         [HttpPut("UpdateDocumentMaster")]
         public async Task<ActionResult> UpdateDocumentMaster(EmployeeDocumentMaseterDto employeeDocument)
         {
-            employeeDocument.UpdatedBy= int.Parse(User.GetUserId());
+            employeeDocument.UpdatedBy = int.Parse(User.GetUserId());
 
             var res = await _uot.EmployeeRepository.UpdateEmployeeDocumentMaster(employeeDocument);
 
-            if(res.Status == false) return BadRequest(res.Message);
+            if (res.Status == false) return BadRequest(res.Message);
 
             if (await _uot.Complete()) return Ok(new { Message = "Doc Info Updated Successfully", res.Data });
 

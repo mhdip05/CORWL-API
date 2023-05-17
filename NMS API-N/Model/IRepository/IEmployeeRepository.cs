@@ -13,11 +13,7 @@ namespace NMS_API_N.Model.IRepository
         Task<Result> UpdateEmployeeDocumentMaster(EmployeeDocumentMaseterDto employeeDocument);
         Task<object> GetDocumentInfoByEmployee(int employeeId);
         Task<Result> GetEmployeeBasicInfo(int employeeId);
-        Task<Result> UpdateEmployeeBasicInfo(EmployeeBasicInfoDto employeeBasicInfoDto);
-        Task<Result> SaveUserInfo(User user);
-        Task<Result> UpdateUserInfo(UserDataDto userInfoDto);
-        Task<Result> UpdateUserPassword(UserPasswordDto userPasswordDto);
-        Task<UserInfoDto> GetUserData(int employeeId);
+        Task<Result> UpdateEmployeeBasicInfo(EmployeeBasicInfoDto employeeBasicInfoDto);  
         Task<PageList<EmployeeBasicInfoDto>> GetAllEmployee(PaginationParams @params);
         Task<bool> DeleteEmployeeDoc(int fileId, int empId);
        

@@ -34,9 +34,14 @@ namespace NMS_API_N.Model.Repository
         private IQueryable<EmployeeBasicInfoDto> FetchAllEmployeeBasicInfo()
         {
             return from emp in _context.Employees
+
                    join com in _context.Companies on emp.CompanyId equals com.Id
                    into sbCom
                    from subcom in sbCom.DefaultIfEmpty()
+
+                   join empUsr in _context.Users on emp.Id equals empUsr.EmployeeId
+                   into sbEmpUsr 
+                   from subEmpUsr in sbEmpUsr.DefaultIfEmpty()
 
                    join usr in _context.Users on emp.CreatedBy equals usr.Id
 
@@ -47,6 +52,7 @@ namespace NMS_API_N.Model.Repository
                        Id = emp.Id,
                        FirstName = emp.FirstName,
                        LastName = emp.LastName,
+                       UserName = subEmpUsr.UserName,
                        Gender = emp.Gender,
                        Dob = emp.Dob,
                        BloodGroup = emp.BloodGroup,
@@ -63,8 +69,6 @@ namespace NMS_API_N.Model.Repository
                        IsActive = emp.IsActive,
                    };
         }
-
-
 
         public async Task<IEnumerable<object>> GetEmployeeDropdown()
         {

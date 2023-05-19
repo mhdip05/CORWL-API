@@ -31,9 +31,20 @@ namespace NMS_API_N.DbContext
 
             base.OnModelCreating(modelBuilder);
 
+ 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("Users");
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("Roles");
+            });
+
+            modelBuilder.Entity<UserRoleMapping>(entity =>
+            {
+                entity.ToTable("UserRoles");
             });
 
             modelBuilder.ApplyUtcDateTimeConverter();

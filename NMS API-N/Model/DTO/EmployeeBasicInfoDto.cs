@@ -18,6 +18,8 @@ namespace NMS_API_N.Model.DTO
         [RegularExpression(@"^[a-zA-Z0-9 '](?:(?![.-]{1,})[a-zA-Z0-9 '])*[a-zA-Z0-9 ']$", ErrorMessage = "Please enter valid last name")]
         public string LastName { get; set; }
 
+        public string UserName { get; set; }
+
         [Required(ErrorMessage = "Dob is required")]
         public DateTime? Dob { get; set; }
 

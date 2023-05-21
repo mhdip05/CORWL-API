@@ -45,7 +45,7 @@ namespace NMS_API_N.Services
 
         private string ModifyFileName(string fileName)
         {
-            int unixTime = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            int unixTime = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalHours;
             var nameOfFile = Path.GetFileNameWithoutExtension(fileName);
             var fileExtension = Path.GetExtension(fileName);
             return nameOfFile + "_" + unixTime + fileExtension;
@@ -66,9 +66,10 @@ namespace NMS_API_N.Services
 
         public async Task<List<Model.Entities.FileInfo>> CopyFileToServer(List<IFormFile> files, string directory, string subdirectory = null, string folderName = null)
         {
+
             var baseDirectoryPath = subdirectory == null
-                ? Path.Combine(_webHostEnvironment.WebRootPath, BaseFolder(), directory.ToLower())
-                : Path.Combine(_webHostEnvironment.WebRootPath, BaseFolder(), directory.ToLower(), subdirectory.ToLower());
+                ? Path.Combine(Directory.GetCurrentDirectory(), BaseFolder(), directory.ToLower())
+                : Path.Combine(Directory.GetCurrentDirectory(), BaseFolder(), directory.ToLower(), subdirectory.ToLower());
 
             var uploadFolderPath = folderName == null
                  ? baseDirectoryPath

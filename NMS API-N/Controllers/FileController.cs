@@ -21,11 +21,11 @@ namespace NMS_API_N.Controllers
 
             if (string.IsNullOrWhiteSpace(subdirectory))
             {
-                filePath = Path.Combine(_env.WebRootPath, "FileUpload", directory.Trim(), fileName);
+                filePath = Path.Combine(Directory.GetCurrentDirectory(), "FileUpload", directory.Trim(), fileName);
             }
             else
             {
-                filePath = Path.Combine(_env.WebRootPath, "FileUpload", directory.Trim(), subdirectory.Trim(), fileName.Trim());
+                filePath = Path.Combine(Directory.GetCurrentDirectory(), "FileUpload", directory.Trim(), subdirectory.Trim(), fileName.Trim());
             }
 
             var fileProvider = new PhysicalFileProvider(Path.GetDirectoryName(filePath));

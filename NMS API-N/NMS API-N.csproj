@@ -25,7 +25,8 @@
 
 	<ItemGroup>
 	  <Folder Include="Enum\" />
-	  <Folder Include="wwwroot\FileUpload\" />
+	  <Folder Include="FileUpload\employeedoc\" />
+	  <Folder Include="wwwroot\" />
 	</ItemGroup>
 
 </Project>

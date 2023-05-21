@@ -62,6 +62,7 @@ namespace NMS_API_N.DbContext
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeDocumentMaster> EmployeeDocumentMaster { get; set; }
         public DbSet<EmployeeDocumentDetails> EmployeeDocumentDetails { get; set; }
+        public DbSet<EmployeeJobDetails> EmployeeJobDetails { get; set; }
 
     }
 

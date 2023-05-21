@@ -40,7 +40,7 @@ namespace NMS_API_N.Model.Repository
                    from subcom in sbCom.DefaultIfEmpty()
 
                    join empUsr in _context.Users on emp.Id equals empUsr.EmployeeId
-                   into sbEmpUsr 
+                   into sbEmpUsr
                    from subEmpUsr in sbEmpUsr.DefaultIfEmpty()
 
                    join usr in _context.Users on emp.CreatedBy equals usr.Id
@@ -91,6 +91,66 @@ namespace NMS_API_N.Model.Repository
             return new Result { Status = true, Data = employee };
         }
 
+
+        public async Task<EmployeeJobDetailsDto> GetEmployeeJobDetails(int employeeId)
+        {
+            return await (from empj in _context.EmployeeJobDetails.Where(e => e.EmployeeId == employeeId)
+
+                          join com in _context.Companies on empj.CompanyId equals com.Id
+                          join br in _context.Branches on empj.BranchId equals br.Id
+                          join dept in _context.Departments on empj.DepartmentId equals dept.Id
+                          join des in _context.Designations on empj.DesignationId equals des.Id
+
+                          join emp in _context.Employees on empj.SupervisorId equals emp.Id
+                          into sbEmp
+                          from subEmp in sbEmp.DefaultIfEmpty()
+
+                          select new EmployeeJobDetailsDto
+                          {
+                              Id = empj.Id,
+                              EmployeeId = empj.EmployeeId,
+                              CompanyId = com.Id,
+                              CompanyName = com.CompanyName,
+                              BranchId = br.Id,
+                              BranchName = br.BranchName,
+                              DepartmentId = dept.Id,
+                              DepartmentName = dept.DepartmentName,
+                              DesignationId = des.Id,
+                              DesignationName = des.DesignationName,
+                              SupervisorId = subEmp.Id,
+                              SupervisorName = subEmp.FirstName + " " + subEmp.LastName,
+                              StaffGrade = empj.StaffGrade,
+                              ConfirmationDate = empj.ConfirmationDate,
+                              JoiningDate = empj.JoiningDate,
+                              ReportingMethod = empj.ReportingMethod,
+                          }).FirstOrDefaultAsync();
+        }
+
+        public async Task<Result> SaveEmployeeJobDetails(EmployeeJobDetails employeeJobDetails)
+        {
+            var checkEmployee = await _context.EmployeeJobDetails.FirstOrDefaultAsync(e => e.EmployeeId == employeeJobDetails.EmployeeId);
+
+            if (checkEmployee != null)
+                return new Result { Status = false, Message = ValidationMsg.Exist("employee job details") };
+
+            _context.EmployeeJobDetails.Add(employeeJobDetails);
+
+            return new Result { Status = true };
+        }
+
+        public async Task<Result> UpdateEmployeeJobDetails(EmployeeJobDetailsDto employeeJobDetails)
+        {
+            var jobDetails = await _context.EmployeeJobDetails.FindAsync(employeeJobDetails.Id);
+
+            if (jobDetails == null) return new Result { Status = false, Message = ValidationMsg.NoRecordFound() };
+
+            var mapData = _mapper.Map(employeeJobDetails, jobDetails);
+            mapData.LastUpdatedDate= DateTime.Now;
+
+            _context.Attach(mapData);
+
+            return new Result { Status = true, Data = mapData};
+        }
 
         public async Task<Result> SaveDocument(EmployeeDocumentMaster employeeDocumentMaster, List<IFormFile> filesCollection)
         {
@@ -157,7 +217,7 @@ namespace NMS_API_N.Model.Repository
 
         }
 
-    
+
 
         public async Task<Result> GetEmployeeBasicInfo(int employeeId)
         {

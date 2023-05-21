@@ -81,7 +81,44 @@ namespace NMS_API_N.Controllers
             return BadRequest(ValidationMsg.SomethingWrong("updating employee"));
 
         }
+        [HttpPost("SaveEmployeeJobDetails")]
+        public async Task<IActionResult> SaveEmployeeJobDetails(EmployeeJobDetailsDto employeeJobDetailsDto)
+        {
+            var data = _mapper.Map<EmployeeJobDetails>(employeeJobDetailsDto);
+            data.CreatedBy= int.Parse(User.GetUserId());
+            data.CreatedDate= DateTime.Now;
 
+            var res = await _uot.EmployeeRepository.SaveEmployeeJobDetails(data);
+
+            if (res.Status == false) return BadRequest(res.Message);
+             
+            if(await _uot.Complete())
+                return Ok(new { Message = "Employee Job Details Saved Successfully"});
+
+            return BadRequest(ValidationMsg.SomethingWrong());
+        }
+
+        [HttpPut("UpdateEmployeeJobDetails")]
+        public async Task<IActionResult> UpdateEmployeeJobDetails(EmployeeJobDetailsDto employeeJobDetails)
+        {
+            employeeJobDetails.UpdatedBy = int.Parse(User.GetUserId());
+
+            var res = await _uot.EmployeeRepository.UpdateEmployeeJobDetails(employeeJobDetails);
+
+            if (res.Status == false) return BadRequest(res.Message);
+
+            if (await _uot.Complete())
+                return Ok(new { Message = "Job Details Updated Successfully", res.Data });
+
+            return BadRequest(ValidationMsg.SomethingWrong("updating employee"));
+
+        }
+
+        [HttpGet("GetEmployeeJobDetails/{employeeId}")]
+        public async Task<IActionResult> GetEmployeeJobDetails(int employeeId)
+        {
+            return Ok(await _uot.EmployeeRepository.GetEmployeeJobDetails(employeeId));
+        }
  
         [HttpPost("SaveDocument")]
         public async Task<ActionResult> SaveDocument([FromForm] EmployeeDocumentDto employeeDocumentDto)

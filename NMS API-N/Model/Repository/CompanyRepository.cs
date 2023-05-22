@@ -43,6 +43,10 @@ namespace NMS_API_N.Model.Repository
                    into sic
                    from subic in sic.DefaultIfEmpty()
 
+                   join usr in _context.Users on com.CreatedBy equals usr.Id
+                   into sbUsr
+                   from subUsr in sbUsr.DefaultIfEmpty()
+
                    select new CompanyDto
                    {
                        Id = com.Id,
@@ -60,6 +64,7 @@ namespace NMS_API_N.Model.Repository
                        Address = com.Address,
                        ConversionRate = com.ConversionRate,
                        CreatedBy = com.CreatedBy,
+                       CreatedByName = subUsr.UserName.ToUpper(),
                        CreatedDate = com.CreatedDate,
                        UpdatedBy = com.UpdatedBy,
                        LastUpdatedDate = com.LastUpdatedDate ?? null,

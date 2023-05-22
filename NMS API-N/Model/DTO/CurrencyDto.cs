@@ -2,7 +2,7 @@
 
 namespace NMS_API_N.Model.DTO
 {
-    public class CurrencyDto
+    public class CurrencyDto : CommonDto
     {
 #nullable disable
         public int Id { get; set; }

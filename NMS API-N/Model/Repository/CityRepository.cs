@@ -27,6 +27,11 @@ namespace NMS_API_N.Model.Repository
         {
             return await (from country in _context.Countries
                           join city in _context.Cities on country.Id equals city.CountryId
+                         
+                          join usr in _context.Users on city.CreatedBy equals usr.Id
+                          into sbUsr
+                          from subUsr in sbUsr.DefaultIfEmpty()
+
                           orderby country.CountryName, city.CityName
                           select new CityDto
                           {
@@ -35,6 +40,7 @@ namespace NMS_API_N.Model.Repository
                               Id = city.Id,
                               CityName = city.CityName.ToUpper(),
                               CreatedBy = city.CreatedBy,
+                              CreatedByName = subUsr.UserName.ToUpper(),
                               CreatedDate = city.CreatedDate,
                               LastUpdatedDate = city.LastUpdatedDate,
                           })
@@ -47,7 +53,7 @@ namespace NMS_API_N.Model.Repository
         {
             var data = await (from city in _context.Cities.Where(e => e.CountryId == countryId)
                               orderby city.CityName
-                              select new 
+                              select new
                               {
                                   CityId = city.Id,
                                   CityName = city.CityName.ToUpper(),

@@ -19,8 +19,6 @@ namespace NMS_API_N.Model.DTO
         [RegularExpression(@"^(?:(?![+]{2})[0-9+])*[0-9]$", ErrorMessage = "Invalid Telephone Code, e.g. +123")]
         public string TelephoneCode { get; set; }
 
-        public int? UpdatedBy { get; set; }
-
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NMS_API_N.DbContext;
+using NMS_API_N.Model.DTO;
 using NMS_API_N.Model.Entities;
 using NMS_API_N.Model.FetchDTO;
 using NMS_API_N.Model.IRepository;
@@ -35,16 +36,27 @@ namespace NMS_API_N.Model.Repository
             }
         }
 
-        public async Task<IEnumerable<Currency>> GetAllCurrency()
+        public async Task<IEnumerable<CurrencyDto>> GetAllCurrency()
         {
-            return await _context.Currencies.OrderBy(e => e.CurrencyName).AsNoTracking().ToListAsync();
+            return await (from cur in _context.Currencies
+                          join usr in _context.Users on cur.CreatedBy equals usr.Id
+                          into sbUsr from subUsr in sbUsr.DefaultIfEmpty()
+                          select new CurrencyDto
+                          {
+                              Id = cur.Id,
+                              CurrencyName = cur.CurrencyName,
+                              CurrencySymbol = cur.CurrencySymbol,
+                              CreatedDate = cur.CreatedDate,
+                              LastUpdatedDate = cur.LastUpdatedDate,
+                              CreatedByName = subUsr.UserName.ToUpper()
+                          }).AsNoTracking().ToListAsync();
         }
 
         public async Task<IEnumerable<object>> GetCurrencyDropdown()
         {
             return await _context.Currencies
                 .OrderBy(e => e.CurrencyName)
-                .Select(e => new 
+                .Select(e => new
                 {
                     CurrencyId = e.Id,
                     CurrencyName = e.CurrencyName,

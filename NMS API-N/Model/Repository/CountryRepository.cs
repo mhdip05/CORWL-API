@@ -25,9 +25,21 @@ namespace NMS_API_N.Model.Repository
             _context.Countries.Add(country);
         }
 
-        public async Task<IEnumerable<Country>> GetAllCountry()
+        public async Task<IEnumerable<CountryDto>> GetAllCountry()
         {
-            return await _context.Countries.OrderBy(x => x.CountryName).AsNoTracking().ToListAsync();
+            return await (from con in _context.Countries
+                          join usr in _context.Users on con.CreatedBy equals usr.Id
+                          into sbUsr
+                          from subUsr in sbUsr.DefaultIfEmpty()
+                          select new CountryDto
+                          {
+                              Id = con.Id,
+                              CountryName = con.CountryName,
+                              CountryAlias = con.CountryAlias,
+                              CreatedDate = con.CreatedDate,
+                              LastUpdatedDate = con.LastUpdatedDate,
+                              CreatedByName = subUsr.UserName.ToUpper()
+                          }).AsNoTracking().ToListAsync();
         }
 
         public async Task<IEnumerable<object>> GetCountryDropdown()

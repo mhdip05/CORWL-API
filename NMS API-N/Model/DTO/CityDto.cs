@@ -17,6 +17,7 @@ namespace NMS_API_N.Model.DTO
         public string CityName { get; set; }
         public string CountryName { get; set; }
         public int CreatedBy { get; set; }
+        public string CreatedByName { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
         public IEnumerable<object> Cities { get; set; }

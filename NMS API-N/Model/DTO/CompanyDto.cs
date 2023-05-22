@@ -57,6 +57,7 @@ namespace NMS_API_N.Model.DTO
         public bool? IsParentCompany { get; set; } = false;
         public DateTime? CreatedDate { get; set; } = DateTime.UtcNow.AddHours(DateTimeHelper.GetUtcHour());
         public int? CreatedBy { get; set; }
+        public string CreatedByName { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
         public string LastUpdatedComment { get; set; }
         public int? UpdatedBy { get; set; }

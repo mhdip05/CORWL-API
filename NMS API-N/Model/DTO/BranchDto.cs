@@ -66,6 +66,7 @@ namespace NMS_API_N.Model.DTO
         public string ZipCode { get; set; }
         public bool? IsActive { get; set; }
         public int CreatedBy { get; set; }
+        public string CreatedByName { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(DateTimeHelper.GetUtcHour());
         public int? UpdatedBy { get; set; }
         public DateTime? LastUpdatedDate { get; set;}

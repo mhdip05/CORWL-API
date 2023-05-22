@@ -36,6 +36,9 @@ namespace NMS_API_N.Model.Repository
                    into sbrai
                    from subbrai in sbrai.DefaultIfEmpty()
 
+                   join usr in _context.Users on br.CreatedBy equals usr.Id
+                   into sbUsr from subUsr in sbUsr.DefaultIfEmpty()
+
                    select new BranchDto
                    {
                        Id = br.Id,
@@ -59,6 +62,7 @@ namespace NMS_API_N.Model.Repository
                        Phone = br.Phone,
                        Web = br.Web,
                        CreatedBy = br.CreatedBy,
+                       CreatedByName = subUsr.UserName.ToUpper(),
                        CreatedDate = br.CreatedDate,
                        UpdatedBy = br.UpdatedBy,
                        LastUpdatedDate = br.LastUpdatedDate,

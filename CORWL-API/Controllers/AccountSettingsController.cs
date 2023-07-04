@@ -161,9 +161,9 @@ namespace CORWL_API.Controllers
         private string PasswordResetEmailBody(string userName, int code)
         {
             return "     <div>" +
-                          "        <h2>N-M-S</h2>" +
+                          "        <h2>Concord Raiment Wear Ltd.</h2>" +
                           "        <h3>Hello, " + userName + "</h3>" +
-                          "        <p>Please enter the code below to reset your password</p>" +
+                          "        <p>Here is your code to reset your password</p>" +
                           "         <div style='background-color:gainsboro;padding:10px;'>" +
                           "            <h2>" + code + "</h2>" +
                           "         </div>" +

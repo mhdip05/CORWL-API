@@ -25,7 +25,7 @@ namespace CORWL_API.Model.DTO
 
         [Required(ErrorMessage = "Address is Required")]
         [StringLength(300, MinimumLength = 4, ErrorMessage = "Address length: min={2} & max={1}")]
-        [RegularExpression(@"^[a-zA-Z0-9# '](?:[a-zA-Z0-9#\-+*/\,:_;()=. '])*[a-zA-Z0-9. ']$", ErrorMessage = "Please enter valid address")]
+        [RegularExpression(@"^[a-zA-Z0-9# '](?:[a-zA-Z0-9#\-+*/\,:_;()=., '])*[a-zA-Z0-9. ']$", ErrorMessage = "Please enter valid address")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Zip code is required")]

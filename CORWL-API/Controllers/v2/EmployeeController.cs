@@ -14,16 +14,15 @@ using CORWL_API.Helper;
 namespace CORWL_API.Controllers.v2
 {
 
-    public class EmployeeV2Controller : BaseApiController2
+    public class EmployeeController : BaseApiController2
     {
         private readonly IUnitOfWork _uot;
         private readonly IMapper _mapper;
 
-        public EmployeeV2Controller(IUnitOfWork uot, IMapper mapper)
+        public EmployeeController(IUnitOfWork uot, IMapper mapper)
         {
             _uot = uot;
             _mapper = mapper;
-
         }
 
         [HttpGet("GetAllEmployee")]

@@ -28,7 +28,7 @@ namespace CORWL_API.Model.DTO
     {
 
         [Required(ErrorMessage = "New password is required")]
-        [MinLength(5, ErrorMessage = "New password must be at least 5 character.")]
+        [MinLength(6, ErrorMessage = "New password must be at least 6 character.")]
         public string Password { get; set; }
 
         [Compare("Password", ErrorMessage = "Password does not match with confirm passowrd.")]
@@ -41,7 +41,7 @@ namespace CORWL_API.Model.DTO
         public int Id { get; set; }
 
         [Required(ErrorMessage = "New password is required")]
-        [MinLength(5, ErrorMessage = "New password must be at least 5 character.")]
+        [MinLength(6, ErrorMessage = "New password must be at least 6 character.")]
         public string Password { get; set; }
 
         [Compare("Password", ErrorMessage = "Password does not match with confirm passowrd.")]

@@ -6,16 +6,18 @@ using CORWL_API.Extension;
 using CORWL_API.Middleware;
 using CORWL_API.Model.Entities;
 using CORWL_API.SeedData;
-
+using CORWL_API.Signal_R;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddApiVersioningServices();
 builder.Services.AddSwaggerServices();
 builder.Services.AddApplicationService(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddCors();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -39,13 +41,19 @@ catch (Exception ex)
     logger.LogError(ex, "An error occured during migration");
 }
 
+
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint($"v1/swagger.json","v1");
+        c.SwaggerEndpoint($"v2/swagger.json","v2");
+        c.RoutePrefix = "swagger";
+    });
 }
 
 app.UseHttpsRedirection();
@@ -54,7 +62,8 @@ app.UseRouting();
 
 app.UseCors(policy => policy.AllowAnyHeader()
         .AllowAnyMethod()
-        .WithOrigins("https://localhost:4201"));
+        .AllowCredentials() // for signal R access token
+        .WithOrigins("https://localhost:4201")); ;
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -62,13 +71,15 @@ app.UseAuthorization();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
+//app.UseMiddleware<ApiVersioningMiddleware>();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
     endpoints.MapFallbackToController("Index", "Fallback");
+    endpoints.MapHub<PresenceHub>("hubs/presence");
 
 });
-
 
 app.Run();
 

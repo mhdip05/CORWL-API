@@ -50,10 +50,10 @@ namespace CORWL_API.SeedData
         {
             var company = new Company
             {
-                CompanyName = "neurogen",
+                CompanyName = "Concord Raiment Wear Limited",
                 CompanyCode = "123456",
                 CityId = 1,
-                Address = "Dhaka, Bangladesh",
+                Address = "Gazipur, Bangladesh",
                 ZipCode = "12500",
                 MobileNo = "123456789",
                 CreatedBy = 1,
@@ -81,7 +81,7 @@ namespace CORWL_API.SeedData
         {
             var city = new City
             {
-                CityName = "dhaka",
+                CityName = "Dhaka",
                 CreatedBy = 1,
                 CreatedDate = DateTime.Now,
                 CountryId = 1,
@@ -95,7 +95,7 @@ namespace CORWL_API.SeedData
         {
             var address = new Address
             {
-                AddressDescription = "New Elephant Road, Beside Cartoon Hall, 74/B/N",
+                AddressDescription = "Gazipur, Bangladesh, Beside National University",
                 SourceId = 1,
                 SourceType = "company",
                 Phone = "+8801791468094",

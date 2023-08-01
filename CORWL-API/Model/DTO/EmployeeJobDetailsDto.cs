@@ -9,7 +9,7 @@ namespace CORWL_API.Model.DTO
 
         public int EmployeeId { get; set; }
 
-        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Please select company")]
+        //[RegularExpression("([1-9][0-9]*)", ErrorMessage = "Please select company")]
         public int CompanyId { get; set; }
         public string CompanyName { get; set; }
 

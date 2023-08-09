@@ -2,10 +2,11 @@
 {
     enum EmployeeEnum
     {
-        notSpecify,
         active,
         inactive,
         pending,
         block,
+        waiting,
+        confirmed,
     }
 }

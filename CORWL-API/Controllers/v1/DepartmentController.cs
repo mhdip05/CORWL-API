@@ -71,5 +71,7 @@ namespace CORWL_API.Controllers.v1
 
             return BadRequest(ValidationMsg.SomethingWrong("updating Department"));
         }
+
+
     }
 }

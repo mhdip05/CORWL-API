@@ -29,8 +29,6 @@ namespace CORWL_API.Extension
                 setup.SubstituteApiVersionInUrl = true;
             });
 
-        
-
             return services;
         }
     }

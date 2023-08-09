@@ -68,7 +68,7 @@ namespace CORWL_API.SeedData
         {
             var country = new Country
             {
-                CountryName = "bangladesh",
+                CountryName = "Bangladesh",
                 CreatedBy = 1,
                 CreatedDate = DateTime.Now,
             };

@@ -7,6 +7,9 @@ using CORWL_API.Extension;
 using CORWL_API.Model.DTO;
 using CORWL_API.Model.Entities;
 using CORWL_API.Unit_Of_Work;
+using Bogus;
+using CORWL_API.DbContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace CORWL_API.Controllers.v1
 {
@@ -19,8 +22,6 @@ namespace CORWL_API.Controllers.v1
         public CountryController(IUnitOfWork uot, IMapper mapper)
         {
             _uot = uot;
-
-
             _mapper = mapper;
         }
 
@@ -69,5 +70,7 @@ namespace CORWL_API.Controllers.v1
 
             return BadRequest(ValidationMsg.SomethingWrong("updating country"));
         }
+
+
     }
 }

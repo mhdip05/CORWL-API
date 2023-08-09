@@ -14,7 +14,7 @@ namespace CORWL_API.CustomValidation
 
         public static string SameObjectDetectionMessage()
         {
-            return $@"It seems that you did not update anything for";
+            return $"It seems that you did not update anything for";
         }
 
         public static string NoRecordFound()
@@ -26,14 +26,14 @@ namespace CORWL_API.CustomValidation
         {
             if (state == null) return "Something went wrong";
 
-            return $@"Something went wrong while {state}";
+            return $"Something went wrong while {state}";
         }
 
         public static string Exist(string entity = null)
         {
             if (entity == null) return "Data Already Exists";
 
-            return $@"{entity.ToCapitalize()} Already Exists";
+            return $"{entity.ToCapitalize()} Already Exists";
         }
 
 

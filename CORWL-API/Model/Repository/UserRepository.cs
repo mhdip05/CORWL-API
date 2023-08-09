@@ -24,8 +24,8 @@ namespace CORWL_API.Model.Repository
             _mapper = mapper;
             _userManager = (UserManager<User>)IdentityServiceExtension.serviceProvider.GetRequiredService(typeof(UserManager<User>));
         }
-
-        private async Task<Result> CheckUser(User user)
+#nullable disable
+        async Task<Result> CheckUser(User user)
         {
             var checkUserName = await _context.Users.FirstOrDefaultAsync(x => x.UserName == user.UserName);
 
@@ -54,7 +54,7 @@ namespace CORWL_API.Model.Repository
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
-#nullable disable
+
             return await _context.Users.SingleOrDefaultAsync(x => x.UserName == username.ToLower());
         }
 

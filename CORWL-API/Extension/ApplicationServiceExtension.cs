@@ -22,8 +22,9 @@ namespace CORWL_API.Extension
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
+
             services.AddDbContextPool<DataContext>(options =>
-            {
+            { 
                 var conStr = config.GetConnectionString("DefaultConnection");
 
                 options.UseNpgsql(conStr);

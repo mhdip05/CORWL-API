@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace CORWL_API.Helper
 {
-    public class StringTrimmerProfile : ITypeConverter<string, string>
+    public class StringTrimmerHelper : ITypeConverter<string, string>
     {
 #nullable disable
         public string Convert(string source, string destination, ResolutionContext context)

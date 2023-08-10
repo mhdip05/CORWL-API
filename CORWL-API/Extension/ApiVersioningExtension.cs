@@ -19,7 +19,6 @@ namespace CORWL_API.Extension
                     new QueryStringApiVersionReader("api-version")
                   //new HeaderApiVersionReader("x-version")
                   //new MediaTypeApiVersionReader("ver")
-                  //consolo.log(test)
                 );
 
             });

@@ -362,5 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-NMS API-N/appsettings.json
-NMS API-N/appsettings.Development.json
+CORWL-API/appsettings.json
+CORWL-API/appsettings.Development.json

@@ -45,8 +45,8 @@ catch (Exception ex)
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
 
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
@@ -54,7 +54,7 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint($"v2/swagger.json","v2");
         c.RoutePrefix = "swagger";
     });
-}
+//}
 
 app.UseHttpsRedirection();
 
@@ -76,8 +76,8 @@ app.UseStaticFiles();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    endpoints.MapFallbackToController("Index", "Fallback");
-    endpoints.MapHub<PresenceHub>("hubs/presence");
+    //endpoints.MapFallbackToController("Index", "Fallback");
+    //endpoints.MapHub<PresenceHub>("hubs/presence");
 
 });
 

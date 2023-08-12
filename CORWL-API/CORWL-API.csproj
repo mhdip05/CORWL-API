@@ -29,7 +29,6 @@
 	
 	<ItemGroup>
 	  <Folder Include="FileUpload\employeedoc\" />
-	  <Folder Include="wwwroot\" />
 	</ItemGroup>
 
 </Project>

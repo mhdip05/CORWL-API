@@ -76,8 +76,8 @@ app.UseStaticFiles();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    //endpoints.MapFallbackToController("Index", "Fallback");
-    //endpoints.MapHub<PresenceHub>("hubs/presence");
+    endpoints.MapFallbackToController("Index", "Fallback");
+    endpoints.MapHub<PresenceHub>("hubs/presence");
 
 });
 

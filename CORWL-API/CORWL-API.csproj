@@ -10,6 +10,7 @@
 	<ItemGroup>
 		 <!--<PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />-->
          <!-- <PackageReference Include="ReportViewerCore.NETCore" Version="15.1.17" />-->
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.17.0" />
 		<PackageReference Include="Bogus" Version="34.0.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />

@@ -1,4 +1,6 @@
-﻿using CORWL_API.IServices;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using CORWL_API.IServices;
 using CORWL_API.Model.Entities;
 using System.IO;
 
@@ -18,7 +20,7 @@ namespace CORWL_API.Services
         private string GetFileExtension(string fileName)
         {
             var lastIndex = fileName.LastIndexOf('.');
-            return fileName.Substring(lastIndex + 1).ToLower();
+            return fileName[(lastIndex + 1)..].ToLower();
         }
 
         private decimal ConvertFileSizeToMb(long fileSize)
@@ -29,11 +31,11 @@ namespace CORWL_API.Services
             return decimal.Parse(formatNumber);
         }
 
-        private Model.Entities.FileInfo CreateFileInfoObject(IFormFile file, string filePath)
+        public Model.Entities.FileInfo CreateFileInfoObject(IFormFile file, string filePath, string fileName)
         {
             return new Model.Entities.FileInfo
             {
-                FileName = ModifyFileName(file.FileName),
+                FileName = fileName,
                 ContentType = file.ContentType,
                 FilePath = filePath,
                 FileSize = ConvertFileSizeToMb(file.Length),
@@ -43,12 +45,11 @@ namespace CORWL_API.Services
             };
         }
 
-        private string ModifyFileName(string fileName)
+        public string ModifyFileName(string fileName)
         {
             int unixTime = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalHours;
-            var nameOfFile = Path.GetFileNameWithoutExtension(fileName);
-            var fileExtension = Path.GetExtension(fileName);
-            return nameOfFile + "_" + unixTime + fileExtension;
+            var nameOfFile = Path.GetFileNameWithoutExtension(fileName).Replace(" ","_");
+            return (nameOfFile + "_" + Guid.NewGuid() + Path.GetExtension(fileName)).ToLower();
         }
 
         private string GetFileType(string fileExtension)
@@ -78,18 +79,20 @@ namespace CORWL_API.Services
             if (!Directory.Exists(uploadFolderPath))
                 Directory.CreateDirectory(uploadFolderPath);
 
-            List<Model.Entities.FileInfo> fileInfo = new List<Model.Entities.FileInfo>();
+            List<Model.Entities.FileInfo> fileInfo = new();
 
             foreach (var file in files)
             {
-                string filePath = Path.Combine(uploadFolderPath, ModifyFileName(file.FileName));
+                var fileName = ModifyFileName(file.FileName);
+
+                string filePath = Path.Combine(uploadFolderPath, fileName);
 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);
                 }
 
-                fileInfo.Add(CreateFileInfoObject(file, filePath));
+                fileInfo.Add(CreateFileInfoObject(file, filePath, fileName));
             }
 
             return fileInfo;
@@ -117,5 +120,8 @@ namespace CORWL_API.Services
             return true;
         }
 
+
     }
 }
+
+

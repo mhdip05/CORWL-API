@@ -7,6 +7,7 @@ using CORWL_API.IServices;
 using CORWL_API.Model.Entities;
 using CORWL_API.Services;
 using CORWL_API.Unit_Of_Work;
+using CORWL_API.Model.FetchDTO;
 
 namespace CORWL_API.Extension
 {
@@ -19,17 +20,15 @@ namespace CORWL_API.Extension
             services.AddScoped<ITokenServices, TokenServices>();
             services.AddSingleton<IEmailServices, MailServices>();
             services.AddSingleton<IFileServices, FileServices>();
+            services.AddSingleton<IAzureBlob, AzureBlob>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.Configure<AzureBlobDto>(config.GetSection("AzureBlob"));
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-
-
             services.AddDbContextPool<DataContext>(options =>
             { 
                 var conStr = config.GetConnectionString("DefaultConnection");
-
                 options.UseNpgsql(conStr);
             });
-
 
             serviceProvider = services.BuildServiceProvider();
 

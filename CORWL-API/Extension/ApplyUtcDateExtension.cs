@@ -13,10 +13,10 @@ namespace CORWL_API.Extension
 builder.HasAnnotation(IsUtcAnnotation, isUtc);
 
         private static readonly ValueConverter<DateTime, DateTime> UtcConverter =
-          new ValueConverter<DateTime, DateTime>(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+          new(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 
         private static readonly ValueConverter<DateTime?, DateTime?> UtcNullableConverter =
-          new ValueConverter<DateTime?, DateTime?>(v => v, v => v == null ? v : DateTime.SpecifyKind(v.Value, DateTimeKind.Utc));
+          new(v => v, v => v == null ? v : DateTime.SpecifyKind(v.Value, DateTimeKind.Utc));
 
         public static bool IsUtc(this IMutableProperty property) =>
           ((bool?)property.FindAnnotation(IsUtcAnnotation)?.Value) ?? true;

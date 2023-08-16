@@ -11,6 +11,7 @@ using CORWL_API.Model.Entities;
 using CORWL_API.Model.IRepository;
 using CORWL_API.Pagination;
 using CORWL_API.Unit_Of_Work;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CORWL_API.Model.Repository
 {
@@ -22,6 +23,7 @@ namespace CORWL_API.Model.Repository
         private readonly IMapper _mapper;
         private readonly IFileServices _fileService;
         private readonly UserManager<User> _userManager;
+        private readonly IAzureBlob _azureBlob;
 
         public EmployeeRepository(DataContext context, IMapper mapper)
         {
@@ -29,6 +31,7 @@ namespace CORWL_API.Model.Repository
             _mapper = mapper;
             _fileService = (IFileServices)ApplicationServiceExtension.serviceProvider.GetRequiredService(typeof(IFileServices));
             _userManager = (UserManager<User>)IdentityServiceExtension.serviceProvider.GetRequiredService(typeof(UserManager<User>));
+            _azureBlob = (IAzureBlob)IdentityServiceExtension.serviceProvider.GetRequiredService(typeof(IAzureBlob));
         }
 
         private IQueryable<EmployeeBasicInfoDto> FetchAllEmployeeBasicInfo()
@@ -145,11 +148,11 @@ namespace CORWL_API.Model.Repository
             if (jobDetails == null) return new Result { Status = false, Message = ValidationMsg.NoRecordFound() };
 
             var mapData = _mapper.Map(employeeJobDetails, jobDetails);
-            mapData.LastUpdatedDate= DateTime.Now;
+            mapData.LastUpdatedDate = DateTime.Now;
 
             _context.Attach(mapData);
 
-            return new Result { Status = true, Data = mapData};
+            return new Result { Status = true, Data = mapData };
         }
 
         public async Task<Result> SaveDocument(EmployeeDocumentMaster employeeDocumentMaster, List<IFormFile> filesCollection)
@@ -167,8 +170,8 @@ namespace CORWL_API.Model.Repository
             else
             {
                 var dataToDto = _mapper.Map<EmployeeDocumentDto>(employeeDocumentMaster);
-
                 var dataToUpdate = _mapper.Map(dataToDto, empDocMasterData);
+
                 dataToUpdate.LastUpdatedDate = DateTime.UtcNow.AddHours(DateTimeHelper.GetUtcHour());
                 dataToUpdate.UpdatedBy = employeeDocumentMaster.CreatedBy;
 
@@ -179,7 +182,7 @@ namespace CORWL_API.Model.Repository
 
             if (filesCollection.Count > 0)
             {
-                var files = await _fileService.CopyFileToServer(filesCollection, "employeedoc", "emp_" + employeeDocumentMaster.EmployeeId);
+                var files = await _azureBlob.UploadFileToAzureStorage(filesCollection, "employeedoc", "emp_" + employeeDocumentMaster.EmployeeId);
 
                 foreach (var file in files)
                 {
@@ -278,9 +281,23 @@ namespace CORWL_API.Model.Repository
                 return true;
             }
             return false;
-
         }
 
+        public async Task<bool> DeleteEmployeeDocsFromAzure(int FileId)
+        {
+            var getFileByid = await _context.EmployeeDocumentDetails.FirstOrDefaultAsync(e => e.Id == FileId);
+
+            if (getFileByid != null)
+            {
+                var blob = await _azureBlob.DeleteFileFromAzureStorage(getFileByid.FilePath, getFileByid.FileName);
+                if (blob)
+                {
+                    _context.EmployeeDocumentDetails.Remove(getFileByid);
+                    return true;
+                }
+            }
+            return false;
+        }
 
     }
 }

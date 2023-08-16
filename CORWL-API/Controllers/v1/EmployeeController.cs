@@ -17,7 +17,7 @@ namespace CORWL_API.Controllers.v1
     {
         private readonly IUnitOfWork _uot;
         private readonly IMapper _mapper;
-                    
+
         public EmployeeController(IUnitOfWork uot, IMapper mapper)
         {
             _uot = uot;
@@ -158,6 +158,18 @@ namespace CORWL_API.Controllers.v1
         public async Task<ActionResult> DeleteEmployeeDoc(int fileId, int empId)
         {
             var data = await _uot.EmployeeRepository.DeleteEmployeeDoc(fileId, empId);
+
+            if (await _uot.Complete())
+                return Ok(data);
+
+            return Ok(ValidationMsg.SomethingWrong("deleting employee document"));
+        }
+
+
+        [HttpDelete("DeleteEmployeeDocsFromAzure/{fileId}")]
+        public async Task<ActionResult> DeleteEmployeeDocsFromAzure(int fileId)
+        {
+            var data = await _uot.EmployeeRepository.DeleteEmployeeDocsFromAzure(fileId);
 
             if (await _uot.Complete())
                 return Ok(data);

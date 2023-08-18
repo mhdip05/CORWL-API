@@ -2,7 +2,7 @@ name: Build and deploy .NET application to container app corwl-api-app
 on:
   push:
     branches:
-    - main
+    - develop
 env:
   CONTAINER_APP_CONTAINER_NAME: corwl-api
   CONTAINER_APP_NAME: corwl-api-app

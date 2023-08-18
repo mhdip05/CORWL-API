@@ -7,5 +7,6 @@ namespace CORWL_API.IServices
         Task<List<Model.Entities.FileInfo>> UploadFileToAzureStorage(List<IFormFile> files, string directory, string subdirectory = "", string folderName = "");
         string CreateServiceSasForContainer();
         Task<bool> DeleteFileFromAzureStorage(string directory, string fileName);
+
     }
 }

@@ -8,7 +8,7 @@ env:
   CONTAINER_APP_NAME: corwl-api-app
   CONTAINER_APP_RESOURCE_GROUP_NAME: rgcorwldev
   CONTAINER_REGISTRY_LOGIN_SERVER: corwlapi.azurecr.io
-  DOTNET_CORE_VERSION: 7.0.x
+  DOTNET_CORE_VERSION: 6.0.x
   PROJECT_NAME_FOR_DOCKER: corwl-api
 jobs:
   build:
@@ -25,8 +25,8 @@ jobs:
       uses: azure/docker-login@v1
       with:
         login-server: ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}
-        username: ${{ secrets.CORWLAPI_USERNAME_5D87 }}
-        password: ${{ secrets.CORWLAPI_PASSWORD_5D87 }}
+        username: ${{ secrets.CORWLAPI_USERNAME_E360 }}
+        password: ${{ secrets.CORWLAPI_PASSWORD_E360 }}
     - name: Build and push container image to registry
       run: dotnet publish -c Release -r linux-x64 -p:PublishProfile=DefaultContainer -p:ContainerImageTag=${{ github.sha }} --no-self-contained -p:ContainerRegistry=${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }} -bl
     - name: Upload binlog for investigation
@@ -49,7 +49,7 @@ jobs:
         inlineScript: >
           az config set extension.use_dynamic_install=yes_without_prompt
 
-          az containerapp registry set --name ${{ env.CONTAINER_APP_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP_NAME }} --server ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }} --username ${{ secrets.CORWLAPI_USERNAME_5D87 }} --password ${{ secrets.CORWLAPI_PASSWORD_5D87 }}
+          az containerapp registry set --name ${{ env.CONTAINER_APP_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP_NAME }} --server ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }} --username ${{ secrets.CORWLAPI_USERNAME_E360 }} --password ${{ secrets.CORWLAPI_PASSWORD_E360 }}
 
           az containerapp update --name ${{ env.CONTAINER_APP_NAME }} --container-name ${{ env.CONTAINER_APP_CONTAINER_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP_NAME }} --image ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}/${{ env.PROJECT_NAME_FOR_DOCKER }}:${{ github.sha }}
     - name: logout

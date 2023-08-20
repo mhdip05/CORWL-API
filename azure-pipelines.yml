@@ -25,17 +25,15 @@ jobs:
   - script: dotnet test --configuration $(buildConfiguration) --no-build --verbosity normal
     displayName: 'Run Tests'
 
-- job: Publish
-  condition: succeeded('Build')
-  steps:
-  - task: UseDotNet@2
-    inputs:
-      packageType: 'sdk'
-      version: '6.x'
-
-  - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish --no-build
+  - task: DotNetCoreCLI@2
     displayName: 'Publish'
+    inputs:
+      command: 'publish'
+      publishWebProjects: true
+      arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish'
+      zipAfterPublish: true
 
+  # Publish artifacts
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)/publish'

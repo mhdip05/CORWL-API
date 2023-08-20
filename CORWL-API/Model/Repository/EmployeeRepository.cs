@@ -89,7 +89,6 @@ namespace CORWL_API.Model.Repository
                 return new Result { Status = false, Message = ValidationMsg.Exist("employee") };
 
             _context.Employees.Add(employee);
-
             return new Result { Status = true, Data = employee };
         }
 

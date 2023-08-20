@@ -151,6 +151,7 @@ namespace CORWL_API.Model.Repository
             _context.Attach(mapData);
 
             return new Result { Status = true, Data = mapData };
+
         }
 
         public async Task<Result> SaveDocument(EmployeeDocumentMaster employeeDocumentMaster, List<IFormFile> filesCollection)

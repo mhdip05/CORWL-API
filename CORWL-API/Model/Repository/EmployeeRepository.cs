@@ -75,7 +75,6 @@ namespace CORWL_API.Model.Repository
 
         public async Task<IEnumerable<object>> GetEmployeeDropdown()
         {
-
             return await _context.Employees
                 .Select(emp => new { employeeId = emp.Id, employeeName = emp.FirstName + " " + emp.LastName })
                 .AsNoTracking()

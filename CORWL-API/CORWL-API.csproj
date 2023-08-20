@@ -27,8 +27,6 @@
 		<PackageReference Include="CloudinaryDotNet" Version="1.16.0" />
 		<PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
 	</ItemGroup>
-
-	
 	<ItemGroup>
 	  <Folder Include="FileUpload\employeedoc\" />
 	</ItemGroup>

@@ -1,50 +1,19 @@
-pr:
-- main
-- develop
-
 trigger:
-- main
 - develop
 
 pool:
   vmImage: 'windows-latest'
 
 jobs:
-- job: BuildTestPublishMain
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+- job: BuildTestPublishDev
   steps:
+    - script: echo Running CI for develop branch
+      displayName: 'CI for develop branch'
+
     - task: UseDotNet@2
       inputs:
         packageType: 'sdk'
         version: '6.x'
-        installationPath: $(Agent.ToolsDirectory)/dotnet
-
-    - script: dotnet restore --verbosity normal
-      displayName: 'Restore NuGet packages'
-
-    - script: dotnet build --configuration Release --no-restore
-      displayName: 'Build'
-
-    - script: dotnet test --configuration Release --no-build --verbosity normal
-      displayName: 'Run Tests'
-
-    - script: dotnet publish --configuration Release --output $(Build.ArtifactStagingDirectory)/publish --no-build
-      displayName: 'Publish'
-
-    - task: PublishBuildArtifacts@1
-      inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)/publish'
-        artifactName: 'published-app-main'
-        publishLocation: 'Container'
-
-- job: BuildTestPublishDevelop
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
-  steps:
-    - task: UseDotNet@2
-      inputs:
-        packageType: 'sdk'
-        version: '6.x'
-        installationPath: $(Agent.ToolsDirectory)/dotnet
 
     - script: dotnet restore --verbosity normal
       displayName: 'Restore NuGet packages'

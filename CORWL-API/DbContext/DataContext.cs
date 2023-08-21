@@ -57,7 +57,6 @@ namespace CORWL_API.DbContext
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Designation> Designations { get; set; }
-        public DbSet<Bank> Banks { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeDocumentMaster> EmployeeDocumentMaster { get; set; }

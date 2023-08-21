@@ -5,11 +5,13 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNamespace>CORWL_API</RootNamespace>
+		<UserSecretsId>1ebf00eb-ce0b-4772-b79d-c60326e966bb</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
 		 <!--<PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />-->
          <!-- <PackageReference Include="ReportViewerCore.NETCore" Version="15.1.17" />-->
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.17.0" />
 		<PackageReference Include="Bogus" Version="34.0.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
@@ -25,11 +27,8 @@
 		<PackageReference Include="CloudinaryDotNet" Version="1.16.0" />
 		<PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
 	</ItemGroup>
-
-	
 	<ItemGroup>
 	  <Folder Include="FileUpload\employeedoc\" />
-	  <Folder Include="wwwroot\" />
 	</ItemGroup>
 
 </Project>

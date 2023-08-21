@@ -1,5 +1,7 @@
-﻿using Bogus;
+﻿using Azure.Storage.Blobs.Models;
+using Bogus;
 using CORWL_API.DbContext;
+using CORWL_API.IServices;
 using CORWL_API.Model.Entities;
 using CORWL_API.Unit_Of_Work;
 using Microsoft.AspNetCore.Identity;
@@ -25,7 +27,7 @@ namespace CORWL_API.Controllers.v1
 
             var countryFaker = new Faker<Country>()
                 .RuleFor(c => c.CountryName, f => f.Address.Country())
-                .RuleFor(c => c.CountryAlias, (f, c) => c.CountryName.Substring(0, 2).ToUpper())
+                .RuleFor(c => c.CountryAlias, (f, c) => c.CountryName[..2].ToUpper())
                 .RuleFor(c => c.TelephoneCode, f => f.Address.Random.Int(1, 99).ToString() + f.UniqueIndex);
 
             var country = Enumerable.Range(1, 20)
@@ -41,7 +43,7 @@ namespace CORWL_API.Controllers.v1
 
         string GetRandomString(string type)
         {
-            Random random = new Random();
+            Random random = new();
             string[] bloodGroups = { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" };
             string[] maritalStatus = { "Married", "Single", "Divorced" };
             string[] idType = { "driving license", "voter id", "registration number" };
@@ -68,15 +70,12 @@ namespace CORWL_API.Controllers.v1
 
         string GenerateEmailOrUserName(string firstName, string lastName, string type)
         {
-            switch (type)
+            return type switch
             {
-                case "username":
-                    return $"{firstName.ToLower()}.{lastName.ToLower()}";
-                case "email":
-                    return $"{firstName.ToLower()}.{lastName.ToLower()}@gmail.com";
-                default:
-                    return null;
-            }
+                "username" => $"{firstName.ToLower()}.{lastName.ToLower()}",
+                "email" => $"{firstName.ToLower()}.{lastName.ToLower()}@gmail.com",
+                _ => null,
+            };
         }
 
         [HttpPost("AddBogusEmployeeAndUser")]
@@ -144,5 +143,14 @@ namespace CORWL_API.Controllers.v1
 
             return Ok(users);
         }
+
+        [HttpPost("UploadFileToAzureStorage")]
+        public async Task<IActionResult> UploadFileToAzureStorage([FromServices] IAzureBlob azureBlob,List<IFormFile> files, string directory, string subdirectory = "", string folderName = "")
+        {
+            var data = await azureBlob.UploadFileToAzureStorage(files, directory, subdirectory, folderName);
+
+             return Ok(data);
+        }
+
     }
 }

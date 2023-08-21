@@ -75,6 +75,9 @@ MIT
 @coreui/icons-angular
 MIT
 
+@microsoft/signalr
+Apache-2.0
+
 @ngrx/store
 MIT
 

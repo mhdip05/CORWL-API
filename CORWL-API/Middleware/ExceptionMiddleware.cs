@@ -37,7 +37,16 @@ namespace CORWL_API.Middleware
 
                 var json = JsonSerializer.Serialize(response, options);
 
-                await context.Response.WriteAsync(json);
+                try
+                {
+                    await context.Response.WriteAsync(json);
+                }
+                catch (Exception innerEx)
+                {
+                    _logger.LogError(innerEx, "Error sending response to client.");
+                }
+
+
             }
         }
     }

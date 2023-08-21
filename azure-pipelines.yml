@@ -1,0 +1,41 @@
+trigger:
+- develop
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildConfiguration: 'Release'
+
+jobs:
+- job: Build
+  steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '6.x'
+
+  - script: dotnet restore --verbosity normal
+    displayName: 'Restore NuGet packages'
+
+  - script: dotnet build --configuration $(buildConfiguration) --no-restore
+    displayName: 'Build'
+
+  - script: dotnet test --configuration $(buildConfiguration) --no-build --verbosity normal
+    displayName: 'Run Tests'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish'
+    inputs:
+      command: 'publish'
+      publishWebProjects: true
+      arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish'
+      zipAfterPublish: true
+
+  # Publish artifacts
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)/publish'
+      artifactName: 'published-app'
+      publishLocation: 'Container'

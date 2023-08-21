@@ -21,7 +21,7 @@ namespace CORWL_API.Pagination
 
         public static async Task<PageList<T>> CreateAsynch(IQueryable<T> source, int pageNumber, int pageSize)
         {
-            // countAsynch will make database call
+            //countAsynch will make database call
             var count = await source.CountAsync();
             var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 

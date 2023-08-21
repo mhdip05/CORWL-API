@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using CORWL_API.IServices;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using MimeKit;
@@ -9,9 +10,12 @@ namespace CORWL_API.Controllers.v1
     {
 #nullable disable
         private readonly IWebHostEnvironment _env;
-        public FileController(IWebHostEnvironment env)
+        private readonly IAzureBlob _azureBlob;
+
+        public FileController(IWebHostEnvironment env, IAzureBlob azureBlob)
         {
             _env = env;
+            _azureBlob = azureBlob;
         }
 
         [HttpGet("GetFile/{directory}/{fileName}/{subdirectory?}")]
@@ -42,5 +46,16 @@ namespace CORWL_API.Controllers.v1
             return File(fileStream, contentType);
         }
 
+        [HttpGet("GetAzureStorageContainerToken")]
+        public IActionResult GetAzureStorageContainerToken()
+        {
+            return Ok(new { AzureBlobContainerToken = _azureBlob.CreateServiceSasForContainer() });
+        }
+
+        [HttpGet("DeleteFileFromAzure")]
+        public async Task<IActionResult> DeleteFileFromAzure([FromQuery]string directory, string blobName)
+        {
+            return Ok(await _azureBlob.DeleteFileFromAzureStorage(directory,  blobName));
+        }
     }
 }

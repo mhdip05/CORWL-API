@@ -137,6 +137,7 @@ namespace CORWL_API.Model.Repository
             _context.EmployeeJobDetails.Add(employeeJobDetails);
 
             return new Result { Status = true };
+
         }
 
         public async Task<Result> UpdateEmployeeJobDetails(EmployeeJobDetailsDto employeeJobDetails)

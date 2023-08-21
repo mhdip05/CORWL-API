@@ -4,7 +4,7 @@
     {
         public void Test()
         {
-            Console.WriteLine("Test FOr Ci/CD");
+            Console.WriteLine("Test FOr Ci/CD for develop");
         }
     }
 }

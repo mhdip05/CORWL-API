@@ -31,17 +31,17 @@ jobs:
     - script: dotnet publish --configuration Release --output $(Build.ArtifactStagingDirectory)/publish --no-build
       displayName: 'Publish'
 
-    - task: ArchiveFiles@2  # Add this task to create a zip file
+    - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/publish'
+        rootFolderOrFile: $(Build.ArtifactStagingDirectory)/publish
         includeRootFolder: false
         archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/published-app-main.zip'
+        archiveFile: $(Build.ArtifactStagingDirectory)/published-app-main.zip
         replaceExistingArchive: true
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        pathtoPublish: $(Build.ArtifactStagingDirectory)
         artifactName: 'published-app-main'
         publishLocation: 'Container'
 
@@ -66,16 +66,16 @@ jobs:
     - script: dotnet publish --configuration Release --output $(Build.ArtifactStagingDirectory)/publish --no-build
       displayName: 'Publish'
 
-    - task: ArchiveFiles@2  # Add this task to create a zip file
+    - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/publish'
+        rootFolderOrFile: $(Build.ArtifactStagingDirectory)/publish
         includeRootFolder: false
         archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/published-app-develop.zip'
+        archiveFile: $(Build.ArtifactStagingDirectory)/published-app-develop.zip
         replaceExistingArchive: true
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        pathtoPublish: $(Build.ArtifactStagingDirectory)
         artifactName: 'published-app-develop'
         publishLocation: 'Container'

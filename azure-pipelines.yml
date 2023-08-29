@@ -28,9 +28,6 @@ jobs:
     - script: dotnet test --configuration Release --no-build --verbosity normal
       displayName: 'Run Tests'
 
-    - script: dotnet publish --configuration Release --output $(Build.ArtifactStagingDirectory)/publish --no-build
-      displayName: 'Publish'
-
     - task: ArchiveFiles@2
       inputs:
         rootFolderOrFile: $(Build.ArtifactStagingDirectory)/publish
@@ -62,9 +59,6 @@ jobs:
 
     - script: dotnet test --configuration Release --no-build --verbosity normal
       displayName: 'Run Tests'
-
-    - script: dotnet publish --configuration Release --output $(Build.ArtifactStagingDirectory)/publish --no-build
-      displayName: 'Publish'
 
     - task: ArchiveFiles@2
       inputs:

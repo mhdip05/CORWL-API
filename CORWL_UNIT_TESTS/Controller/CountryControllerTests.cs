@@ -78,6 +78,5 @@ namespace CORWL_UNIT_TESTS.Controller
             // Assert
             var okResult = result.Result.Should().BeOfType<OkObjectResult>();
         }
-
     }
 }

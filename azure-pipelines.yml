@@ -1,9 +1,4 @@
-pr:
-- main
-- develop
-
 trigger:
-- main
 - develop
 
 pool:
@@ -11,13 +6,14 @@ pool:
 
 jobs:
 - job: BuildTestPublishMain
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   steps:
+    - script: echo Running CI for main branch
+      displayName: 'CI for main branch'
+
     - task: UseDotNet@2
       inputs:
         packageType: 'sdk'
         version: '6.x'
-        installationPath: $(Agent.ToolsDirectory)/dotnet
 
     - script: dotnet restore --verbosity normal
       displayName: 'Restore NuGet packages'
@@ -28,48 +24,11 @@ jobs:
     - script: dotnet test --configuration Release --no-build --verbosity normal
       displayName: 'Run Tests'
 
-    - task: ArchiveFiles@2
-      inputs:
-        rootFolderOrFile: $(Build.ArtifactStagingDirectory)/publish
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: $(Build.ArtifactStagingDirectory)/published-app-main.zip
-        replaceExistingArchive: true
+    - script: dotnet publish --configuration Release --output $(Build.ArtifactStagingDirectory)/publish --no-build
+      displayName: 'Publish'
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathtoPublish: $(Build.ArtifactStagingDirectory)
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/publish'
         artifactName: 'published-app-main'
-        publishLocation: 'Container'
-
-- job: BuildTestPublishDevelop
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
-  steps:
-    - task: UseDotNet@2
-      inputs:
-        packageType: 'sdk'
-        version: '6.x'
-        installationPath: $(Agent.ToolsDirectory)/dotnet
-
-    - script: dotnet restore --verbosity normal
-      displayName: 'Restore NuGet packages'
-
-    - script: dotnet build --configuration Release --no-restore
-      displayName: 'Build'
-
-    - script: dotnet test --configuration Release --no-build --verbosity normal
-      displayName: 'Run Tests'
-
-    - task: ArchiveFiles@2
-      inputs:
-        rootFolderOrFile: $(Build.ArtifactStagingDirectory)/publish
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: $(Build.ArtifactStagingDirectory)/published-app-develop.zip
-        replaceExistingArchive: true
-
-    - task: PublishBuildArtifacts@1
-      inputs:
-        pathtoPublish: $(Build.ArtifactStagingDirectory)
-        artifactName: 'published-app-develop'
         publishLocation: 'Container'

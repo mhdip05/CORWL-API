@@ -26,7 +26,15 @@ jobs:
 
     - script: dotnet publish --configuration Release --output $(Build.ArtifactStagingDirectory)/publish --no-build
       displayName: 'Publish'
-
+      
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/publish'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/published-app-main.zip'
+        replaceExistingArchive: true
+        
     - task: PublishBuildArtifacts@1
       inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)/publish'

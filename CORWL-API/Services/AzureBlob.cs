@@ -24,7 +24,7 @@ namespace CORWL_API.Services
 
         }
 
-        public string CreateServiceSasForContainer()
+        public string TestCredential()
         {
             BlobSasBuilder sasBuilder = new()
             {

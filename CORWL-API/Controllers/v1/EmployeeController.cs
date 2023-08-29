@@ -121,12 +121,12 @@ namespace CORWL_API.Controllers.v1
         }
 
         [HttpPost("SaveDocument")]
-        public async Task<ActionResult> SaveDocument([FromForm] EmployeeDocumentDto employeeDocumentDto)
+        public async Task<ActionResult> SaveDocument([FromForm] EmployeeDocumentDto employeeDocumentDto, [FromServices] IAzureBlob azureBlob)
         {
             var docInfo = _mapper.Map<EmployeeDocumentMaster>(employeeDocumentDto);
             docInfo.CreatedBy = int.Parse(User.GetUserId());
 
-            var res = await _uot.EmployeeRepository.SaveDocument(docInfo, employeeDocumentDto.Files);
+            var res = await _uot.EmployeeRepository.SaveDocument(docInfo, employeeDocumentDto.Files, azureBlob);
 
             if (await _uot.Complete())
                 return Ok(res);
@@ -167,9 +167,9 @@ namespace CORWL_API.Controllers.v1
 
 
         [HttpDelete("DeleteEmployeeDocsFromAzure/{fileId}")]
-        public async Task<ActionResult> DeleteEmployeeDocsFromAzure(int fileId)
+        public async Task<ActionResult> DeleteEmployeeDocsFromAzure(int fileId, [FromServices] IAzureBlob azureBlob)
         {
-            var data = await _uot.EmployeeRepository.DeleteEmployeeDocsFromAzure(fileId);
+            var data = await _uot.EmployeeRepository.DeleteEmployeeDocsFromAzure(fileId, azureBlob);
 
             if (await _uot.Complete())
                 return Ok(data);

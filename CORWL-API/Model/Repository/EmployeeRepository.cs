@@ -31,7 +31,7 @@ namespace CORWL_API.Model.Repository
             _mapper = mapper;
             _fileService = (IFileServices)ApplicationServiceExtension.serviceProvider.GetRequiredService(typeof(IFileServices));
             _userManager = (UserManager<User>)IdentityServiceExtension.serviceProvider.GetRequiredService(typeof(UserManager<User>));
-            _azureBlob = (IAzureBlob)IdentityServiceExtension.serviceProvider.GetRequiredService(typeof(IAzureBlob));
+           // _azureBlob = (IAzureBlob)IdentityServiceExtension.serviceProvider.GetRequiredService(typeof(IAzureBlob));
         }
 
         private IQueryable<EmployeeBasicInfoDto> FetchAllEmployeeBasicInfo()
@@ -157,7 +157,7 @@ namespace CORWL_API.Model.Repository
 
         }
 
-        public async Task<Result> SaveDocument(EmployeeDocumentMaster employeeDocumentMaster, List<IFormFile> filesCollection)
+        public async Task<Result> SaveDocument(EmployeeDocumentMaster employeeDocumentMaster, List<IFormFile> filesCollection, IAzureBlob azureBlob)
         {
             int lastInsertedId = 0;
             var empDocMasterData = await _context.EmployeeDocumentMaster.FirstOrDefaultAsync(e => e.EmployeeId == employeeDocumentMaster.EmployeeId);
@@ -184,7 +184,7 @@ namespace CORWL_API.Model.Repository
 
             if (filesCollection.Count > 0)
             {
-                var files = await _azureBlob.UploadFileToAzureStorage(filesCollection, "employeedoc", "emp_" + employeeDocumentMaster.EmployeeId);
+                var files = await azureBlob.UploadFileToAzureStorage(filesCollection, "employeedoc", "emp_" + employeeDocumentMaster.EmployeeId);
 
                 foreach (var file in files)
                 {
@@ -285,13 +285,13 @@ namespace CORWL_API.Model.Repository
             return false;
         }
 
-        public async Task<bool> DeleteEmployeeDocsFromAzure(int FileId)
+        public async Task<bool> DeleteEmployeeDocsFromAzure(int FileId, IAzureBlob azureBlob)
         {
             var getFileByid = await _context.EmployeeDocumentDetails.FirstOrDefaultAsync(e => e.Id == FileId);
 
             if (getFileByid != null)
             {
-                var blob = await _azureBlob.DeleteFileFromAzureStorage(getFileByid.FilePath, getFileByid.FileName);
+                var blob = await azureBlob.DeleteFileFromAzureStorage(getFileByid.FilePath, getFileByid.FileName);
                 if (blob)
                 {
                     _context.EmployeeDocumentDetails.Remove(getFileByid);

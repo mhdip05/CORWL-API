@@ -11,7 +11,7 @@ namespace CORWL_API.Model.IRepository
     {
         Task<IEnumerable<object>> GetEmployeeDropdown();
         Task<Result> SaveEmployeeBasicInfo(Employee employee);
-        Task<Result> SaveDocument(EmployeeDocumentMaster employeeDocument, List<IFormFile> fileCollection);
+        Task<Result> SaveDocument(EmployeeDocumentMaster employeeDocument, List<IFormFile> fileCollection, IAzureBlob azureBlob);
         Task<Result> UpdateEmployeeDocumentMaster(EmployeeDocumentMaseterDto employeeDocument);
         Task<object> GetDocumentInfoByEmployee(int employeeId);
         Task<Result> GetEmployeeBasicInfo(int employeeId);
@@ -21,7 +21,7 @@ namespace CORWL_API.Model.IRepository
         Task<Result> UpdateEmployeeJobDetails(EmployeeJobDetailsDto employeeJobDetails);
         Task<PageList<EmployeeBasicInfoDto>> GetAllEmployee(PaginationParams @params);
         Task<bool> DeleteEmployeeDoc(int fileId, int empId);
-        Task<bool> DeleteEmployeeDocsFromAzure(int FileId);
+        Task<bool> DeleteEmployeeDocsFromAzure(int FileId, IAzureBlob azureBlob);
 
 
     }

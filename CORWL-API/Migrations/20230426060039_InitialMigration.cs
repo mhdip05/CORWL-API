@@ -34,24 +34,6 @@ namespace CORWL_API.Migrations
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Banks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    BankName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    BankAccountNo = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    SourceId = table.Column<int>(type: "integer", nullable: false),
-                    SourceType = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
-                    BankBranch = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    BankAddress = table.Column<string>(type: "character varying(521)", maxLength: 521, nullable: true),
-                    SwiftCode = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Banks", x => x.Id);
-                });
 
             migrationBuilder.CreateTable(
                 name: "Countries",

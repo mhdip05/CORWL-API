@@ -43,7 +43,6 @@ namespace CORWL_UNIT_TESTS.Controller
             var result = _countryController.GetAllCountries();
 
             //assert
-
             result.Should().NotBeNull();
             result.Result.Should().BeOfType(typeof(OkObjectResult));
 
@@ -66,7 +65,6 @@ namespace CORWL_UNIT_TESTS.Controller
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             {
                  new Claim(ClaimTypes.NameIdentifier, "1")
-
             }, "mock"));
 
             _countryController.ControllerContext = new ControllerContext
@@ -79,7 +77,6 @@ namespace CORWL_UNIT_TESTS.Controller
 
             // Assert
             var okResult = result.Result.Should().BeOfType<OkObjectResult>();
-
         }
     }
 }

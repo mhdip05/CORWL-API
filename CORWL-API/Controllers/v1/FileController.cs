@@ -49,7 +49,7 @@ namespace CORWL_API.Controllers.v1
         [HttpGet("GetAzureStorageContainerToken")]
         public IActionResult GetAzureStorageContainerToken()
         {
-            return Ok(new { AzureBlobContainerToken = _azureBlob.CreateServiceSasForContainer() });
+            return Ok(new { AzureBlobContainerToken = _azureBlob.TestCredential()});
         }
 
         [HttpGet("DeleteFileFromAzure")]

@@ -177,6 +177,4 @@ namespace CORWL_API.Controllers.v1
             return Ok(ValidationMsg.SomethingWrong("deleting employee document"));
         }
     }
-
-
 }

@@ -2,11 +2,11 @@
 
 namespace CORWL_API.Helper
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-    public class InheritedApiVersion : ApiVersionAttribute
+   //[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+    public class InheritedApiVersion 
     {
-        public InheritedApiVersion(string version) : base(version)
-        {
-        }
+        //public InheritedApiVersion(string version) : base(version)
+        //{
+        //}
     }
 }

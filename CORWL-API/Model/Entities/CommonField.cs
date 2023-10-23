@@ -16,6 +16,7 @@ namespace CORWL_API.Model.Entities
 
         [StringLength(256)]
         public string? LastUpdatedComment { get; set; }
+
         public int? UpdatedBy { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDelete { get; set; }

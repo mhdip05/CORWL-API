@@ -22,15 +22,15 @@ namespace CORWL_API.Model.Repository
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IFileServices _fileService;
-        private readonly UserManager<User> _userManager;
-        private readonly IAzureBlob _azureBlob;
+       // private readonly UserManager<User> _userManager;
+       // private readonly IAzureBlob _azureBlob;
 
         public EmployeeRepository(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
             _fileService = (IFileServices)ApplicationServiceExtension.serviceProvider.GetRequiredService(typeof(IFileServices));
-            _userManager = (UserManager<User>)IdentityServiceExtension.serviceProvider.GetRequiredService(typeof(UserManager<User>));
+            //_userManager = (UserManager<User>)IdentityServiceExtension.serviceProvider.GetRequiredService(typeof(UserManager<User>));
            // _azureBlob = (IAzureBlob)IdentityServiceExtension.serviceProvider.GetRequiredService(typeof(IAzureBlob));
         }
 

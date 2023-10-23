@@ -14,6 +14,5 @@ namespace CORWL_API.Controllers.v1
             _mapper = mapper;
         }
 
-
     }
 }

@@ -27,6 +27,7 @@ namespace CORWL_API.Unit_Of_Work
         public IEmployeeRepository EmployeeRepository => new EmployeeRepository(_context, _mapper);
         public IDepartmentRepository DepartmentRepository => new DepartmentRepository(_context, _mapper);
         public IDesignationRepository DesignationRepository => new DesignationRepository(_context, _mapper);
+        public ISupplierRepository SupplierRepository => new SupplierRepository(_context, _mapper);
 
         public async Task<bool> Complete()
         {

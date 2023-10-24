@@ -1,4 +1,4 @@
-﻿using CORWL_API.Model.IRepository;
+﻿using CORWL_API.Business_Logic.IRepository;
 
 namespace CORWL_API.Unit_Of_Work
 {

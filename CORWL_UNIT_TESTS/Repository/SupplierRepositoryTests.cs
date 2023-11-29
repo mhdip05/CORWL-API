@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using CORWL_API.Business_Logic.IRepository;
 using CORWL_API.Business_Logic.Repository;
+using CORWL_API.CustomValidation;
 using CORWL_API.DbContext;
 using CORWL_API.Model.Entities;
 using CORWL_UNIT_TESTS.TEST_Utility;
+using FakeItEasy;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,19 +18,21 @@ namespace CORWL_UNIT_TESTS.Repository
 {
     public class SupplierRepositoryTests
     {
+#nullable disable
+
         private readonly IMapper _mapper;
+        private readonly DataContext _context;
 
         public SupplierRepositoryTests()
         {
             var mapperConfig = new MapperConfiguration(mc => { });
             _mapper = mapperConfig.CreateMapper();
+            _context = DatabaseContextUtility.GetInMemoryDatabaseContext();
         }
 
-        private static async Task<DataContext> GetSupplierContext()
+        private async Task<DataContext> GetSupplierContext()
         {
-            var t = DatabaseContextUtility.GetInMemoryDatabaseContext();
-
-            var supplierContext = DatabaseContextUtility.GetDataContext(t, t.Suppliers, 10, i => new Supplier
+            var supplierContext = DatabaseContextUtility.GetDataContext(_context, _context.Suppliers, 10, i => new Supplier
             {
                 SupplierName = "supplier-" + i,
                 SupplierCode = "sp-" + i,
@@ -41,7 +46,19 @@ namespace CORWL_UNIT_TESTS.Repository
         }
 
         [Fact]
-        public async void SupplierRepository_GetSupplierByCode_ReturnSupplier()
+        public async void SupplierRepository_SaveSupplierInfo_ReturnTrue()
+        {
+            var repo = new SupplierRepository(_context, _mapper);
+            var result = await repo.SaveSupplierInfo(new Supplier
+            {
+                SupplierCode = "sp-15899",
+            });
+            
+            result.Status.Should().BeTrue();
+        }
+
+        [Fact]
+        public async void SupplierRepository_GetSupplierByCode_ReturnTrue()
         {
             //Arrange
             var name = "sp-1";
@@ -53,5 +70,8 @@ namespace CORWL_UNIT_TESTS.Repository
             //Assert
             result.Should().BeTrue();
         }
+
+
+
     }
 }

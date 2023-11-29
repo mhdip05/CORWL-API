@@ -9,8 +9,8 @@ namespace CORWL_API.Business_Logic.Repository
 {
     public class SupplierRepository : ISupplierRepository
     {
-        private DataContext _context;
-        private IMapper _mapper;
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
         public SupplierRepository(DataContext context, IMapper mappper)
         {
@@ -20,19 +20,18 @@ namespace CORWL_API.Business_Logic.Repository
 
         public async Task<bool> GetSupplierByCode(string code)
         {
-            return await _context.Suppliers.AnyAsync(e => e.SupplierCode == code);
+            var a = await _context.Suppliers.AnyAsync(e => e.SupplierCode == code);
+            return a;
         }
 
         public async Task<Result> SaveSupplierInfo(Supplier supplier)
         {
-            if (await GetSupplierByCode(supplier.SupplierCode) == false) 
+            if (await GetSupplierByCode(supplier.SupplierCode) == true) 
                 return new Result { Status = false, Message = ValidationMsg.Exist("Supplier code exist") };
 
             _context.Suppliers.Add(supplier);
 
             return new Result { Status = true, Message = ValidationMsg.Saved()};
         }
-
-
     }
 }

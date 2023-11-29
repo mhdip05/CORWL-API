@@ -4,16 +4,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CORWL_API.Model.DTO
 {
-    public class SupplierDto
+    public class SupplierDto : CommonDto
     {
 #nullable disable
         public int Id { get; set; }
-
 
         [Required(ErrorMessage = "Supplier name is required")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "First name length: min={2} & max={1}")]
         [RegularExpression(@"^[a-zA-Z0-9 '](?:(?![.-]{1,})[a-zA-Z0-9 '])*[a-zA-Z0-9 ']$", ErrorMessage = "Please enter valid name")]
         public string SupplierName { get; set; }
+
+        [Required(ErrorMessage = "Supplier Code is required")]
+        [StringLength(20, MinimumLength = 5, ErrorMessage = "Supplier Codes length: min={2} & max={1}")]
+        public string SupplierCode { get; set; }
 
         [Required(ErrorMessage = "Country is required")]
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Please select country")]

@@ -45,8 +45,6 @@ namespace CORWL_API.Middleware
                 {
                     _logger.LogError(innerEx, "Error sending response to client.");
                 }
-
-
             }
         }
     }

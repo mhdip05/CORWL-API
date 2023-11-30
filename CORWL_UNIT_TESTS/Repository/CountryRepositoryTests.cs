@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CORWL_API.DbContext;
 using CORWL_API.Model.Entities;
-using CORWL_API.Model.Repository;
+using CORWL_API.Business_Logic.Repository;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CORWL_UNIT_TESTS.TEST_Utility;
 
 namespace CORWL_UNIT_TESTS.Repository
 {
@@ -21,29 +22,17 @@ namespace CORWL_UNIT_TESTS.Repository
             var mapperConfig = new MapperConfiguration(mc => { });
             _mapper = mapperConfig.CreateMapper();
         }
-        private async Task<DataContext> GetDatabaseContext()
+        private static async Task<DataContext> GetDatabaseContext()
         {
-            var options = new DbContextOptionsBuilder<DataContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var mdc = DatabaseContextUtility.GetInMemoryDatabaseContext();
 
-            var databaseContext = new DataContext(options);
-            databaseContext.Database.EnsureCreated();
-
-            if (await databaseContext.Countries.CountAsync() <= 0)
+            var countryContext = DatabaseContextUtility.GetDataContext(mdc, mdc.Countries, 10, i => new Country
             {
-                for (int i = 1; i <= 10; i++)
-                {
-                    databaseContext.Countries.Add(
-                        new Country
-                        {
-                            CountryName = "country-" + i,
-                            CountryAlias = "country alias-" + i
-                        }
-                  );
-                }
-                await databaseContext.SaveChangesAsync();
-            }
-            return databaseContext;
+                CountryName = "country-" + i,
+                CountryAlias = "country alias-" + i
+            });
+
+            return await countryContext;
         }
 
 

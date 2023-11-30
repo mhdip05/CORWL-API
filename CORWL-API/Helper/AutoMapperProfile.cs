@@ -44,7 +44,7 @@ namespace CORWL_API.Helper
 
             CreateMap<EmployeeJobDetailsDto, EmployeeJobDetails>().ReverseMap();
 
-            CreateMap<string, string>().ConvertUsing(new StringTrimmerHelper());
+            CreateMap<string, string>().ConvertUsing(source => StringTrimmerHelper.TrimString(source));
 
             //CreateMap<string, string>().ConvertUsing(new EmptyToNullConverter());
         }

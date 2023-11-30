@@ -1,4 +1,4 @@
-﻿using CORWL_API.Helper;
+﻿
 using Microsoft.OpenApi.Models;
 
 namespace CORWL_API.Extension
@@ -22,12 +22,6 @@ namespace CORWL_API.Extension
                     Title = "CORWL-API-V2",
                     Description = "CORWL-API-V2"
                 });
-                
-                c.ResolveConflictingActions(a => a.First());
-                c.OperationFilter<RemoveVersionFromParamter>();
-                c.OperationFilter<RemoveApiVersionFromParamter>();
-                c.DocumentFilter<ReplaceVersionWithExactValueInPath>();
-
 
             });
             return services;

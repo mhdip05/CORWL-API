@@ -5,7 +5,7 @@ using CORWL_API.Model.Entities;
 using CORWL_API.Pagination;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CORWL_API.Model.IRepository
+namespace CORWL_API.Business_Logic.IRepository
 {
     public interface IEmployeeRepository
     {

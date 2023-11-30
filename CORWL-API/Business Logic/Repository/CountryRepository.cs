@@ -6,9 +6,9 @@ using CORWL_API.Helper;
 using CORWL_API.Model.DTO;
 using CORWL_API.Model.Entities;
 using CORWL_API.Model.FetchDTO;
-using CORWL_API.Model.IRepository;
+using CORWL_API.Business_Logic.IRepository;
 
-namespace CORWL_API.Model.Repository
+namespace CORWL_API.Business_Logic.Repository
 {
     public class CountryRepository : ICountryRepository
     {

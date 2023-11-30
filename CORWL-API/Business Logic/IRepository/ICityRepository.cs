@@ -1,7 +1,7 @@
 ﻿using CORWL_API.Model.DTO;
 using CORWL_API.Model.Entities;
 
-namespace CORWL_API.Model.IRepository
+namespace CORWL_API.Business_Logic.IRepository
 {
     public interface ICityRepository
     {

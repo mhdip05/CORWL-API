@@ -12,7 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddApiVersioningServices();
 builder.Services.AddSwaggerServices();
 builder.Services.AddApplicationService(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
@@ -41,20 +40,18 @@ catch (Exception ex)
     logger.LogError(ex, "An error occured during migration");
 }
 
-
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
 
-//if (app.Environment.IsDevelopment())
-//{
+if (app.Environment.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint($"v1/swagger.json","v1");
-        c.SwaggerEndpoint($"v2/swagger.json","v2");
-        c.RoutePrefix = "swagger";
+        c.SwaggerEndpoint($"v1/swagger.json", "v1");
+        c.SwaggerEndpoint($"v2/swagger.json", "v2");
     });
-//}
+}
 
 app.UseHttpsRedirection();
 
@@ -71,14 +68,12 @@ app.UseAuthorization();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-//app.UseMiddleware<ApiVersioningMiddleware>();
 
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
     endpoints.MapFallbackToController("Index", "Fallback");
     endpoints.MapHub<PresenceHub>("hubs/presence");
-
 });
 
 app.Run();

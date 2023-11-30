@@ -41,5 +41,8 @@ namespace CORWL_API.Model.Entities
 
         [StringLength(20)]
         public string SupplierType { get; set; }
+
+        [Required, StringLength(50)]
+        public string SupplierCode { get; set; }
     }
 }

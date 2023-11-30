@@ -2,7 +2,7 @@
 using CORWL_API.Model.Entities;
 using CORWL_API.Model.FetchDTO;
 
-namespace CORWL_API.Model.IRepository
+namespace CORWL_API.Business_Logic.IRepository
 {
     public interface ICurrencyRepository
     {

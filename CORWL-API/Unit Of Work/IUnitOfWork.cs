@@ -1,4 +1,4 @@
-﻿using CORWL_API.Model.IRepository;
+﻿using CORWL_API.Business_Logic.IRepository;
 
 namespace CORWL_API.Unit_Of_Work
 {
@@ -15,6 +15,7 @@ namespace CORWL_API.Unit_Of_Work
         IEmployeeRepository EmployeeRepository { get; }
         IDepartmentRepository DepartmentRepository { get; }
         IDesignationRepository DesignationRepository { get; }
+        ISupplierRepository SupplierRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }

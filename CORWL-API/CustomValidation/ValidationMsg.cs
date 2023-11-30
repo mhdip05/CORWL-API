@@ -36,6 +36,11 @@ namespace CORWL_API.CustomValidation
             return $"{entity.ToCapitalize()} Already Exists";
         }
 
+        public static string Saved(string entity = null)
+        {
+            return entity == null ? "Data Saved Successfully" : $"{entity.ToCapitalize()} Saved Successfully";
+        }
+
 
     }
 }

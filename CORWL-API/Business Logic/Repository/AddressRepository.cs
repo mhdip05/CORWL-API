@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using CORWL_API.DbContext;
 using CORWL_API.Model.Entities;
-using CORWL_API.Model.IRepository;
+using CORWL_API.Business_Logic.IRepository;
 
-namespace CORWL_API.Model.Repository
+namespace CORWL_API.Business_Logic.Repository
 {
     [Authorize("ManagementRole")]
     public class AddressRepository : IAddressRepository

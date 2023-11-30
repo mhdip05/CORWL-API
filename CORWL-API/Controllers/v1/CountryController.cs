@@ -33,9 +33,10 @@ namespace CORWL_API.Controllers.v1
 
         [HttpGet("GetCountryDropdown")]
         public async Task<IActionResult> GetCountryDropdown()
-        {
+        {        
             return Ok(await _uot.CountryRepository.GetCountryDropdown());
         }
+
 
         [HttpPost("add-country")]
         public async Task<ActionResult<CountryDto>> AddCountry(CountryDto country)

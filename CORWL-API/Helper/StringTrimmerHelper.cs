@@ -3,19 +3,17 @@ using System.Text.RegularExpressions;
 
 namespace CORWL_API.Helper
 {
-    public class StringTrimmerHelper : ITypeConverter<string, string>
+    public class StringTrimmerHelper
     {
 #nullable disable
-        public string Convert(string source, string destination, ResolutionContext context)
+        public static string TrimString(string source)
         {
             if (String.IsNullOrWhiteSpace(source))
             {
-                source = null;
+                return null;
             }
 
-            var data = source == null ? source : (Regex.Replace(source, @"\s+", " ")).Trim();
-
-            return data;
+            return (Regex.Replace(source, @"\s+", " ")).Trim();
         }
 
     }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CORWL_API.Controllers.v1;
 using CORWL_API.CustomValidation;
-using CORWL_API.Model.IRepository;
+using CORWL_API.Business_Logic.IRepository;
 using CORWL_API.Unit_Of_Work;
 using FakeItEasy;
 using FluentAssertions;

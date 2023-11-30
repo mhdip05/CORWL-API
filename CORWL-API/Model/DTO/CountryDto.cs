@@ -13,6 +13,7 @@ namespace CORWL_API.Model.DTO
         public string CountryName { get; set; }
 
         [RegularExpression(@"^[a-zA-Z ']*$", ErrorMessage = "Invalid country alias, only (a-z and A-Z) are allowed")]
+        [StringLength(6, MinimumLength = 2, ErrorMessage = "Country alias name must be between {2} and {1} characters")]
         public string CountryAlias { get; set; }
 
         [StringLength(5, MinimumLength = 2, ErrorMessage = "Telephone Code must be between {2} and {1} characters")]

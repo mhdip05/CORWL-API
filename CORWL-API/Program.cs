@@ -60,7 +60,7 @@ app.UseRouting();
 app.UseCors(policy => policy.AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials() // for signal R access token
-        .WithOrigins("https://localhost:4201")); ;
+        .WithOrigins("https://localhost:4202")); ;
 
 app.UseAuthentication();
 app.UseAuthorization();

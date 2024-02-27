@@ -59,6 +59,7 @@ namespace CORWL_API.Controllers.v1
         {
             var user = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username!.ToLower());
 
+
             if (user == null) return BadRequest("The username is entered is not correct");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);

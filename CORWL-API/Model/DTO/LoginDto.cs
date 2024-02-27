@@ -6,12 +6,12 @@ namespace CORWL_API.Model.DTO
     {
 #nullable disable
         [Required]
-        [MaxLength(100, ErrorMessage = "Username must be maximum of length 100 character")]
-        [MinLength(2, ErrorMessage = "Username must be minimum of length of 2")]
+        //[MaxLength(100, ErrorMessage = "Username must be maximum of length 100 characters")]
+        //[MinLength(2, ErrorMessage = "Username must be minimum of 2 characters")]
         public string Username { get; set; }
 
         [Required]
-        [MinLength(5, ErrorMessage = "Password must be minimum length of 5")]
+        //[MinLength(5, ErrorMessage = "Password must be minimum of 5 charcters")]
         public string Password { get; set; }
     }
 }
